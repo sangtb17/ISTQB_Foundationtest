@@ -18,11 +18,33 @@ except ImportError:
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', os.urandom(32).hex())
 PARENT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.getenv('DATA_DIR', PARENT_DIR)
-if not os.path.isabs(DATA_DIR):
-    DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), DATA_DIR))
-UPLOAD_FOLDER = os.path.abspath(DATA_DIR)
+def _resolve_data_dir():
+    raw = os.getenv('DATA_DIR', PARENT_DIR)
+    if not os.path.isabs(raw):
+        # Trên Render, CWD là repo root nên ./seed_data -> <repo>/seed_data
+        cwd_based = os.path.abspath(os.path.join(os.getcwd(), raw))
+        app_based = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), raw))
+        raw = cwd_based if os.path.isdir(cwd_based) or not os.path.isdir(app_based) else app_based
+    return os.path.abspath(raw)
+DATA_DIR = _resolve_data_dir()
+UPLOAD_FOLDER = DATA_DIR
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+# Seed dữ liệu mẫu khi thư mục rỗng (Render Free không có Disk persistent)
+try:
+    if not os.listdir(UPLOAD_FOLDER):
+        for _cand in (os.path.join(PARENT_DIR, 'Chương 1'),
+                      os.path.join(os.getcwd(), 'Chương 1'),
+                      os.path.join(os.getcwd(), 'seed_data')):
+            if os.path.isdir(_cand):
+                for _f in os.listdir(_cand):
+                    if _f.lower().endswith('.html'):
+                        try:
+                            shutil.copy2(os.path.join(_cand, _f), os.path.join(UPLOAD_FOLDER, _f))
+                        except OSError:
+                            pass
+                break
+except OSError:
+    pass
 try:
     MAX_MB = int(os.getenv('MAX_CONTENT_MB', '16'))
 except ValueError:
