@@ -1,10 +1,10 @@
 services:
   - type: web
     name: istqb-html-manager
-    runtime: docker
+    runtime: python
     plan: free
-    dockerfilePath: ./html_web_app/Dockerfile
-    dockerContext: .
+    buildCommand: pip install -r html_web_app/requirements.txt
+    startCommand: waitress-serve --listen=0.0.0.0:$PORT html_web_app.app:app
     healthCheckPath: /healthz
     envVars:
       - key: PYTHONUTF8
