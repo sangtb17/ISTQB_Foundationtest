@@ -1,0 +1,50 @@
+﻿<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+  <head><meta charset='utf-8'>
+  <style>
+    body{font-family: Arial, sans-serif;}
+    h1{color:#c0392b;}
+    .qblock{margin-bottom:20px; padding:10px; border:1px solid #ccc;}
+    .qtitle{font-weight:bold; font-size:14px; margin-bottom:6px;}
+    .opt{margin:4px 0;}
+    .correct{color:green; font-weight:bold;}
+    .selectedwrong{color:red; font-weight:bold;}
+    .selectedright{color:green; font-weight:bold;}
+    .explain{background:#f2f2f2; padding:8px; margin-top:8px; font-style:italic;}
+    img{max-width:400px; display:block; margin:6px 0;}
+  </style></head><body><h1>FL2024_chuong 3 Exam 26-27-28</h1><p><b>Điểm:</b> 2/9 &nbsp; <b>Thời gian làm bài:</b> 00:00:25 &nbsp; <b>Nộp bài:</b> 2026-08-03 16:05:29</p><p><b>Video giải đáp:</b> Không có video cho bài này</p><div class='qblock'><div class='qtitle'>Câu hỏi 1</div><div>When comparing Static and Dynamic test techniques, which of the following statements is TRUE?</div><div class='opt selectedwrong'>a.
+Static Testing finds failures, whilst Dynamic Testing only finds the cause of failures.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Static Testing techniques, such as reviews, can be undertaken before Dynamic Testing, making defects cheaper to remove.  [Đáp án đúng]</div><div class='opt'>c.
+Static Testing is based on the execution of code, whist Dynamic Testing relies on examination and analysis.</div><div class='opt'>d.
+Only Static Testing has the objective of identifying defects.</div><div class='explain'>Lời giải: refer 3.1.2 Khi so sánh các kỹ thuật kiểm tra tĩnh và động, câu nào sau đây là ĐÚNG? Chọn B vì đúng như sách, loại A vì "Static Testing finds failures" failure là phải dynamic test mới tìm ra, loại C vì "Static Testing is based on the execution of code" loại D vì từ "Only"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 2</div><div>One of the roles in a review is that of moderator, which of the following best describes this role?</div><div class='opt selectedright'>a.
+Plans the review, runs the review meeting and ensures that follow-up activities are completed.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+Allocates time in the plan, decides which reviews will take place and that the benefits are delivered.</div><div class='opt'>c.
+Writes the document to be reviewed, agrees that the document can be reviewed, and updates the document with any changes.</div><div class='opt'>d.
+Documents all issues raised in the review meeting, records problems and open points.</div><div class='explain'>Lời giải: refer 3.2.2. B là của manager, C là của Author, D là recoder nên chọn A là task của moderator</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 3</div><div>Which of the following statements are correct for walkthroughs? (i) Often led by the author. (ii) Documented and defined results. (iii) All participants have defined roles. (iv) Used to aid learning. (v) Main purpose is to find defects.</div><div class='opt selectedwrong'>a.
+(i) and (v) are correct   [Thí sinh đã chọn]</div><div class='opt'>b.
+(ii) and (iii) are correct.</div><div class='opt correct'>c.
+(i) and (iv) are correct.  [Đáp án đúng]</div><div class='opt'>d.
+(iii) and (iv) are correct.</div><div class='explain'>Lời giải: refer 3.2.4 Câu nào sau đây đúng về walkthrough? thì i đúng và iv đúng ( iv ý nghĩa là để training, education và learning)</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 4</div><div>What benefits do static analysis tools have over test execution tools?</div><div class='opt selectedright'>a.
+Static analysis tools find defects earlier in the life cycle  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+Static analysis tools can be used before code is written.</div><div class='opt'>c.
+Static analysis tools test that the delivered code meets business requirements.</div><div class='opt'>d.
+Static analysis tools are particularly effective for regression testing.</div><div class='explain'>Lời giải: Refer 3.1.2 Các công cụ phân tích tĩnh có lợi ích gì so với các công cụ thực hiện kiểm thử? Chọn A vì tìm đc lỗi sớm là đúng, loại B vì "used before code is written" static analysis tool chỉ phân tích trên các sản phẩm có cấu trúc như code, mà nếu chưa có code thì làm sao bật tool để phân tích, C sai vì "meets business requirements" cái này phải của review tìm ra, loại D vì "regression testing" là của dynamic test</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 5</div><div>You are reading a user story in the product backlog to prepare for a meeting with the product owner and a developer, noting potential defects as you go. Which TWO of the following statements is true about this activity?</div><div class='opt selectedwrong'>a.
+It is not a static test, because static testing involves execution of the test object   [Thí sinh đã chọn]</div><div class='opt selectedwrong'>b.
+It is not a static test, because static testing is always performed using a tool   [Thí sinh đã chọn]</div><div class='opt correct'>c.
+It is a static test, because any defects you find could be found cheaper during dynamic testing  [Đáp án đúng]</div><div class='opt correct'>d.
+It is a static test, because static testing does not involve execution of the test object  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 3.1.3. Hai cái nào đúng về việc mà bạn "reading a user story"? đây là 1 hoạt động review nên nó là static test là chắc chắn, đúng nhất theo định nghĩa là D review thì "not involve execution of the test object", đúng thứ nhì là C nó giúp tìm ra lỗi rẻ hơn dynamic testing</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 6</div><div>Which TWO of the following statements on the use of checklists in a formal review is CORRECT?</div><div class='opt selectedwrong'>a.
+As part of the review planning, the reviewers create the checklists needed for the review   [Thí sinh đã chọn]</div><div class='opt selectedright'>b.
+As part of the individual review, the reviewers fill in the checklists provided for the review  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>c.
+As part of the review meeting, the reviewers create defect reports based on the checklists provided for the review</div><div class='opt correct'>d.
+As part of the review initiation, the reviewers receive the checklists needed for the review  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 3.2.1 Review process. Đáp án D đùng vì nhiệm vụ của Initiate reivew ( kick-off) thì phân phát các tài liệu và material cho reviewers, thì trong đó reviewer cũng nhận đc checklist để review. Và đáp án B mình sửa là trong giai đoạn individual review ( cá nhân tự chuẩn bị cho review) thì họ sẽ fill kết quả vào checklist những comments hoặc defects mà họ tìm đc là đúng. (nếu đề thi để là trong Review Meeting mới fill thông tin vào checklist thì cũng tạm chấp nhận đc.) Còn A sai vì planning ko có nhiệm vụ của reviewer ( đây là nhiệm vụ của moderator). C sai vì tạo defect report là nhiệm vụ của Fixing and Reporting</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 7</div><div>Decide which of the following statements (i-v) are true for static testing. i. Abnormal external behaviors are easier to identify with this testing ii. Discrepancies from a coding standard are easier to find with this testing iii. It identifies failures caused by defects when the software is run iv. Its test objective is to identify defects as early as possible v. Missing coverage for critical security requirements is easier to find and fix</div><div class='opt selectedwrong'>a.
+i, iv, v are true for static testing   [Thí sinh đã chọn]</div><div class='opt'>b.
+i, iii, iv are true for static testing</div><div class='opt'>c.
+ii, iii are true for static testing</div><div class='opt correct'>d.
+ii, iv, v are true for static testing  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 3.1.3. Chú ý vào ii đúng vì "Discrepancies from a coding standard", v đúng vì "security requirements", iv đúng vì " identify defects as early as" còn lại các cái khác sai vì i sai vì "behaviors" của dynamic, iii sai vì " identifies failures" của dynamic</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 8</div><div>What task may management take on during a formal review?</div><div class='opt selectedwrong'>a.
+Taking overall responsibility for the review   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Deciding what is to be reviewed  [Đáp án đúng]</div><div class='opt'>c.
+Ensuring the effective running of review meetings, and mediating, if necessary</div><div class='opt'>d.
+Recording review information such as review decisions</div><div class='explain'>Lời giải: Refer 3.2.2 roles and responsibility. B là của management, còn lại A, C,D là của moderator,</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 9</div><div>Which of following review types has its purpose of discussing, making decisions, evaluation alternatives, solving technical problems and checking conformance to specifications, plans, regulations and standards? [K2]</div><div class='opt selectedwrong'>a.
+Informal   [Thí sinh đã chọn]</div><div class='opt'>b.
+Walkthrough</div><div class='opt correct'>c.
+Technical Review  [Đáp án đúng]</div><div class='opt'>d.
+Inspection</div><div class='explain'>Lời giải: Refer 3.2.3 Bạn chú ý vào đoạn "solving technical problems and checking conformance to specifications" kỹ thuật mà xử lý các vấn đề về kỹ thuật, kiểm tra xem có thỏa mãn với tài liệu đặc tả hay ko thì là Technical Review rồi</div></div></body></html>

@@ -1,0 +1,98 @@
+﻿<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+  <head><meta charset='utf-8'>
+  <style>
+    body{font-family: Arial, sans-serif;}
+    h1{color:#c0392b;}
+    .qblock{margin-bottom:20px; padding:10px; border:1px solid #ccc;}
+    .qtitle{font-weight:bold; font-size:14px; margin-bottom:6px;}
+    .opt{margin:4px 0;}
+    .correct{color:green; font-weight:bold;}
+    .selectedwrong{color:red; font-weight:bold;}
+    .selectedright{color:green; font-weight:bold;}
+    .explain{background:#f2f2f2; padding:8px; margin-top:8px; font-style:italic;}
+    img{max-width:400px; display:block; margin:6px 0;}
+  </style></head><body><h1>FL2024_chuong 1 Exam 26-27-28</h1><p><b>Điểm:</b> 3/21 &nbsp; <b>Thời gian làm bài:</b> 00:00:22 &nbsp; <b>Nộp bài:</b> 2026-08-03 16:08:08</p><p><b>Video giải đáp:</b> Không có video cho bài này</p><div class='qblock'><div class='qtitle'>Câu hỏi 1</div><div>Which of the following phases in the fundamental test process is considered to deliver a document which can be used as a major input for test process improvement?</div><div class='opt selectedwrong'>a.
+Test planning and control   [Thí sinh đã chọn]</div><div class='opt'>b.
+Test implementation & execution</div><div class='opt'>c.
+Evaluating exit criteria and reporting</div><div class='opt correct'>d.
+Test project closure  [Đáp án đúng]</div><div class='explain'>Lời giải: refer 1.4.1 Giai đoạn nào sau đây trong quy trình kiểm thử cơ bản được coi là cung cấp một tài liệu có thể được sử dụng làm đầu vào chính để cải tiến quy trình kiểm thử? chọn D vì câu hỏi nhắc đến"test process improvement"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 2</div><div>Which of the following would achieve the HIGHEST level of testing independence for a project's system test level?</div><div class='opt selectedwrong'>a.
+Training developers to design good tests for the test team to execute.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Outsourcing test design and execution to a different company.  [Đáp án đúng]</div><div class='opt'>c.
+Having the company's independent test team design and execute the tests.</div><div class='opt'>d.
+Minimising contact between testers and developers during test design to avoid bias.</div><div class='explain'>Lời giải: refer 1.5.3 Điều nào sau đây sẽ đạt được mức độ độc lập kiểm tra CAO NHẤT đối với cấp độ kiểm tra hệ thống của dự án? chọn D vì "Outsourcing" là cao nhất</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 3</div><div>Which of the following is a valid drawback of independent testing?</div><div class='opt selectedwrong'>a.
+Developer and independent testing will overlap and waste resources.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Developers loose the sense of responsibility and independent testers may become a bottleneck.  [Đáp án đúng]</div><div class='opt'>c.
+Independent testers need extra education and always cost more</div><div class='opt'>d.
+Independent testers will become a bottleneck and introduce problems in incident management.</div><div class='explain'>Lời giải: refer 1.5.3 Điều nào sau đây là nhược điểm hợp lý của thử nghiệm độc lập? chọn B đúng sách</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 4</div><div>When considering the roles of test leader and tester, which of the following tasks would NOT typically be performed by a tester?</div><div class='opt selectedwrong'>a.
+Prepare and acquire the test data   [Thí sinh đã chọn]</div><div class='opt'>b.
+Set up and check the test environment</div><div class='opt correct'>c.
+Write test summary reports  [Đáp án đúng]</div><div class='opt'>d.
+Review tests developed by others</div><div class='explain'>Lời giải: refer 1.4.5 nhiệm vụ nào sau đây thường KHÔNG được tester thực hiện? chọn C vì của Leader</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 5</div><div>Which list of levels of tester independence is in the correct order, starting with the most independent first?</div><div class='opt selectedwrong'>a.
+Tests designed by the author; tests designed by another member of the development team; tests designed by someone from a different company   [Thí sinh đã chọn]</div><div class='opt'>b.
+Tests designed by someone from a different department within the company; tests designed by the author; tests designed by someone from a different company.</div><div class='opt correct'>c.
+Tests designed by someone from a different company; tests designed by someone from a different department within the company; tests designed by another member of the development team.  [Đáp án đúng]</div><div class='opt'>d.
+Tests designed by someone from a different department within the company; tests designed by someone from a different company; tests designed by the author.</div><div class='explain'>Lời giải: refer 1.4.5. Danh sách các cấp độ độc lập của người thử nghiệm được sắp xếp theo đúng thứ tự, bắt đầu từ mức độ độc lập cao nhất trước tiên? chọn C</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 6</div><div>Hand over of Testware is a part of which Phase:</div><div class='opt selectedwrong'>a.
+Test Analysis and Design   [Thí sinh đã chọn]</div><div class='opt'>b.
+Test Planning and control</div><div class='opt correct'>c.
+Test Closure Activities  [Đáp án đúng]</div><div class='opt'>d.
+Evaluating exit criteria and reporting</div><div class='explain'>Lời giải: refer 1.4.1 "Hand over of Testware" của phase nào? xem sách chọn C</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 7</div><div>Reporting Discrepancies as incidents is a part of which phase:</div><div class='opt selectedwrong'>a.
+Test Analysis and Design   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Test Implementation and execution  [Đáp án đúng]</div><div class='opt'>c.
+Test Closure Activities</div><div class='opt'>d.
+Evaluating exit criteria and reporting</div><div class='explain'>Lời giải: refer 1.4.1 Báo cáo sự khác biệt do sự cố là một phần của giai đoạn nào: "Discrepancies" xem sách thì là của execution test</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 8</div><div>What should be the MAIN objective during development testing?</div><div class='opt selectedright'>a.
+To cause as many failures as possible so that defects in the software are identified and can be fixed  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+To confirm that the system works as expected and that requirements have been met</div><div class='opt'>c.
+To assess the quality of the software with no intention of fixing defects</div><div class='opt'>d.
+To give information to stakeholders of the risk of releasing the system at a given time</div><div class='explain'>Lời giải: refer 1.1.1 Mục tiêu CHÍNH trong quá trình thử nghiệm phát triển là gì? chọn A tìm đc nhiều lỗi nhất có thể, B thì là mục tiêu của Acceptance test, C đánh giá chất lượng ko nằm trong mục tiêu của test, D là cung cấp thông tin cho các bên ở thời điểm Release ko phải Development test nên ko chọn D</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 9</div><div>Which of the following is not a part of the Test Implementation and Execution Phase?</div><div class='opt selectedwrong'>a.
+Creating test suites from the test cases   [Thí sinh đã chọn]</div><div class='opt'>b.
+Executing test cases either manually or by using test execution tools</div><div class='opt'>c.
+Comparing actual results</div><div class='opt correct'>d.
+Designing the Tests  [Đáp án đúng]</div><div class='explain'>Lời giải: refer 1.4.1 Cái nào ko đúng thuộc giai đoạn Test Implementation and Execution? chọn D đúng, vì A của implementation, B C là của execution</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 10</div><div>Which of the following statements BEST describes one of the seven key principles of software testing?</div><div class='opt selectedwrong'>a.
+Automated tests are better than manual tests for avoiding the Exhaustive Testing   [Thí sinh đã chọn]</div><div class='opt'>b.
+Exhaustive testing is, with sufficient effort and tool support, feasible for all software</div><div class='opt correct'>c.
+It is normally impossible to test all input / output combinations for a software system.  [Đáp án đúng]</div><div class='opt'>d.
+The purpose of testing is to demonstrate the absence of defects.</div><div class='explain'>Lời giải: refer 1.3 Câu nào sau đây mô tả TỐT NHẤT một trong bảy nguyên tắc chính của kiểm thử phần mềm? chọn C đúng nhất, Loại A vì so sánh này ko có căn cứ, Loại B vì "Exhaustive testing" test tất cả không thể xảy ra cho tất cả phần mềm, Loại D vì "demonstrate the absence of defects" là sai vì Test ko thể chứng minh sự vắng mặt của lỗi</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 11</div><div>What is the benefit of independent testing?</div><div class='opt selectedwrong'>a.
+More work gets done because testers do not disturb the developers all the time   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Independent testers tend to be unbiased and find different defects than the developers  [Đáp án đúng]</div><div class='opt'>c.
+Independent testers do not need extra education and training</div><div class='opt'>d.
+Independent testers reduce the bottleneck in the incident management process</div><div class='explain'>Lời giải: refer 1.5.3 như sách rồi</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 12</div><div>Which is not a major task of test implementation and execution?</div><div class='opt selectedwrong'>a.
+Develop and prioritizing test cases, creating test data, writing test procedures and optionally, preparing test harness and writing automated test scripts.   [Thí sinh đã chọn]</div><div class='opt'>b.
+Logging the outcome of test execution and recording the identities and versions of the software under test, test tools and testware.</div><div class='opt correct'>c.
+Checking test logs against the exit criteria specified in test planning.  [Đáp án đúng]</div><div class='opt'>d.
+Verifying that the test environment has been set up correctly.</div><div class='explain'>Lời giải: refer 1.4.1 Chọn C vì của test monitoring and control</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 13</div><div>Which is not the testing objective?</div><div class='opt selectedwrong'>a.
+Triggering failures   [Thí sinh đã chọn]</div><div class='opt'>b.
+Gaining confidence about the level of quality and providing information</div><div class='opt'>c.
+Evaluating test basis</div><div class='opt correct'>d.
+Debugging defects  [Đáp án đúng]</div><div class='explain'>Lời giải: refer 1.1.1 và 1.1.2, Debug là hoạt động gỡ lỗi ko phải mục tiêu test</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 14</div><div>When assembling a test team to work on an enhancement to an existing system, which of the following has the highest level of test independence?</div><div class='opt selectedwrong'>a.
+A business analyst who wrote the original requirements for the system.   [Thí sinh đã chọn]</div><div class='opt'>b.
+A permanent programmer who reviewed some of the new code, but has not written any of it.</div><div class='opt'>c.
+A permanent tester who found most defects in the original system.</div><div class='opt correct'>d.
+A contract tester who has never worked for the organization before  [Đáp án đúng]</div><div class='explain'>Lời giải: refer 1.5.3 điều nào sau đây có mức độ độc lập kiểm tra cao nhất? nhìn vào sơ đồ chọn D vì "A contract tester" là tester thuê bên ngoài</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 15</div><div>The following statements relate to activities that are part of the fundamental test process. i. Evaluating the testability of requirements. ii. Repeating testing activities after changes. iii. Designing the test environment set-up. iv. Developing and prioritizing test cases. v. Verifying the environment is set up correctly. Which statement below is TRUE?</div><div class='opt selectedwrong'>a.
+(i) and (ii) are part of analysis and design, (iii), (iv) and (v) are part of test implementation and execution.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+(i) and (iii) are part of analysis and design, (ii), (iv) and (v) are part of test implementation and execution.  [Đáp án đúng]</div><div class='opt'>c.
+(i) and (v) are part of analysis and design, (ii), (iii) and (iv) are part of test implementation and execution</div><div class='opt'>d.
+(i) and (iv) are part of analysis and design, (ii), (iii) and (v) are part of test implementation and execution.</div><div class='explain'>Lời giải: refer 1.4. Câu này rõ ràng là i là của test analysis, iii, iv là của test design còn lại là của implement và execution. Vì thế các bạn lăn tăn giữa đáp án B và D đều có khả năng đúng. Tuy nhiên Đúng nhất là B vì iii là design test environment ko thể để đến giai đoạn test implementation đc, còn iii. Design and priorityTC là hoạt động làm cả ở giai đoạn test design, đến test implement vẫn làm ( bạn nhớ là automation test cũng là Test case còn gọi là test case tự động)</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 16</div><div>Which of the following is an example of testing as part of the requirements specification phase?</div><div class='opt selectedright'>a.
+A requirements review meeting  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+A business analyst eliciting requirements</div><div class='opt'>c.
+Performing acceptance tests against requirements</div><div class='opt'>d.
+A test report showing requirements coverage</div><div class='explain'>Lời giải: refer 1.4.1. Điều nào sau đây là ví dụ về thử nghiệm như một phần của giai đoạn đặc tả yêu cầu? chọn A vì có review, loại B vì đây "eliciting requirements" là task của BA, C là của "acceptance tests", D là "A test report showing requirements coverage" là sản phẩm của giai đoạn chạy test</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 17</div><div>Which of the following answers describes a test condition?</div><div class='opt selectedright'>a.
+A testable aspect of a component or system identified as a basis for testing  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+A distinguishing characteristic of a component or system</div><div class='opt'>c.
+The degree to which a software product provides functions which meet stated and implied needs when the software is used under specified conditions</div><div class='opt'>d.
+test cases designed to execute combinations of conditions and actions resulting from them</div><div class='explain'>Lời giải: Refer 1.4.1 hoặc tra glossary từ test condition</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 18</div><div>Which one of the following is the BEST description of a test condition?</div><div class='opt selectedwrong'>a.
+An attribute of a component or system specified or implied by requirements documentation.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+An aspect of the test basis that is relevant to achieve specific test objectives.  [Đáp án đúng]</div><div class='opt'>c.
+The capability of the software product to provide functions which meet stated and implied needs when the software is used under specified conditions.</div><div class='opt'>d.
+The percentage of all single condition outcomes that independently affect a decision outcome that have been exercised by a test case suite.</div><div class='explain'>Lời giải: Refer 1.4. hoặc refer lên glossary để tra định nghĩa của test condition bạn thấy nó là 1 "aspect of test basis"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 19</div><div>Which one of the statements below describes a defect discovered during testing ?</div><div class='opt selectedwrong'>a.
+The product crashed when the user selected an option in a dialog box.   [Thí sinh đã chọn]</div><div class='opt'>b.
+The developer of the system forgot to rename variables after a cut-and-paste operation</div><div class='opt'>c.
+The developer misinterpreted the requirement for the algorithm.</div><div class='opt correct'>d.
+The computation algorithm used the wrong input variables.  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 1.2.3. Mô tả nào về defect là đúng. ở đây thì A là failure rồi, B C là Error chỉ còn D là defect</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 20</div><div>Which of the following is an example of a defect in a car cruise control system?</div><div class='opt selectedwrong'>a.
+The developer of the system forgot to rename variables after a cut-and-paste operation.   [Thí sinh đã chọn]</div><div class='opt'>b.
+Unnecessary code that sounds an alarm when reversing was included in the system.</div><div class='opt'>c.
+The system stops maintaining a set speed when the radio volume is increased or decreased.</div><div class='opt correct'>d.
+The design specification for the system wrongly states speeds in km/h.  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 1.2.3. chọn D là lỗi sai trong tài liệu Design. ( nếu câu này đc chọn 2 đáp án thì chọn B, D, nhưng nếu chỉ đc chọn 1 thì D là đúng nhất vì wrongly của D là sai hơn Unnecessary của B)</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 21</div><div>A phone ringing in a neighboring cubicle distracts a programmer causing him to improperly program the logic that checks the upper boundary of an input variable. Later, during system testing, a tester notices that this input field accepts invalid input values. Which of the following correctly describes an incorrectly coded upper bound?</div><div class='opt selectedwrong'>a.
+The root cause   [Thí sinh đã chọn]</div><div class='opt'>b.
+A failure</div><div class='opt'>c.
+An error</div><div class='opt correct'>d.
+A defect  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 1.2.3 chú ý vào câu hỏi đang hỏi từ nào mô tả về cái incorrectly code</div></div></body></html>

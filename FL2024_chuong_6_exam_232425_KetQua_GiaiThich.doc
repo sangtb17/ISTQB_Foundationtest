@@ -1,0 +1,26 @@
+﻿<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+  <head><meta charset='utf-8'>
+  <style>
+    body{font-family: Arial, sans-serif;}
+    h1{color:#c0392b;}
+    .qblock{margin-bottom:20px; padding:10px; border:1px solid #ccc;}
+    .qtitle{font-weight:bold; font-size:14px; margin-bottom:6px;}
+    .opt{margin:4px 0;}
+    .correct{color:green; font-weight:bold;}
+    .selectedwrong{color:red; font-weight:bold;}
+    .selectedright{color:green; font-weight:bold;}
+    .explain{background:#f2f2f2; padding:8px; margin-top:8px; font-style:italic;}
+    img{max-width:400px; display:block; margin:6px 0;}
+  </style></head><body><h1>FL2024- chuong 6 exam 23-24-25</h1><p><b>Điểm:</b> 0/3 &nbsp; <b>Thời gian làm bài:</b> 00:00:26 &nbsp; <b>Nộp bài:</b> 2026-08-03 16:09:29</p><p><b>Video giải đáp:</b> Không có video cho bài này</p><div class='qblock'><div class='qtitle'>Câu hỏi 1</div><div>Which of the following is most likely to be performed by developers?</div><div class='opt selectedwrong'>a.
+A. Technical review of a functional specification.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. Walkthrough of a requirements document.</div><div class='opt'>c.
+C. Informal review of a program specification.</div><div class='opt correct'>d.
+D. Static analysis of a software model.  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 6.1 A,B,C là tester tham gia đc, D là tool phân tích tĩnh chỉ dùng cho lập trình viên</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 2</div><div>Which of the following pairs of test tools are likely to be most useful during the test analysis and design stage of the fundamental test process? (i) Test execution tool (ii) Test data preparation tool (iii) Test management tool (iv) Requirements management tool</div><div class='opt selectedwrong'>a.
+A. (i) and (ii)   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. (i) and (iv)</div><div class='opt'>c.
+C. (ii) and (iii)</div><div class='opt correct'>d.
+D. (iii) and (iv)  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 6.1 nói chung giai đoạn analysis and design chủ yếu dùng tool để quản lý task, test case, test document, requirement</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 3</div><div>Which of the following benefits are MOST likely to be achieved by using test tools? i) Easy to access information about tests and testing. ii) Reduced maintenance of testware. iii) Easy and cheap to implement. iv) Greater consistency of tests.</div><div class='opt selectedwrong'>a.
+i and iii   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+i and iv  [Đáp án đúng]</div><div class='opt'>c.
+ii and iii</div><div class='opt'>d.
+ii and iv</div><div class='explain'>Lời giải: refer 6.2 Lợi ích nào sau đây có khả năng đạt được NHIỀU NHẤT khi sử dụng các công cụ kiểm tra? theo sách chọn i và iv</div></div></body></html>

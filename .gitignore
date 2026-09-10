@@ -1,0 +1,15 @@
+# Secrets - TUYET DOI KHONG COMMIT
+html_web_app/.env
+.env
+# Python
+__pycache__/
+*.py[cod]
+# Office temp / lock files
+~$*.xlsx
+~$*.docx
+~$*.doc
+*.tmp
+# IDE / OS
+.vscode/
+.DS_Store
+Thumbs.db

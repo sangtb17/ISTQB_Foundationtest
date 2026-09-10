@@ -1,0 +1,78 @@
+﻿<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+  <head><meta charset='utf-8'>
+  <style>
+    body{font-family: Arial, sans-serif;}
+    h1{color:#c0392b;}
+    .qblock{margin-bottom:20px; padding:10px; border:1px solid #ccc;}
+    .qtitle{font-weight:bold; font-size:14px; margin-bottom:6px;}
+    .opt{margin:4px 0;}
+    .correct{color:green; font-weight:bold;}
+    .selectedwrong{color:red; font-weight:bold;}
+    .selectedright{color:green; font-weight:bold;}
+    .explain{background:#f2f2f2; padding:8px; margin-top:8px; font-style:italic;}
+    img{max-width:400px; display:block; margin:6px 0;}
+  </style></head><body><h1>FL2024_chuong 5 Exam 26-27-28</h1><p><b>Điểm:</b> 6/15 &nbsp; <b>Thời gian làm bài:</b> 00:00:24 &nbsp; <b>Nộp bài:</b> 2026-08-03 16:00:09</p><p><b>Video giải đáp:</b> Không có video cho bài này</p><div class='qblock'><div class='qtitle'>Câu hỏi 1</div><div>As part of the test strategy, entry and exit criteria will be defined for each test level. Which is NOT a valid reason for using entry and exit criteria?</div><div class='opt selectedwrong'>a.
+The expectation is that development testing is not adequate.   [Thí sinh đã chọn]</div><div class='opt'>b.
+Exit criteria are used to decide on when to stop testing.</div><div class='opt correct'>c.
+Entry and exit criteria are a principal way for getting adequate resources.  [Đáp án đúng]</div><div class='opt'>d.
+Using entry and exit criteria will prevent software that is not or poorly tested from going to the next test level.</div><div class='explain'>Lời giải: Refer 5.1.3 Lý do nào KHÔNG hợp lệ để sử dụng tiêu chí vào và ra? Chọn C vì "adequate resources" là sai, entry và exit criteria để giúp trong tình huống thiếu thời gian và nguồn lực thì vẫn có thể test được những cái quan trọng nhất và đảm bảo mục tiêu quan trọng nhất</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 2</div><div>which of the following topics would you need to address in detail in the master test plan?</div><div class='opt selectedright'>a.
+An approach to regression testing  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+A list of boundary values for "advance amount"</div><div class='opt'>c.
+A description of dependencies between test cases</div><div class='opt'>d.
+A logical collection of test cases</div><div class='explain'>Lời giải: refer 5.1.1. chọn A vì có Approach, BCD là của test case</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 3</div><div>Which option BEST describes how the level of risk is determined?</div><div class='opt selectedwrong'>a.
+The likelihood of an adverse event happening multiplied by the cost of preventing it.   [Thí sinh đã chọn]</div><div class='opt'>b.
+The consequences of potential problem multiplied by the cost of possible legal action.</div><div class='opt correct'>c.
+The impact of an adverse event multiplied by the likelihood of that event occurring.  [Đáp án đúng]</div><div class='opt'>d.
+The likelihood and the probability of a hazard occurring</div><div class='explain'>Lời giải: refer 5.2.1. Lựa chọn nào TỐT NHẤT mô tả cách xác định mức độ rủi ro? Bạn thấy risk level = likelihood x impact, nên chọn C vì có 2 nhân tố này, loại D vì probability = likelihood, loại A vì likelihood x the cost of preventing (2 cái này nhân với nhau là sai), loại B vì consequences x cost ( hậu quả nhân với chi phí)</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 4</div><div>Which of the following BEST describes how configuration management supports the test process?</div><div class='opt selectedright'>a.
+It enables the tester to reproduce the tested item through unique identification and version control  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+It enables the tester to systematically design test conditions, cases and data</div><div class='opt'>c.
+It enables incidents to be tracked from discovery and classification to correction and confirmation of the solution</div><div class='opt'>d.
+It helps the test manager to decide how best to integrate and coordinate the testing activities into the software life cycle.</div><div class='explain'>Lời giải: refer 5.4 Điều nào sau đây TỐT NHẤT mô tả cách quản lý cấu hình hỗ trợ quá trình thử nghiệm? cứ theo định nghĩa ta chọn A vì có " unique identification and version control" loại B vì là mô tả của kỹ thuật thiết kế test của chương 4 mục 4.1.1, loại C vì nó đang mô tả đến defect management của 5.5, loại D vì là task của test manager ở mục 1.4.5</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 5</div><div>Which one of the following statements about techniques for estimating test effort is correct?</div><div class='opt selectedwrong'>a.
+The metrics-based technique finds the most similar former project and uses its original estimate for the current project.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+The expert-based approach is based on the experience of the owners of the testing tasks or by subject matter experts.  [Đáp án đúng]</div><div class='opt'>c.
+The metrics-based technique uses metrics supplied by the current test team based on their subjective feel for effort required.</div><div class='opt'>d.
+In an expert-based approach, the test lead with the most years in the role is chosen to produce the estimate.</div><div class='explain'>Lời giải: refer 5.1.4 Câu nào sau đây về kỹ thuật ước lượng nỗ lực kiểm thử là đúng? Chọn B đúng mô tả đúng về expert-based, Loại A vì "uses its original estimate" sử dụng estimation ban đầu của các dự án tương tự để tham chiếu cho dự án hiện tại là sai, loại C vì "their subjective feel- cảm giác chủ quan" cái này ko thể của metric based, loại D vì "the most years" cho test lead nhiều năm kinh nghiệm nhất estimate là sai</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 6</div><div>Which of the following activities is appropriate to the test planning stage?</div><div class='opt selectedwrong'>a.
+Analyzing the test basis   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Assigning resources for the planned activities  [Đáp án đúng]</div><div class='opt'>c.
+Designing the test environments</div><div class='opt'>d.
+Writing a test execution schedule</div><div class='explain'>Lời giải: refer 5.1.1 Hoạt động nào sau đây phù hợp với giai đoạn lập kế hoạch kiểm thử? chọn B như sách là của test planning, A là của test analysis, C là của test design, D là của test implementation</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 7</div><div>Which of the following would you expect to see in the master test plan?</div><div class='opt selectedwrong'>a.
+A description of how the test cases are cross-referenced to requirements in the test management tool.   [Thí sinh đã chọn]</div><div class='opt'>b.
+A detailed identification of the resources that will carry out structural testing in the first iteration.</div><div class='opt correct'>c.
+The test approach that will be applied at system integration testing  [Đáp án đúng]</div><div class='opt'>d.
+A list of the names of the testers who will carry out the performance testing for the final iteration.</div><div class='explain'>Lời giải: refer 5.1.1 Bạn mong đợi điều nào sau đây trong kế hoạch kiểm tra tổng thể? chọn C vì "test approach"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 8</div><div>Which of the following would be the TWO most appropriate examples of entry criteria documented in the system integration test plan?</div><div class='opt selectedright'>a.
+The percentage of decision coverage achieved during unit testing.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt selectedright'>b.
+The availability of the latest version of the capture-replay tool (for testing the interface with the newly developed test management tool)  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>c.
+The sign-off of a performance test software release note (test item transmittal report) by both development and testing showing that system performance meets the specified acceptance criteria.</div><div class='opt'>d.
+The percentage of acceptance test procedures scheduled for execution.
+e.
+E. The percentage of requirements coverage achieved during system integration test</div><div class='explain'>Lời giải: refer 5.1.3 Điều nào sau đây sẽ là HAI ví dụ phù hợp nhất về tiêu chí đầu vào được ghi trong kế hoạch kiểm tra tích hợp hệ thống? chọn A vì là level trước (unit test) thỏa mãn tiêu chí kết thúc, Chọn B vì sự sẵn sàng của tài liệu</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 9</div><div>The following Test Cases have been created for a simple web-based airline booking system. Test Case 1: Search for an item: Available Flights Test Case 2: View selected item in My Flights Test Case 3: Login to the system: Login is accepted Test Case 4: Select an available flight: item added to My Flights Test Case 5: Print confirmation receipt, then exit Test Case 6: In My Flights, confirm details and book flight Which of the following is the correct logical order for the test cases?</div><div class='opt selectedwrong'>a.
+6, 3, 1, 4, 2, 5   [Thí sinh đã chọn]</div><div class='opt'>b.
+3, 4, 1, 2, 5, 6</div><div class='opt'>c.
+3, 2, 1, 4, 6, 5</div><div class='opt correct'>d.
+3, 1, 4, 2, 6, 5  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 5.1.5. Sắp thứ tự của test case theo logic: bắt đầu Open/login và kết thúc là exit, tiếp theo là Search - select - edit - confirm</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 10</div><div>Which of the following is NOT part of configuration management?</div><div class='opt selectedwrong'>a.
+Status accounting of configuration items   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Auditing conformance to ISO9001  [Đáp án đúng]</div><div class='opt'>c.
+Identification of test versions</div><div class='opt'>d.
+Record of changes to documentation over time</div><div class='explain'>Lời giải: refer 5.4. chọn B vì ko nhắc đến trong sách, A thì "Status accounting- kiểm tra rà soát trạng thái" là 1 hoạt động của CM control, C và D thì rõ trong định nghĩa của CM rồi</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 11</div><div>Which TWO of the following options are the exit criteria for testing a system?</div><div class='opt selectedwrong'>a.
+Test environment readiness   [Thí sinh đã chọn]</div><div class='opt selectedwrong'>b.
+The ability to log in to the test object by the tester   [Thí sinh đã chọn]</div><div class='opt correct'>c.
+Estimated defect density is reached  [Đáp án đúng]</div><div class='opt correct'>d.
+Requirements are translated into given/when/then format
+e.
+ Regression tests are automated  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 5.1.3 Chọn 2 tiêu chí Exit criteria như trong sách luôn</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 12</div><div>You are testing a mobile application that allows users to find a nearby restaurant based on the type of food they want to eat. Consider the following list of test cases, priorities (i.e., a smaller number means a higher priority), and dependencies (IMAGE) Which of the following test cases should be executed as the third one?</div><div class='opt selectedright'>a.
+TC 003  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+TC 005</div><div class='opt'>c.
+TC 002</div><div class='opt'>d.
+TC 001</div><div class='explain'>Lời giải: Refer 5.1.5 sắp xếp theo dependences trước rồi mới đến priority</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 13</div><div>How can a risk assessment influence the thoroughness testing?</div><div class='opt selectedright'>a.
+The types of test techniques to be employed  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+The total tests needed to provide 100 percent coverage.</div><div class='opt'>c.
+An estimation of the total cost of fixing.</div><div class='opt'>d.
+Only that test execution is effective at reducing risk.</div><div class='explain'>Lời giải: Refer 5.2.3 Đánh giá rủi ro có thể ảnh hưởng đến việc kiểm tra tính kỹ lưỡng như thế nào? Chọn A có trong sách, B sai vì ko có yêu cầu nào chính xác phải đạt 100% coverage, C sai ở cost of fixing, D sai ở Only that test execution</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 14</div><div>You are engaged in planning a test effort for a new mobile banking application. As part of estimation, you first meet with the proposed testers and others on the project. The team is well-coordinated and has already worked on similar projects. To verify the resulting estimate, you then refer to some industry averages for testing effort and costs on similar projects, published by a reputable consultant. Which TWO statement describes your estimation approach?</div><div class='opt selectedright'>a.
+A simultaneous expert-based and metrics-based approach  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt selectedright'>b.
+Primarily an expert-based approach, augmented with a metrics-based approach  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>c.
+Primarily a metrics-based approach, augmented with an expert-based approach</div><div class='opt'>d.
+Primarily planning poker, checked by velocity from burndown charts.</div><div class='explain'>Lời giải: Refer 5.2.4 kỹ thật estimation. Trong kịch bản: Đề ước lượng thì đầu tiên là bạn gặp "meet with the proposed testers and others- người phù hợp" cái này là kỹ thuật expert based rồi, sau đó để kiểm tra lại ước lượng này bạn "refer to some industry averages for testing effort and costs on similar projects- tham chiếu đến các giá trị trung bình của dự án tương tự" đây là kỹ thuật metric based. Như vậy đúng nhất là B, đúng thứ nhì là A ( dịch là kết hợp của 2 kỹ thuật)</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 15</div><div>Which of the following statements about risks is most accurate?</div><div class='opt selectedwrong'>a.
+Project risks rarely affect product risk.   [Thí sinh đã chọn]</div><div class='opt'>b.
+Product risks rarely affect project risk.</div><div class='opt correct'>c.
+A risk-based approach is more likely to be used to mitigate product rather than project risks.  [Đáp án đúng]</div><div class='opt'>d.
+A risk-based approach is more likely to be used to mitigate project rather than product risks.</div><div class='explain'>Lời giải: Refer 5.2. Cái nào đúng nhất về Risk. Bạn xem lại cái bảng thì risk based là để mitigate cho product risk nên chọn C</div></div></body></html>

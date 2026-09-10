@@ -1,0 +1,92 @@
+﻿<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+  <head><meta charset='utf-8'>
+  <style>
+    body{font-family: Arial, sans-serif;}
+    h1{color:#c0392b;}
+    .qblock{margin-bottom:20px; padding:10px; border:1px solid #ccc;}
+    .qtitle{font-weight:bold; font-size:14px; margin-bottom:6px;}
+    .opt{margin:4px 0;}
+    .correct{color:green; font-weight:bold;}
+    .selectedwrong{color:red; font-weight:bold;}
+    .selectedright{color:green; font-weight:bold;}
+    .explain{background:#f2f2f2; padding:8px; margin-top:8px; font-style:italic;}
+    img{max-width:400px; display:block; margin:6px 0;}
+  </style></head><body><h1>FL2024_chuong 2 Exam 26-27-28</h1><p><b>Điểm:</b> 2/19 &nbsp; <b>Thời gian làm bài:</b> 00:00:28 &nbsp; <b>Nộp bài:</b> 2026-08-03 16:06:50</p><p><b>Video giải đáp:</b> Không có video cho bài này</p><div class='qblock'><div class='qtitle'>Câu hỏi 1</div><div>Which of the following apply to System Testing? a) May satisfy legal requirements. b) Can use system specifications as a test basis. c) Often the responsibility of business users. d) Main goal is to establish confidence. e) Should focus on the communication between systems.</div><div class='opt selectedwrong'>a.
+a and c.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+b and d.  [Đáp án đúng]</div><div class='opt'>c.
+a and b.</div><div class='opt'>d.
+c and e.</div><div class='explain'>Lời giải: refer 2.2. e là của integration test, a, c là rõ ràng nhất của Acceptance test, b là system test, còn d khá khiên cưỡng cho vào đây vì lẽ ra là của acceptance test, nhưng system test để test the whole system nên có thể chấp nhận đc mục tiêu về establish confidence</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 2</div><div>Which of the following is a characteristic of good testing in any life cycle model?</div><div class='opt selectedwrong'>a.
+Analysis and design of tests begins as soon as development is completed.   [Thí sinh đã chọn]</div><div class='opt'>b.
+Some, but not all, development activities have corresponding test activities</div><div class='opt correct'>c.
+Each test level has test objectives specific to that level  [Đáp án đúng]</div><div class='opt'>d.
+All document reviews involve the development team.</div><div class='explain'>Lời giải: refer 2.1.2 theo như sách nên chọn C</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 3</div><div>System requirement states that up to 100 users should be able to carry out a transaction, with responses returned within 5 seconds. What type of non-functional testing would you carry out to verify these requirements?</div><div class='opt selectedwrong'>a.
+Stress testing   [Thí sinh đã chọn]</div><div class='opt'>b.
+Maintenance testing</div><div class='opt correct'>c.
+Load testing  [Đáp án đúng]</div><div class='opt'>d.
+Usability testing</div><div class='explain'>Lời giải: refer 2.3. Bạn sẽ thực hiện loại thử nghiệm phi chức năng nào để xác minh các yêu cầu này? chọn đáp án là C. Cái này chưa đến mức stress test vì mới chỉ có 100 users thôi</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 4</div><div>The difference between re-testing and regression testing is:</div><div class='opt selectedright'>a.
+Re-testing is running a test again; regression testing looks for unexpected side effects  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+Re-testing looks for unexpected side effects; regression testing is repeating those tests</div><div class='opt'>c.
+Re-testing is done after faults are fixed; regression testing is done earlier</div><div class='opt'>d.
+Re-testing uses different environments, regression testing uses the same environment
+e.
+Re-testing is done by developers, regression testing is done by independent testers</div><div class='explain'>Lời giải: refer 2.2.3</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 5</div><div>According to the ISTQB Glossary, regression testing is required for what purpose?</div><div class='opt selectedwrong'>a.
+To verify the success of corrective actions.   [Thí sinh đã chọn]</div><div class='opt'>b.
+To prevent a task from being incorrectly considered completed</div><div class='opt correct'>c.
+To ensure that defects have not been introduced by a modification  [Đáp án đúng]</div><div class='opt'>d.
+To motivate better unit testing by the programmers.</div><div class='explain'>Lời giải: refer 2.2.3 mục đích của regression test? Chọn C vì có "introduced"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 6</div><div>Maintenance testing is:</div><div class='opt selectedwrong'>a.
+updating tests when the software has changed   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+testing a released system that has been changed  [Đáp án đúng]</div><div class='opt'>c.
+testing by users to ensure that the system meets a business need</div><div class='opt'>d.
+testing to maintain business advantage</div><div class='explain'>Lời giải: refer 2.3 chọn D nó đang hỏi định nghĩa của Maintenance test là .... nên chỉ chọn B</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 7</div><div>For which of the following would maintenance testing be used?</div><div class='opt selectedwrong'>a.
+Correction of defects during the development phase   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Planned enhancements to an existing operational system.  [Đáp án đúng]</div><div class='opt'>c.
+Complaints about system quality during user acceptance testing.</div><div class='opt'>d.
+Integrating functions during the development of a new system.</div><div class='explain'>Lời giải: refer 2.3 Thử nghiệm bảo trì sẽ được sử dụng cho mục đích nào sau đây? chọn B vì "enhancements" là đúng, loại A vì sửa lỗi trong giai đoạn phát triển "development phase" ko phải của maintenance test, loại C vì "Complaints" phàn nàn của KH, D loại vì "development of a new system" là phát triển hệ thống mới</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 8</div><div>Which of the following is not true of regression testing?</div><div class='opt selectedwrong'>a.
+It can be carried out at each stage of the life cycle.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+It serves to demonstrate that the changed software works as intended.  [Đáp án đúng]</div><div class='opt'>c.
+It serves to demonstrate that software has not been unintentionally changed.</div><div class='opt'>d.
+It is often automated.</div><div class='explain'>Lời giải: refer 2.2.3. chon B là đáp án vì "the changed software works as intended" là new test kiểm tra thay đổi đã làm việc như mong đợi chưa</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 9</div><div>Which pair of definitions is correct?</div><div class='opt selectedwrong'>a.
+Regression testing is checking that the reported defect has been fixed; retesting is testing that there are no additional problems in previously tested software   [Thí sinh đã chọn]</div><div class='opt'>b.
+Regression testing is checking there are no additional problems in previously tested software; retesting enables developers to isolate the problem.</div><div class='opt'>c.
+Regression testing involves running all tests that have been run before; retesting runs new tests</div><div class='opt correct'>d.
+Regression testing is checking that there are no additional problems in previously tested software, retesting is demonstrating that the reported defect has been fixed.  [Đáp án đúng]</div><div class='explain'>Lời giải: refer 2.2.3 chọn D đúng, A sai vì đang mô tả ngược của nhau, B sai về thứ 2 "retesting enables developers to isolate the problem" C sai vế đầu "Regression testing involves running all tests"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 10</div><div>Which of the following is true about the V-model?</div><div class='opt selectedwrong'>a.
+It has the same steps as the waterfall model for software development   [Thí sinh đã chọn]</div><div class='opt'>b.
+It is referred to as a cyclical model for software development.</div><div class='opt'>c.
+It enables the production of a working version of the system as early as possible</div><div class='opt correct'>d.
+It enables test planning to start as early as possible.  [Đáp án đúng]</div><div class='explain'>Lời giải: refer 2.1.1 chọn đc D là đúng hoạt động lập kế hoạch test bắt đầu sớm, A sai vì waterfall và V model là khác nhau chúng chỉ thuộc cùng 1 nhóm các mô hình tuần tự, B và C là đặc điểm của mô hình theo giai đoạn và gia tăng ko phải của V-model</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 11</div><div>Which of the following is true of iterative development?</div><div class='opt selectedwrong'>a.
+It uses fully defined specifications from the start.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+It involves the users in the testing throughout  [Đáp án đúng]</div><div class='opt'>c.
+Changes to the system do not need to be formally recorded.</div><div class='opt'>d.
+It is not suitable for developing websites.</div><div class='explain'>Lời giải: refer 2.1. A sai vì fully, C sai vì change nào cũng cần recorded bất cứ model nào, D càng sai vì ko phù hợp cho website. Chọn B vì nó mô hình này cần sự tham gia nhiều của end user</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 12</div><div>A top-down development strategy affects which level of testing most?</div><div class='opt selectedwrong'>a.
+Component testing   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Integration testing  [Đáp án đúng]</div><div class='opt'>c.
+System testing</div><div class='opt'>d.
+User acceptance testing</div><div class='explain'>Lời giải: refer 2.2 Chiến lược phát triển từ trên xuống ảnh hưởng đến cấp độ thử nghiệm nào nhiều nhất? nhìn sách bạn chọn đc B</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 13</div><div>Which of the following statements are true? (i) For every development activity there is a corresponding testing activity. (ii) Each test level has the same test objectives. (iii) The analysis and design of tests for a given test level should begin after the corresponding development activity. (iv)Testers should be involved in reviewing documents as soon as drafts are available in the development life cycle.</div><div class='opt selectedwrong'>a.
+(i) and (ii)   [Thí sinh đã chọn]</div><div class='opt'>b.
+(iii) and (iv)</div><div class='opt'>c.
+(ii) and (iii)</div><div class='opt correct'>d.
+(i) and (iv)  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 2.1.2 theo đúng sách nên ta chọn i và iv</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 14</div><div>To test a function, the programmer has to write a _________, which calls the function to be tested and passes it test data:</div><div class='opt selectedwrong'>a.
+Stub   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Driver  [Đáp án đúng]</div><div class='opt'>c.
+Proxy</div><div class='opt'>d.
+None of the above</div><div class='explain'>Lời giải: Refer 2.2 Để kiểm tra một hàm, người lập trình phải viết một _________, hàm này gọi hàm cần kiểm tra và truyền dữ liệu kiểm tra cho nó, cái này bạn vẽ sơ đồ ra sẽ tìm ra đc Drivers</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 15</div><div>What is regression test?</div><div class='opt selectedwrong'>a.
+Running the same test again in the same circumstances to reproduce the problem.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+A cursory run through a test pack to see if any new errors have been introduced.  [Đáp án đúng]</div><div class='opt'>c.
+Checking that the predetermined exit criteria for the test phase have been met</div><div class='opt'>d.
+Running a previously failed test against new software/data/documents to see if the problem is solved</div><div class='explain'>Lời giải: Refer 2.2.3 Kiểm tra hồi quy là gì?chọn C đúng vì "see if any new errors have been introduced- xem có bất kỳ lỗi nào phát sinh ko", A sai vì "reproduce the problem- tài hiện lỗi là của LTV", C sai vì "the predetermined exit criteria" Kiểm tra tiêu chí kết thúc là của Evaluate exit criteria, D sai vì "a previously failed test" này là của re-test</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 16</div><div>You are testing a user story with three acceptance criteria: AC1, AC2 and AC3. AC1 is covered by test case TC1, AC2 by TC2, and AC3 by TC3. The test execution history had three test runs on three consecutive versions of the software as image: Tests are repeated once you are informed that all defects found in the test run are corrected and a new version of the software is available. Which of the above tests are executed as regression tests?</div><div class='opt selectedwrong'>a.
+Only 4, 7, 8, 9   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Only 5, 7  [Đáp án đúng]</div><div class='opt'>c.
+Only 4, 6, 8, 9</div><div class='opt'>d.
+Only 5, 6</div><div class='explain'>Lời giải: Refer 2.2.3. Thử nghiệm nào ở trên được thực hiện dưới dạng thử nghiệm hồi quy? bạn nhớ là nếu kết quả lần trước Fail thì lần sau chạy lại gọi là Re-test, nếu kết quả lần trước Pass thì lần sau chạy lại gọi là Regression test,</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 17</div><div>There are several characteristics of good testing in any life cycle model. Which statement is true about the characteristics of good testing? [K1]</div><div class='opt selectedwrong'>a.
+Each test level has general test objectives   [Thí sinh đã chọn]</div><div class='opt'>b.
+The planning of tests for a given test level should begin during the corresponding</div><div class='opt correct'>c.
+Testers should be involved in reviewing documents as soon as drafts are available in the development life cycle  [Đáp án đúng]</div><div class='opt'>d.
+For every testing activity there is a corresponding development activity.</div><div class='explain'>Lời giải: Refer 2.1 nhìn kỹ nhé, chọn C đúng, D là nó viết ngược so với sách, A sai vì general, B sai vì planning of test</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 18</div><div>You work as a tester in a project on a mobile application for food ordering for one of your clients. The client sent you a list of requirements. One of them, with high priority, says "The order must be processed in less than 10 seconds in 95% of the cases". You created a set of test cases in which a number of random orders were made, the processing time measured, and the test results were checked against the requirements. What test type did you perform?</div><div class='opt selectedwrong'>a.
+Functional, because the test cases cover the user's business requirement for the system   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Non-functional, because the measure the system's performance  [Đáp án đúng]</div><div class='opt'>c.
+Functional, because the test cases interact with the user interface</div><div class='opt'>d.
+Structural, because we need to know the internal structure of the program to measure the order processing time</div><div class='explain'>Lời giải: Refer 2.3 test types. chú ý vào cái yêu cầu này "less than 10 seconds"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 19</div><div>Your organization's test strategy suggests that once a system is going to be retired, data migration shall be tested. As part of what test type is this testing MOST likely to be performed?</div><div class='opt selectedright'>a.
+Maintenance testing  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+Regression testing</div><div class='opt'>c.
+Component testing</div><div class='opt'>d.
+Integration testing</div><div class='explain'>Lời giải: refer 2.3 chú ý vào "data migration"</div></div></body></html>

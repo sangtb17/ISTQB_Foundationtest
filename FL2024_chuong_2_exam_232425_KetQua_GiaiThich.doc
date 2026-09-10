@@ -1,0 +1,94 @@
+﻿<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+  <head><meta charset='utf-8'>
+  <style>
+    body{font-family: Arial, sans-serif;}
+    h1{color:#c0392b;}
+    .qblock{margin-bottom:20px; padding:10px; border:1px solid #ccc;}
+    .qtitle{font-weight:bold; font-size:14px; margin-bottom:6px;}
+    .opt{margin:4px 0;}
+    .correct{color:green; font-weight:bold;}
+    .selectedwrong{color:red; font-weight:bold;}
+    .selectedright{color:green; font-weight:bold;}
+    .explain{background:#f2f2f2; padding:8px; margin-top:8px; font-style:italic;}
+    img{max-width:400px; display:block; margin:6px 0;}
+  </style></head><body><h1>FL2024- chuong 2 exam 23-24-25</h1><p><b>Điểm:</b> 4/20 &nbsp; <b>Thời gian làm bài:</b> 00:00:20 &nbsp; <b>Nộp bài:</b> 2026-08-03 15:58:48</p><p><b>Video giải đáp:</b> Không có video cho bài này</p><div class='qblock'><div class='qtitle'>Câu hỏi 1</div><div>Which of the following are triggers for Maintenance testing? a) System migration from one platform to another. b) Retirement of a system. c) Preparation for an audit of a system. d) Modifications to a system. e) Development of a whole new system.</div><div class='opt selectedwrong'>a.
+A. a, c and d.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. a, d and e.</div><div class='opt'>c.
+C. b, c and e.</div><div class='opt correct'>d.
+D. a, b and d.  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 2.4.1 Triggers for Maintenance: Modification- Migration -Retirement</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 2</div><div>Which of the following are triggers for maintenance testing? 1. The period of time since last regression testing a system 2. New operating system installations 3. Changes in corporate policies and government regulations 4. Converting a legacy system to a software package 5. Developing a new software application Select one:</div><div class='opt selectedwrong'>a.
+2, 3, 4, and 5   [Thí sinh đã chọn]</div><div class='opt'>b.
+1, 2, 3, and 4</div><div class='opt correct'>c.
+2, 3, and 4  [Đáp án đúng]</div><div class='opt'>d.
+2, 3, and 5</div><div class='explain'>Lời giải: Refer 2.3 chỉ cần nhìn vào keyword là sẽ tìm ra, 2. đúng vì New OS installations, 3 đúng vì Changes, 4 đúng vì Converting. 1 sai vì period of time, 5 sai vì new software</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 3</div><div>An impact analysis after maintenance to an existing system evaluates:</div><div class='opt selectedwrong'>a.
+The skills and knowledge of testers to perform regression testing   [Thí sinh đã chọn]</div><div class='opt'>b.
+Different test design techniques to use for re-testing after a change</div><div class='opt correct'>c.
+How changes to a system might affect the unchanged areas of the system  [Đáp án đúng]</div><div class='opt'>d.
+How long a legacy system can remain operational and not need replacement</div><div class='explain'>Lời giải: refer 2.3 impact analysis. thì C đúng để xem mức độc phạm vi ảnh hưởng của thay đổi lên các vùng ko thay đổi của hệ thống. A sai vì không liên quan "skills and knowledge". B sai vì ko liên quan đến "re-testing" D sai vì không liên quan đến việc duy trì vận hành operatinal của hệ thống</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 4</div><div>What is retesting?</div><div class='opt selectedwrong'>a.
+A. Running the same test again in the same circumstances to reproduce the problem.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. A cursory run through a test pack to see if any new errors have been introduced.</div><div class='opt'>c.
+C. Checking that the predetermined exit criteria for the test phase have been met</div><div class='opt correct'>d.
+D. Running a previously failed test against new software/data/documents to see if the problem is solved  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 2.2 Test types. D định nghĩa của "Confirmation testing ( Retest): confirm whether the original defect has been successfully fixed". A là định nghĩa của Regression test, C là định nghĩa của Exit criteria. A là chỉ hoạt động tái hiện lỗi Reproduce bug</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 5</div><div>Which of the following is in the correct order (typically)?</div><div class='opt selectedright'>a.
+A. Unit testing, system testing, acceptance testing, maintenance testing.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+B. System testing, unit testing, acceptance testing, maintenance testing.</div><div class='opt'>c.
+C. Acceptance testing, system testing, maintenance testing, unit testing.</div><div class='opt'>d.
+D. Unit testing, maintenance testing, system testing, acceptance testing.</div><div class='explain'>Lời giải: Refer 2.2 test levels. A là thứ tự đúng nhất</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 6</div><div>Which of the following is not true of regression testing</div><div class='opt selectedwrong'>a.
+A. It can be carried out at each stage of the life cycle.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+B. It serves to demonstrate that the changed software works as intended.  [Đáp án đúng]</div><div class='opt'>c.
+C. It serves to demonstrate that software has not been unintentionally changed.</div><div class='opt'>d.
+D. It is often automated.</div><div class='explain'>Lời giải: Refer 2.2 Test types. Câu sai là B vì test cho " changed software" phần thay đổi của phần mềm là việc của New test, không phải của regression test. Regression test chạy lại test case ở những chỗ không thay đổi</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 7</div><div>One of the roles in a review is that of moderator, which of the following best describes this role?</div><div class='opt selectedright'>a.
+A. Plans the review, runs the review meeting and ensures that follow-up activities are completed.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+B. Allocates time in the plan, decides which reviews will take place and that the benefits are delivered.</div><div class='opt'>c.
+C. Writes the document to be reviewed, agrees that the document can be reviewed, and updates the document with any changes.</div><div class='opt'>d.
+D. Documents all issues raised in the review meeting, records problems and open points.</div><div class='explain'>Lời giải: Refer 3.2.3 các vai trò của review. A là của Moderator còn gọi là Leader của review, B là của manager ra quyết định và cấp phép, C là của Author, D là Scribe</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 8</div><div>Which pair of definitions is correct?</div><div class='opt selectedwrong'>a.
+A. Regression testing is checking that the reported defect has been fixed; retesting is testing that there are no additional problems in previously tested software.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. Regression testing is checking there are no additional problems in previously tested software; retesting enables developers to isolate the problem.</div><div class='opt'>c.
+C. Regression testing involves running all tests that have been run before; retesting runs new tests.</div><div class='opt correct'>d.
+D. Regression testing is checking that there are no additional problems in previously tested software, retesting is demonstrating that the reported defect has been fixed.  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 2.2 Test types. A sai cả 2 vế, B sai vế thứ 2 đanh định nghĩa debugging của lập trình, C sai vì all tests. Còn mỗi D đúng cả 2 vế</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 9</div><div>A top-down development strategy affects which level of testing most?</div><div class='opt selectedwrong'>a.
+A. Component testing   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+B. Integration testing  [Đáp án đúng]</div><div class='opt'>c.
+C. System testing</div><div class='opt'>d.
+D. User acceptance testing</div><div class='explain'>Lời giải: Refer 2.2 test level.</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 10</div><div>Which of the following is a non-functional requirement?</div><div class='opt selectedwrong'>a.
+A. The system will enable users to buy books.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. The system will allow users to return books.</div><div class='opt'>c.
+C. The system will ensure security of the customer details.</div><div class='opt correct'>d.
+D. The system will allow up to 100 users to log in at the same time.  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 2.2 test type. Chú ý mọi người hay nhầm đáp án C "ensure security of the customer details." là 1 yêu cầu về non-functional nhưng đọc như vậy là sai. C là 1 các yêu cầu về functional về security giống như các tính năng Login, phân quyền gọi là các tính năng về security. Còn các yêu cầu non-function về security là các yêu cầu Protect data ( nói chung ko nói về tính năng cụ thể mà các yêu cầu chung cho toàn hệ thống để bảo đảm an toàn)</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 11</div><div>Which of the following statements are true? (i) For every development activity there is a corresponding testing activity. (ii) Each test level has the same test objectives. (iii) The analysis and design of tests for a given test level should begin after the corresponding development activity. (iv)Testers should be involved in reviewing documents as soon as drafts are available in the development life cycle.</div><div class='opt selectedwrong'>a.
+A. (i) and (ii)   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. (iii) and (iv)</div><div class='opt'>c.
+C. (ii) and (iii)</div><div class='opt correct'>d.
+D. (i) and (iv)  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 2.1.2 goog testing ( học thuộc) ii sai vì "the same test objectives". iii sai vì "begin after the corresponding development activity"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 12</div><div>What is regression test?</div><div class='opt selectedwrong'>a.
+A. Running the same test again in the same circumstances to reproduce the problem.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+B. A cursory run through a test pack to see if any new errors have been introduced.  [Đáp án đúng]</div><div class='opt'>c.
+C. Checking that the predetermined exit criteria for the test phase have been met</div><div class='opt'>d.
+D. Running a previously failed test against new software/data/documents to see if the problem is solved</div><div class='explain'>Lời giải: Refer 2.2.3 Test types. định nghĩa của Regression test là "Regression testing: re-run tests to detect any introduced issues". D là định nghĩa của Retest, C là định nghĩa của Exit criteria. A là chỉ hoạt động tái hiện lỗi Reproduce bug</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 13</div><div>Which of the following list contains only non-functional tests?</div><div class='opt selectedwrong'>a.
+Interoperability (compatibility) testing, System testing, performance testing   [Thí sinh đã chọn]</div><div class='opt'>b.
+Load testing, stress testing, component testing, portability testing</div><div class='opt correct'>c.
+Load testing, stress testing, reliability testing, performance testing  [Đáp án đúng]</div><div class='opt'>d.
+Load testing, stress testing, component testing, portability testing</div><div class='explain'>Lời giải: refer 2.2 chỉ có C mới chứa các loại test types thuộc non-functional. B và D có Component test là test Level, A cũng có System test là test level</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 14</div><div>Acceptance testing means</div><div class='opt selectedwrong'>a.
+Testing performed on a single stand   [Thí sinh đã chọn]</div><div class='opt'>b.
+Testing after changes have been made to ensure that no unwanted changes were introduced</div><div class='opt correct'>c.
+Testing to ensure that the system meets the needs of the organization and end user.  [Đáp án đúng]</div><div class='opt'>d.
+Users test the application in the developers environment</div><div class='explain'>Lời giải: refer 2.2 mục tiêu của acceptance test là validate product</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 15</div><div>Integration testing where all the system's components being combined to form the system at once.</div><div class='opt selectedwrong'>a.
+System testing   [Thí sinh đã chọn]</div><div class='opt'>b.
+Component testing</div><div class='opt'>c.
+Incremental testing</div><div class='opt correct'>d.
+Big-bang testing  [Đáp án đúng]</div><div class='explain'>Lời giải: refer 2.2 Kiểm thử tích hợp trong đó tất cả các thành phần của hệ thống được kết hợp để tạo thành hệ thống cùng một lúc? Integration test level có 2 chiến lược tích hợp, trong đó Big bang= merge code</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 16</div><div>Alpha testing is</div><div class='opt selectedwrong'>a.
+post-release testing by end user representatives at the developer's site.   [Thí sinh đã chọn]</div><div class='opt'>b.
+the first testing that is performed.</div><div class='opt correct'>c.
+pre-release testing by end user representatives at the developer's site.  [Đáp án đúng]</div><div class='opt'>d.
+pre-release testing by end user representatives at their sites.</div><div class='explain'>Lời giải: refer 2.2 chọn C, còn D là của Beta test, A sai vì post-release là sau release rồi, B thì sai hoàn toàn</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 17</div><div>Which requirement is testable?</div><div class='opt selectedwrong'>a.
+The tested application is portable.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Loading time of the tested web application is within 3 seconds.  [Đáp án đúng]</div><div class='opt'>c.
+The critical part of the tested application has no fault.</div><div class='opt'>d.
+The tested application is user-friendly.</div><div class='explain'>Lời giải: Refer 2.2 Requirement nào đủ rõ ràng và chi tiết để test đc chọn B đủ chi tiết</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 18</div><div>Which of the following is a form of functional testing?</div><div class='opt selectedright'>a.
+Boundary value analysis  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+Usability testing</div><div class='opt'>c.
+Performance testing</div><div class='opt'>d.
+Security testing</div><div class='explain'>Lời giải: refer 2.2. BCD đều là non functional</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 19</div><div>After a record of poor quality software releases (incorrect menu selection options, new features that do not work, users allowed to change security levels without administrator rights), you have been asked to review the test capability in your company. You have limited time to do the review before the next project, which type of testing would be MOST appropriate to review first?</div><div class='opt selectedwrong'>a.
+Functional testing.   [Thí sinh đã chọn]</div><div class='opt'>b.
+Non-functional testing</div><div class='opt'>c.
+Performance testing</div><div class='opt correct'>d.
+Structural testing.  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer chapter 2.3 Test type, Họ nói là thơi gian bị giới hạn thì cái test type nào phù hợp để review đầu tiên. Lúc đầu mình thấy các lỗi họ đưa ra là thuộc về functional thì Nếu là câu hỏi là Run test cho loại nào đầu tiên thì tất nhiên chọn functional rồi, phần mô tả ko liên quan gì đến non-functional và performance cả. Nên loại C, D đi vì ko mô tả gì về performance hay security cũng ko phải nhé ( users allowed to change security levels without administrator rights -- cái này đang mô tả tính năng chứ ko phải security). Nhưng câu hỏi là review cái nào phừ hợp ( chứ nó ko hỏi chạy test) nên giữa A và D thì thấy review nên dùng Whitebox test sẽ nhanh hơn, tập trung vào phần code đang sai</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 20</div><div>Where and by whom is Beta testing normally performed?</div><div class='opt selectedright'>a.
+By customers or potential customers at their own locations  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+By an independent test team at the developing organization's location</div><div class='opt'>c.
+At the developing organization's site, but not by the developing team</div><div class='opt'>d.
+By customers or potential customers at the developing organization's site</div><div class='explain'>Lời giải: refer 2.2 chọn A là định nghĩa của Beta test, loại C D vì là định nghĩa của Alpha test, loại B vì "an independent test team" là đội dự án ko phải bên KH</div></div></body></html>

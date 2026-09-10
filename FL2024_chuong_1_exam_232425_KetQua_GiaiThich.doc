@@ -1,0 +1,130 @@
+﻿<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+  <head><meta charset='utf-8'>
+  <style>
+    body{font-family: Arial, sans-serif;}
+    h1{color:#c0392b;}
+    .qblock{margin-bottom:20px; padding:10px; border:1px solid #ccc;}
+    .qtitle{font-weight:bold; font-size:14px; margin-bottom:6px;}
+    .opt{margin:4px 0;}
+    .correct{color:green; font-weight:bold;}
+    .selectedwrong{color:red; font-weight:bold;}
+    .selectedright{color:green; font-weight:bold;}
+    .explain{background:#f2f2f2; padding:8px; margin-top:8px; font-style:italic;}
+    img{max-width:400px; display:block; margin:6px 0;}
+  </style></head><body><h1>FL2024- chuong 1 exam 23-24-25</h1><p><b>Điểm:</b> 9/29 &nbsp; <b>Thời gian làm bài:</b> 08:14:35 &nbsp; <b>Nộp bài:</b> 2026-08-03 16:01:27</p><p><b>Video giải đáp:</b> Không có video cho bài này</p><div class='qblock'><div class='qtitle'>Câu hỏi 1</div><div>During which stage of the fundamental test process is the testability of requirements evaluated?</div><div class='opt selectedwrong'>a.
+A. Test Design.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+B. Test Analysis.  [Đáp án đúng]</div><div class='opt'>c.
+C. Test Execution.</div><div class='opt'>d.
+D. Test Planning.</div><div class='explain'>Lời giải: Refer 1.4.1 đánh giá khả năng test của requirement là của Analysis</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 2</div><div>Which of the following BEST describes a Test Case?</div><div class='opt selectedwrong'>a.
+A. A testable aspect of a component or system identified as a basis for testing.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. A description of the test objectives to be achieved and the means and the schedule for achieving them.</div><div class='opt correct'>c.
+C. A set of preconditions, inputs, actions, expected results and postconditions developed based on test conditions.  [Đáp án đúng]</div><div class='opt'>d.
+D. A source to determine expected results to compare with the actual result of the system under test.</div><div class='explain'>Lời giải: Glossary tra test case ra đáp án C. A là của test condition, B là test plan, D là test oracle</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 3</div><div>During the development of a software change for a system, the developer makes a mistake in his work, which leads to a fault in the code. Unfortunately, the fault is not found by software testing and is released into live. What is the DEFINITE consequence of this mistake?</div><div class='opt selectedright'>a.
+A. If the defect is executed, the system may fail.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+B. Loss of money, time, or business reputation.</div><div class='opt'>c.
+C. The system will fail, causing a defect.</div><div class='opt'>d.
+D. Contractual requirements have not been met by testing.</div><div class='explain'>Lời giải: Refer 1.2.3 Hậu quả cuối cùng của Mistake là gì? ta hiểu là Failure. Nhưng A đúng vì có may fail. B sai ko liên quan đến tiền, C sai vì will fail là chắc chắn sẽ fail ( hiểu là không phải tất cả các defect đều làm cho hệ thống fail, ví dụ như lỗi sai conding convention). D sai vì ko liên quan đến contract</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 4</div><div>Which of the following are benefits of an independent test team, and which are drawbacks? a) Independent testers can find different defects. b) Developers may put less emphasis on quality. c) Independent testers can be seen as the reason for delayed projects. d) Independent testers can verify assumptions made during the specification of a system</div><div class='opt selectedwrong'>a.
+a and b are benefits, c and d are drawbacks.   [Thí sinh đã chọn]</div><div class='opt'>b.
+b and c are benefits, a and d are drawbacks.</div><div class='opt correct'>c.
+a and d are benefits, b and c are drawbacks.  [Đáp án đúng]</div><div class='opt'>d.
+c and d are benefits, a and b are drawbacks.</div><div class='explain'>Lời giải: Refer 1.5.3</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 5</div><div>What is quality assurances?</div><div class='opt selectedwrong'>a.
+The total costs incurred on quality activities and issues and often split into prevention costs, appraisal costs, internal failure costs and external failure costs.   [Thí sinh đã chọn]</div><div class='opt'>b.
+The degree to which a component or system protects information and data so that persons or other components or systems have the degree of access appropriate to their types and levels of authorization.</div><div class='opt correct'>c.
+Part of quality management focused on providing confidence that quality requirements will be fulfilled.  [Đáp án đúng]</div><div class='opt'>d.
+The degree to which a component, system or process meets specified requirements and/or user/customer needs and expectations.</div><div class='explain'>Lời giải: Refer 1.2.2 và Glossary tra quality assurance ra C là đúng, A sai vì là cost of quality, B sai vì protects information and data là của security, D sai là định nghĩa của quality</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 6</div><div>Which of the following provides the BEST description of a test ware?</div><div class='opt selectedwrong'>a.
+A document specifying a sequence of actions for the execution of a test. Also known as test script or manual test script.   [Thí sinh đã chọn]</div><div class='opt'>b.
+A set of input values and expected results, with execution preconditions and execution postconditions, developed for a particular test condition.</div><div class='opt'>c.
+An attribute of a system specified by requirements documentation (for example reliability, usability or design constraints) that is executed in a test.</div><div class='opt correct'>d.
+Work products produced during the test process for use in planning, designing, executing, evaluating and reporting on testing  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 1.4.3 và Glossary để tra từ. D là đúng, A là của test scripts, B là test case, C là non-functional</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 7</div><div>The testing approach with the least independence is:</div><div class='opt selectedwrong'>a.
+Having another developer on the same team write the tests   [Thí sinh đã chọn]</div><div class='opt'>b.
+Having a tester on an independent team write the tests</div><div class='opt'>c.
+Having the users write the tests</div><div class='opt correct'>d.
+Having the developer write tests for his own code  [Đáp án đúng]</div><div class='explain'>Lời giải: refer 1.5.3 Mức độc lập thấp nhất là D</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 8</div><div>Which option is part of the implementation and execution area of the fundamental test process?</div><div class='opt selectedwrong'>a.
+Developing the tests.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Comparing actual and expected results  [Đáp án đúng]</div><div class='opt'>c.
+Writing a test summary.</div><div class='opt'>d.
+Analysing lessons learnt for future releases.</div><div class='explain'>Lời giải: Refer 1.4 tìm ra B. A là của Design, C là của Monitoring, D là của Completion test</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 9</div><div>Which statement is most true?</div><div class='opt selectedright'>a.
+A.Different testing is needed depending upon the application.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+B. All software is tested in the same way.</div><div class='opt'>c.
+C. A technique that finds defects will always find defects.</div><div class='opt'>d.
+D. A technique that has found no defects is not useful.</div><div class='explain'>Lời giải: Refer 1.3 nói về 7 nguyên lý test thì A là nguyên lý 6 Test phụ thuộc vào ngữ cảnh và phần mềm khác nhau. B sai All, C sai kỹ thuật tìm ra lỗi luôn luôn ( always) tìm ra lỗi là sai, D sai "kỹ thuật không tìm ra lỗi là không hữu ích"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 10</div><div>A bug or defect is:?</div><div class='opt selectedwrong'>a.
+A. A mistake made by a person;   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. A run-time problem experienced by a user;</div><div class='opt correct'>c.
+C. The result of an error or mistake;  [Đáp án đúng]</div><div class='opt'>d.
+D. The result of a failure, which may lead to an error?</div><div class='explain'>Lời giải: Refer 1.2.3 sơ đồ Error- Defect- Failure thì tìm ra là C. Defect là kết quả của 1 error</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 11</div><div>Which of the following is correct? Debugging is:</div><div class='opt selectedwrong'>a.
+A. Testing/checking whether the software performs correctly.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. Checking that a previously reported defect has been corrected.</div><div class='opt correct'>c.
+C. Identifying the cause of a defect, repairing the code and checking the fix is correct.  [Đáp án đúng]</div><div class='opt'>d.
+D. Checking that no unintended consequences have occurred as a result of a fix.</div><div class='explain'>Lời giải: Refer 1.1.2 Debugging. D sai vì là định nghĩa của regression test, A là hoạt động test, B là retest</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 12</div><div>Which list of levels of tester independence is in the correct order, starting with the most independent first?</div><div class='opt selectedwrong'>a.
+A. Tests designed by the author; tests designed by another member of the development team; tests designed by someone from a different company.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. Tests designed by someone from a different department within the company; tests designed by the author; tests designed by someone from a different company.</div><div class='opt correct'>c.
+C. Tests designed by someone from a different company; tests designed by someone from a different department within the company; tests designed by another member of the development team.  [Đáp án đúng]</div><div class='opt'>d.
+D. Tests designed by someone from a different department within the company; tests designed by someone from a different company; tests designed by the author.</div><div class='explain'>Lời giải: Refer 1.5.3 thứ tự của test independence đúng tứ mức độc lập cao nhất trở xuống, C là đúng nhất</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 13</div><div>Which of the following defines the expected result of a test?</div><div class='opt selectedright'>a.
+A. Test case  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+B. Test procedure</div><div class='opt'>c.
+C. Test execution schedule</div><div class='opt'>d.
+D. Test condition</div><div class='explain'>Lời giải: Glossary tra cứu định nghĩa Test case, có chứa thông tin về expected result của 1 cái test</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 14</div><div>When assembling a test team to work on an enhancement to an existing system, which of the following has the highest level of test independence?</div><div class='opt selectedwrong'>a.
+A. A business analyst who wrote the original requirements for the system.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. A permanent programmer who reviewed some of the new code, but has not written any of it.</div><div class='opt'>c.
+C. A permanent tester who found most defects in the original system.</div><div class='opt correct'>d.
+D. A contract tester who has never worked for the organization before.  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer1.5.3 các mức độ độc lập thì D là cao nhất vì contract tester là thuê ngoài về</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 15</div><div>The following statements relate to activities that are part of the fundamental test process. i. Evaluating the testability of requirements. ii. Repeating testing activities after changes. iii. Designing the test environment set-up. iv. Developing and prioritizing test cases. v. Verifying the environment is set up correctly. Which statement below is TRUE?</div><div class='opt selectedwrong'>a.
+A. (i) and (ii) are part of analysis and design, (iii), (iv) and (v) are part of test implementation and execution.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+B. (i) and (iii) , (iv) are part of analysis and design, (ii) and (v) are part of test implementation and execution.  [Đáp án đúng]</div><div class='opt'>c.
+C. (i) and (v) are part of analysis and design, (ii), (iii) and (iv) are part of test implementation and execution.</div><div class='opt'>d.
+D. (i) and (iv) are part of analysis and design, (ii), (iii) and (v) are part of test implementation and execution.</div><div class='explain'>Lời giải: Refer 1.4.1</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 16</div><div>Which statement correctly describes the public and profession aspects of the code of ethics?</div><div class='opt selectedwrong'>a.
+A. Public: Certified software testers shall act in the best interests of their client and employer (being consistent with the wider public interest). Profession: Certified software testers shall advance the integrity and reputation of their industry consistent with the public interest.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. Public: Certified software testers shall advance the integrity and reputation of the profession consistent with the public interest. Profession: Certified software testers shall consider the wider public interest in their actions.</div><div class='opt'>c.
+C. Public: Certified software testers shall consider the wider public interest in their actions. Profession: Certified software testers shall participate in lifelong learning regarding the practice of their profession and shall promote an ethical approach to the practice of their profession.</div><div class='opt correct'>d.
+D. Public: Certified software testers shall consider the wider public interest in their actions. Profession: Certified software testers shall advance the integrity and reputation of their industry consistent with the public interest.  [Đáp án đúng]</div><div class='explain'>Lời giải: Theo 1 tài liệu trên mạng chúng tôi đọc đc thì "the code of ethics" được coi là 1 "set of rules or regulary about good and bad behavior" cần phải được tuân thủ theo khi phát triển và test phần mềm ( confidential information là 1 ví dụ rất rõ về cái này) , các rules này xuất phát từ nhiều nguồn khác nhau: The benefit and interest of public (consider act in the interest of public là xem xét đến các mối quan tâm của cộng đồng), Professional ( tester should follow the set of values, principles, standards and advance the integrity of their profession tester nên tuân theo các rules, standards, principles mà team đưa ra để đảm bảo tính toàn vẹn và chuyên nghiệp)</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 17</div><div>Which of the following are valid justifications for developers testing their own code during unit testing? (i) Their lack of independence is mitigated by independent testing during system and acceptance testing. (ii)A person with a good understanding of the code can find more defects more quickly using white-box techniques. (iii)Developers have a better understanding of the requirements than testers. (iv)Testers write unnecessary incident reports because they find minor differences between the way in which the system behaves and the way in which it is specified to work.</div><div class='opt selectedright'>a.
+A. (i) and (ii)  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+B. (i) and (iv)</div><div class='opt'>c.
+C. (ii) and (iii)</div><div class='opt'>d.
+D. (iii) and (iv)</div><div class='explain'>Lời giải: Refer 1.5.3 câu hỏi là giải thích về việc developer thực hiện unit test trên code của anh ta thì là i đúng vì thiếu độc lập ( khách quan) nên cần phải có tester độc lập test ở phase sau, ii đúng vì developer hiểu biết về code, tìm lỗi và sửa lỗi nhanh hơn. iii sai vì developer không thể hiểu requirement hơn tester độc lập, iv sai vì "unnecessary incident reports"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 18</div><div>Which one of the following describes the major benefit of verification early in the life cycle?</div><div class='opt selectedwrong'>a.
+It allows the identification of changes in user requirements.   [Thí sinh đã chọn]</div><div class='opt'>b.
+It facilitates timely set up of the test environment.</div><div class='opt correct'>c.
+It reduces defect multiplication.  [Đáp án đúng]</div><div class='opt'>d.
+It allows testers to become involved early in the project.</div><div class='explain'>Lời giải: Refer 1.1.1 và 1.2.3 chú ý vào từ "verification early" tìm sớm lỗi sẽ ko phát sinh nhiều vào trong các tài liệu khác</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 19</div><div>Even though a test that once revealed many defects is part of the regression suite, no new test cases have been created for the module under test in a long time. What test principle is the test team forgetting?</div><div class='opt selectedwrong'>a.
+Absence-of-errors fallacy   [Thí sinh đã chọn]</div><div class='opt'>b.
+Defect clustering</div><div class='opt correct'>c.
+Tests wear out  [Đáp án đúng]</div><div class='opt'>d.
+Early testing</div><div class='explain'>Lời giải: refer 1.3. chú ý "no new test cases have been created"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 20</div><div>Test objectives vary between projects and so must be stated in the test plan. Which one of the following test objectives might conflict with the proper tester mindset?</div><div class='opt selectedright'>a.
+Show that the system works before we ship it.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+Find as many defects as possible</div><div class='opt'>c.
+Reduce the overall level of product risk</div><div class='opt'>d.
+Prevent defects through early involvement</div><div class='explain'>Lời giải: Refer 1.3 Test ko chứng minh được hệ thống làm việc hay không vì thế mà "test objectives" và test mindset có thể bị mâu thuẫn với nhau</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 21</div><div>Which of the following characterises the cost of faults?</div><div class='opt selectedright'>a.
+They are cheapest to find in the early development phases and the most expensive to fix in the latest test phases.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+They are easiest to find during system testing but the most expensive to fix then.</div><div class='opt'>c.
+Faults are cheapest to find in the early development phases but the most expensive to fix then.</div><div class='opt'>d.
+Although faults are most expensive to find during early development phases, they are cheapest to fix then.</div><div class='explain'>Lời giải: Refer 1.1.1 đặc điểm của chi phí về lỗi?</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 22</div><div>Which activity in the Fundamental Test Process creates test suites for efficient test execution?</div><div class='opt selectedright'>a.
+Implementation and execution  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+Analysis and design</div><div class='opt'>c.
+Planning and control</div><div class='opt'>d.
+Test closure</div><div class='explain'>Lời giải: refer 1.4.1 chú ý "creates test suites"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 23</div><div>The list below (a to e) describes one major task for each of the five main activities of the fundamental test process. Which option (A to D) places the tasks in the correct order, by time? a) Create bi-directional traceability between test basis and test cases. b) Check test logs against exit criteria. c) Define the objectives of testing. d) Check planned deliverables have been delivered. e) Comparing actual results with expected results.</div><div class='opt selectedwrong'>a.
+a, c, b, e, d   [Thí sinh đã chọn]</div><div class='opt'>b.
+c, a, d, e, b</div><div class='opt correct'>c.
+c, a, e, b, d  [Đáp án đúng]</div><div class='opt'>d.
+d, a, c, b, e</div><div class='explain'>Lời giải: Refer 1.4.1 Thứ tự nào diễn ra là đúng? chọn c là task của test plan, a là của test design, e là test execution, b là evaluate exit criteria trong giai đoạn chạy test, d là của test completion</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 24</div><div>Testing and Debugging are key activities in the software development lifecycle. Which of the following are DEBUGGING activities? a) Designing tests to find failures. b) Locating the cause of failures. c) Analysing and fixing the defects. d) Executing tests to show failures.</div><div class='opt selectedwrong'>a.
+a and d.   [Thí sinh đã chọn]</div><div class='opt'>b.
+a and b.</div><div class='opt correct'>c.
+b and c.  [Đáp án đúng]</div><div class='opt'>d.
+c and d.</div><div class='explain'>Lời giải: refer 1.1.2 Kiểm tra và gỡ lỗi là các hoạt động chính trong vòng đời phát triển phần mềm. Hoạt động nào sau đây là hoạt động DEBUGGING? chọn b c</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 25</div><div>Testing and Debugging are key activities in the software development lifecycle. Which of the following are TESTING activities? a) Designing tests to find failures. b) Locating the cause of failures. c) Analysing and fixing the defects. d) Executing tests to show failures.</div><div class='opt selectedright'>a.
+a and d  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+a and b.</div><div class='opt'>c.
+b and c.</div><div class='opt'>d.
+c and d.</div><div class='explain'>Lời giải: refer 1.1.2 Kiểm tra và gỡ lỗi là các hoạt động chính trong vòng đời phát triển phần mềm. Hoạt động nào sau đây là hoạt động THỬ NGHIỆM? chọn a, d là của testing</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 26</div><div>Which of the following options BEST explains the "Tests wear out" principle of testing?</div><div class='opt selectedright'>a.
+If we do not regularly review and revise our tests, we'll stop finding defects.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+Repeatedly running a set of tests will ensure that a system is defect free.</div><div class='opt'>c.
+Defects are, paradoxically, often contained in a small number of modules.</div><div class='opt'>d.
+Testing, like spraying pesticide, is an effective bug/defect removal activity</div><div class='explain'>Lời giải: refer 1.3. chọn A vì "not regularly review and revise our tests" Test case không đc review và chỉnh sửa thường xuyên</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 27</div><div>What does the term "Tests wear out" refer to?</div><div class='opt selectedwrong'>a.
+The phenomena where a piece of code that has a lot of bugs is likely to have more hidden, yet unfound bugs   [Thí sinh đã chọn]</div><div class='opt'>b.
+The decreasing efficiency of debugging when done in code that has many bugs</div><div class='opt correct'>c.
+Reduced effectiveness of test cases that are repeated and focused on the same scenarios  [Đáp án đúng]</div><div class='opt'>d.
+The redundancy of testing the same objects in both black and white box techniques</div><div class='explain'>Lời giải: refer 1.3 Thuật ngữ "Thử nghiệm hao mòn" ám chỉ điều gì? chú ý chọn C vì "Repeated and focused on the same scenarios"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 28</div><div>In foundation level syllabus you will find the main basic principles of testing. Which of the following sentences describes one of these basic principles?</div><div class='opt selectedwrong'>a.
+Complete testing of software is attainable if you have enough resources and test tools   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+For a software system, it is not possible, under normal conditions, to test all input and output combinations  [Đáp án đúng]</div><div class='opt'>c.
+A goal of testing is to show that the software is defect free</div><div class='opt'>d.
+With automated testing you can make statements with more confidence about the quality of a product than with manual testing</div><div class='explain'>Lời giải: refer 1.3 Câu nào sau đây mô tả một trong những nguyên tắc cơ bản này? chú ý vào "it is not possible" chọn B</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 29</div><div>Which of the following is NOT a valid objective of testing?</div><div class='opt selectedwrong'>a.
+Ensuring required coverage of a test object   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Investigating and fixing defects in the software under test  [Đáp án đúng]</div><div class='opt'>c.
+Gaining confidence that the system is fit-for-purpose</div><div class='opt'>d.
+Providing information for stakeholders' decision making</div><div class='explain'>Lời giải: refer 1.1.1 chọn B vì là của debug</div></div></body></html>

@@ -1,0 +1,94 @@
+﻿<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+  <head><meta charset='utf-8'>
+  <style>
+    body{font-family: Arial, sans-serif;}
+    h1{color:#c0392b;}
+    .qblock{margin-bottom:20px; padding:10px; border:1px solid #ccc;}
+    .qtitle{font-weight:bold; font-size:14px; margin-bottom:6px;}
+    .opt{margin:4px 0;}
+    .correct{color:green; font-weight:bold;}
+    .selectedwrong{color:red; font-weight:bold;}
+    .selectedright{color:green; font-weight:bold;}
+    .explain{background:#f2f2f2; padding:8px; margin-top:8px; font-style:italic;}
+    img{max-width:400px; display:block; margin:6px 0;}
+  </style></head><body><h1>FL2024- chuong 3 exam 23-24-25</h1><p><b>Điểm:</b> 6/20 &nbsp; <b>Thời gian làm bài:</b> 00:00:31 &nbsp; <b>Nộp bài:</b> 2026-08-03 16:13:42</p><p><b>Video giải đáp:</b> Không có video cho bài này</p><div class='qblock'><div class='qtitle'>Câu hỏi 1</div><div>You are performing a review, how many comments do you find based on checklist? The Test Cases are as follows: TC1. Success - valid 'User Name' and 'Password'; Customer Menu displayed TC2. Failure - 'User Name' field has blank entry; Error Number 12 displayed TC3. Failure - 'User Id' entered does not exist on database (i.e. unregistered user); Error Number 23 displayed TC4. Failure - 'Password' entered does not match user's password on database; Error Number 24 displayed You are guided by the following checklist in your review: C1. There must be one test case to cover success C2. There must be one test case for each error path ( validation failure) C3. Each test case must use terminology consistent with the test basis document (field names, error number)</div><div class='opt selectedwrong'>a.
+A. 1.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. 2.</div><div class='opt correct'>c.
+C. 3.  [Đáp án đúng]</div><div class='opt'>d.
+D. 4.</div><div class='explain'>Lời giải: Refer 3.2 Câu hỏi là bạn tìm đc bao nhiêu comments dựa vào checklist khi review test case của đồng nghiệp. Comment gồm có: TC1, TC3 bị sai vì "Customer Menu" và "'User Id' không có trong màn hình đặc tả, và thiếu 1 test case cho trường hợp Blank password</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 2</div><div>When comparing Static and Dynamic test techniques, which of the following statements is TRUE?</div><div class='opt selectedwrong'>a.
+A. Static Testing finds failures, whilst Dynamic Testing only finds the cause of failures.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. Only Static Testing has the objective of identifying defects.</div><div class='opt correct'>c.
+C. Static Testing techniques, such as reviews, can be undertaken before Dynamic Testing, making defects cheaper to remove.  [Đáp án đúng]</div><div class='opt'>d.
+D. Static Testing is based on the execution of code, whist Dynamic Testing relies on examination and analysis.</div><div class='explain'>Lời giải: refer 3.1.2 tìm được C đúng. A sai vì Static Testing finds failures ( failure là phải khi chạy), B sai vì Only, D sai vì Static Testing is based on the execution of code</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 3</div><div>Which defect below is MOST likely to be found by a review during static testing?</div><div class='opt selectedright'>a.
+Incorrect interface specifications.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+Old versions of software in use.</div><div class='opt'>c.
+Performance bottlenecks.</div><div class='opt'>d.
+Broken links to web addresses.</div><div class='explain'>Lời giải: Refer 3.1.3 typical defects tìm đc review là chủ yếu trong tài liệu. B là của configuration management, C, D là của dynamic test</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 4</div><div>What benefits do static analysis tools have over test execution tools?</div><div class='opt selectedright'>a.
+A. Static analysis tools find defects earlier in the life cycle.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+B. Static analysis tools can be used before code is written.</div><div class='opt'>c.
+C. Static analysis tools test that the delivered code meets business requirements.</div><div class='opt'>d.
+D. Static analysis tools are particularly effective for regression testing.</div><div class='explain'>Lời giải: Refer 3.1.2 Value của Static testing là tìm thấy lỗi sớm trước Dynamic test. B sai vì static analysis tool chủ yếu phân tích trên code. C sai vì "meets business requirements." là của Review. D sai vì "regression testing" là của Dynamic test</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 5</div><div>One of the roles in a review is that of moderator, which of the following best describes this role?</div><div class='opt selectedright'>a.
+A. Plans the review, runs the review meeting and ensures that follow-up activities are completed.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+B. Allocates time in the plan, decides which reviews will take place and that the benefits are delivered.</div><div class='opt'>c.
+C. Writes the document to be reviewed, agrees that the document can be reviewed, and updates the document with any changes.</div><div class='opt'>d.
+D. Documents all issues raised in the review meeting, records problems and open points.</div><div class='explain'>Lời giải: Refer 3.2.3 các vai trò của review. A là của Moderator còn gọi là Leader của review, B là của manager ra quyết định và cấp phép, C là của Author, D là Scribe</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 6</div><div>What do static analysis tools analyze?</div><div class='opt selectedwrong'>a.
+A. Design   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. Test cases</div><div class='opt'>c.
+C. Requirements</div><div class='opt correct'>d.
+D. Program code  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 3.1.3 ba đáp án A,B,C sai là tài liệu chỉ có thể do Review tìm ra lỗi.</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 7</div><div>Which of the following is most likely to be a benefit of using static techniques?</div><div class='opt selectedwrong'>a.
+A. Fewer performance defects.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+B. Productivity improvements in the development process.  [Đáp án đúng]</div><div class='opt'>c.
+C. More efficient regression testing.</div><div class='opt'>d.
+D. Quick return on investment in static analysis tools.</div><div class='explain'>Lời giải: Refer 3.1.2 thì thấy B đúng, static test giúp cải thiện productivity, giảm thời gian và giảm chi phí. A,C là lỗi của dynamic, D là nhanh trả ra giá trị đầu tư là không có</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 8</div><div>Which of the following are static techniques?</div><div class='opt selectedright'>a.
+A. Walkthrough.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+B. State transition testing.</div><div class='opt'>c.
+C. Decision table testing.</div><div class='opt'>d.
+D. Statement testing.</div><div class='explain'>Lời giải: Refer 3.2.4 kỹ thuật static techniques không chạy source code là A. B,C,D sai vì là của Dynamic test</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 9</div><div>Which one of the following roles is typically used in a review?</div><div class='opt selectedwrong'>a.
+A. Champion.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+B. Author.  [Đáp án đúng]</div><div class='opt'>c.
+C. Project sponsor.</div><div class='opt'>d.
+D. Custodian.</div><div class='explain'>Lời giải: Refer 3.2.3 Vai trò của review chỉ có B đúng</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 10</div><div>Which of the following statements are correct for walkthroughs? (i) Often led by the author. (ii) Documented and defined results. (iii) All participants have defined roles. (iv) Used to aid learning. (v) Main purpose is to find defects.</div><div class='opt selectedwrong'>a.
+A. (i) and (v) are correct.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. (ii) and (iii) are correct.</div><div class='opt correct'>c.
+C. (i) and (iv) are correct.  [Đáp án đúng]</div><div class='opt'>d.
+D. (iii) and (iv) are correct</div><div class='explain'>Lời giải: Refer 3.2.4 Review types thì walkthough có (i) lead by author và (iv) để training. và ii, iii, v là đặc điểm của inspection</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 11</div><div>Which of the following has the typical formal review activities in the correct sequence?</div><div class='opt selectedwrong'>a.
+A. Kick-off, review meeting, planning, follow-up.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. Kick-off, planning, review meeting, re-work.</div><div class='opt correct'>c.
+C. Planning, kick-off, individual preparation, review meeting.  [Đáp án đúng]</div><div class='opt'>d.
+D. Planning, individual preparation, follow-up, re-work</div><div class='explain'>Lời giải: Refer 3.2.2 review process</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 12</div><div>Which of the following statements are true? (i) Defects are likely to be found earlier in the development process by using reviews rather than static analysis. (ii) Walkthroughs require code but static analysis does not require code. (iii) Informal reviews can be performed on code and specifications. (iv) Dynamic techniques are generally used before static techniques. (v) Dynamic techniques can only be used after code is ready to be executed.</div><div class='opt selectedwrong'>a.
+A. (i), (ii), (vi).   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. (ii), (iii), (v).</div><div class='opt'>c.
+C. (i), (iv), (v).</div><div class='opt correct'>d.
+D. (i), (iii), (v).  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 3.1.2 và loại trừ ii sai vì walkthrough là hình thức reiview không thay đc tool phân tích code ( review ko hết đc code). iv sai vì dynamic chạy trước static</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 13</div><div>An important benefit of code inspections is that they</div><div class='opt selectedright'>a.
+enable the code to be tested before the execution environment is ready.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+can be performed by the person who wrote the code.</div><div class='opt'>c.
+can be performed by inexperienced staff.</div><div class='opt'>d.
+are cheap to perform.</div><div class='explain'>Lời giải: refer 3.1.2, chính là lợi ích của static testing ( inspection là hình thức của review). A đúng vì static giúp cho việc kiểm tra code trước khi chạy ( tìm thấy lỗi trước dynamic)</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 14</div><div>Which of the following statements about reviews is true?</div><div class='opt selectedwrong'>a.
+Reviews cannot be performed on user requirements specifications.   [Thí sinh đã chọn]</div><div class='opt'>b.
+Reviews are the least effective way of testing code.</div><div class='opt'>c.
+Reviews are unlikely to find faults in test plans.</div><div class='opt correct'>d.
+Reviews should be performed on specifications, code, and test plans.  [Đáp án đúng]</div><div class='explain'>Lời giải: refer 3.1.3 Review sử dụng cho mọi loại tài liệu</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 15</div><div>Increasing the quality of the software, by better development methods, will affect the time needed for testing (the test phases) by</div><div class='opt selectedwrong'>a.
+increasing test time   [Thí sinh đã chọn]</div><div class='opt'>b.
+no change</div><div class='opt correct'>c.
+reducing test time  [Đáp án đúng]</div><div class='opt'>d.
+can't say</div><div class='explain'>Lời giải: refer 3.1.2, chú ý vào "better development methods" phương pháp phát triển tốt hơn thì phải giúp giảm thời gian và chi phí</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 16</div><div>Inspections can find all the following except?</div><div class='opt selectedwrong'>a.
+Requirements that have been omitted from the design documents   [Thí sinh đã chọn]</div><div class='opt'>b.
+Spelling and grammar faults in the documents</div><div class='opt'>c.
+Variables not defined in the code</div><div class='opt correct'>d.
+How much of the code has been covered  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 3.2.2 câu hỏi là Inspection tìm ra tất cả lỗi trừ cái nào sau đây. D là của dynamic test còn inspection là của static testing</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 17</div><div>Which statement about Static Testing is TRUE?</div><div class='opt selectedright'>a.
+Static testing can be applied to any work product that participants know how to read and understand.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+Static testing must only be applied to final work products that have been signed off.</div><div class='opt'>c.
+Static testing must be conducted by users of the product being tested.</div><div class='opt'>d.
+Static testing executes the code to verify the functionality is as expected.</div><div class='explain'>Lời giải: refer 3.1.1 Cái nào đúng về Static testing? chọn A đúng, loại B vì "must only be applied to final work products" chỉ áp dụng trên sản phẩm cuối cùng, C sai vì "conducted by users", D sai vì "Static testing executes the code"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 18</div><div>Which of the following statements is correct?</div><div class='opt selectedwrong'>a.
+Pair programming is done with developer and tester pairing together   [Thí sinh đã chọn]</div><div class='opt'>b.
+Pair programming is an alternative</div><div class='opt'>c.
+Pair programming is used usually in waterfall model</div><div class='opt correct'>d.
+Pair programming is, among other things, an informal review method  [Đáp án đúng]</div><div class='explain'>Lời giải: refer 3.2.3 review types (Pair programming là pair review)</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 19</div><div>Which of the following is a defect that is more likely to be found by a static analysis tool than by other testing techniques?</div><div class='opt selectedwrong'>a.
+Omission of a major requirement   [Thí sinh đã chọn]</div><div class='opt'>b.
+Inadequate decision coverage</div><div class='opt'>c.
+Component memory leakage</div><div class='opt correct'>d.
+Variables that are not used improperly declared  [Đáp án đúng]</div><div class='explain'>Lời giải: refer 3.1.3 lỗi tìm đc bới static analysis tool là chủ yếu trong code</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 20</div><div>Which of the following type of defect would NOT be typically found by using a static analysis tool?</div><div class='opt selectedwrong'>a.
+A variable is defined but is then not used   [Thí sinh đã chọn]</div><div class='opt'>b.
+A variable is used in a calculation before it is defined</div><div class='opt correct'>c.
+A variable has the wrong numeric value passed into it  [Đáp án đúng]</div><div class='opt'>d.
+A variable is used but not declared</div><div class='explain'>Lời giải: refer 3.1.3, tất cả các lỗi đều nằm trong code nhưng chọn C vì nó quá cụ thể về "the wrong numeric value" không phải lúc nào giá trị test cũng là dạng số</div></div></body></html>

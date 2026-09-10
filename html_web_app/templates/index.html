@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kho Đề Trắc Nghiệm</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <h1>Kho Đề Trắc Nghiệm</h1>
+            <p>Quản lý và sắp xếp các đề thi dễ dàng</p>
+        </header>
+
+        <main>
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                <div class="flash-messages">
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+
+            <!-- Breadcrumbs -->
+            <nav class="breadcrumb-container glass-panel">
+                <ul class="breadcrumb">
+                    <li><a href="{{ url_for('index') }}">🏠 Trang chủ</a></li>
+                    {% for crumb in breadcrumbs %}
+                        <li><span class="separator">/</span></li>
+                        <li><a href="{{ url_for('index', req_path=crumb.path) }}">{{ crumb.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
+
+            <div class="actions-row">
+                <!-- Create Folder Section -->
+                <section class="action-section glass-panel">
+                    <h3>Tạo Thư mục</h3>
+                    <form action="{{ url_for('create_folder') }}" method="post" class="inline-form">
+                        <input type="hidden" name="current_path" value="{{ current_path }}">
+                        <input type="text" name="folder_name" placeholder="Tên thư mục mới..." required class="text-input">
+                        <button type="submit" class="btn-primary">Tạo</button>
+                    </form>
+                </section>
+
+                <!-- Upload Section -->
+                <section class="action-section glass-panel">
+                    <h3>Tải lên File</h3>
+                    <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" class="inline-form">
+                        <input type="hidden" name="current_path" value="{{ current_path }}">
+                        <div class="file-input-compact">
+                            <input type="file" name="file" id="file" accept=".html" class="file-input">
+                            <label for="file" class="file-label-compact">
+                                <span class="text">Chọn File</span>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn-primary">Tải Lên</button>
+                    </form>
+                </section>
+            </div>
+
+            <!-- Folders List -->
+            {% if folders %}
+            <section class="folders-section">
+                <h2>Thư mục</h2>
+                <div class="folder-grid">
+                    {% for folder in folders %}
+                    <div class="folder-card glass-panel">
+                        <a href="{{ url_for('index', req_path=(current_path + '/' + folder).strip('/')) }}" class="folder-link">
+                            <span class="folder-icon">📁</span>
+                            <span class="folder-name">{{ folder }}</span>
+                        </a>
+                        <form action="{{ url_for('delete_item') }}" method="post" onsubmit="return confirm('Bạn có chắc muốn xóa thư mục này và tất cả file bên trong không?');">
+                            <input type="hidden" name="current_path" value="{{ current_path }}">
+                            <input type="hidden" name="item_name" value="{{ folder }}">
+                            <input type="hidden" name="is_folder" value="true">
+                            <button type="submit" class="btn-icon btn-danger" title="Xóa thư mục">🗑️</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            <!-- Files List -->
+            <section class="file-list-section">
+                <h2>Danh sách File HTML</h2>
+                {% if files %}
+                <div class="file-grid">
+                    {% for file in files %}
+                    <div class="file-card glass-panel">
+                        <div class="file-header">
+                            <div class="file-title-wrap">
+                                <span class="file-icon">📄</span>
+                                <h3 class="file-name" title="{{ file }}">{{ file }}</h3>
+                            </div>
+                            <div class="file-header-actions">
+                                <!-- Move Dropdown -->
+                                <div class="move-dropdown-wrap">
+                                    <button type="button" class="btn-icon btn-move" title="Di chuyển file" onclick="toggleMoveDropdown(this)">📂</button>
+                                    <div class="move-dropdown">
+                                        <div class="move-dropdown-header">Chuyển đến...</div>
+                                        <form action="{{ url_for('move_file') }}" method="post" class="move-dropdown-form">
+                                            <input type="hidden" name="current_path" value="{{ current_path }}">
+                                            <input type="hidden" name="filename" value="{{ file }}">
+                                            <ul class="move-folder-list">
+                                                {% for folder in all_folders %}
+                                                <li>
+                                                    <button type="submit" name="target_folder" value="{{ folder }}" class="move-folder-item">
+                                                        {% if folder == '' %}
+                                                            🏠 Trang chủ (Gốc)
+                                                        {% else %}
+                                                            📁 {{ folder }}
+                                                        {% endif %}
+                                                    </button>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- Delete -->
+                                <form action="{{ url_for('delete_item') }}" method="post" class="delete-form" onsubmit="return confirm('Bạn có chắc muốn xóa file này?');">
+                                    <input type="hidden" name="current_path" value="{{ current_path }}">
+                                    <input type="hidden" name="item_name" value="{{ file }}">
+                                    <input type="hidden" name="is_folder" value="false">
+                                    <button type="submit" class="btn-icon btn-danger" title="Xóa file">🗑️</button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <div class="file-actions">
+                            <a href="{{ url_for('view_file', filename=(current_path + '/' + file).strip('/')) }}" class="btn-secondary" target="_blank">Làm Bài</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="empty-state glass-panel">
+                    <p>Không có file nào trong thư mục này.</p>
+                </div>
+                {% endif %}
+            </section>
+        </main>
+    </div>
+    
+    <script>
+        // File input label
+        const fileInput = document.getElementById('file');
+        const fileLabelText = document.querySelector('.file-label-compact .text');
+        
+        if (fileInput) {
+            fileInput.addEventListener('change', function(e) {
+                if(e.target.files.length > 0) {
+                    let fileName = e.target.files[0].name;
+                    if(fileName.length > 15) fileName = fileName.substring(0, 15) + '...';
+                    fileLabelText.textContent = fileName;
+                } else {
+                    fileLabelText.textContent = 'Chọn File';
+                }
+            });
+        }
+
+        // Move dropdown toggle
+        function toggleMoveDropdown(btn) {
+            const wrap = btn.closest('.move-dropdown-wrap');
+            const dropdown = wrap.querySelector('.move-dropdown');
+            const isOpen = dropdown.classList.contains('open');
+
+            // Close all other dropdowns first
+            closeAllDropdowns();
+
+            if (!isOpen) {
+                dropdown.classList.add('open');
+                btn.closest('.file-card').classList.add('dropdown-active');
+            }
+        }
+
+        function closeAllDropdowns() {
+            document.querySelectorAll('.move-dropdown.open').forEach(d => {
+                d.classList.remove('open');
+                const card = d.closest('.file-card');
+                if (card) card.classList.remove('dropdown-active');
+            });
+        }
+
+        // Close dropdown on outside click
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.move-dropdown-wrap')) {
+                closeAllDropdowns();
+            }
+        });
+    </script>
+</body>
+</html>

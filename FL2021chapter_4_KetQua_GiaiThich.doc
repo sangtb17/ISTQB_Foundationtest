@@ -1,0 +1,150 @@
+﻿<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+  <head><meta charset='utf-8'>
+  <style>
+    body{font-family: Arial, sans-serif;}
+    h1{color:#c0392b;}
+    .qblock{margin-bottom:20px; padding:10px; border:1px solid #ccc;}
+    .qtitle{font-weight:bold; font-size:14px; margin-bottom:6px;}
+    .opt{margin:4px 0;}
+    .correct{color:green; font-weight:bold;}
+    .selectedwrong{color:red; font-weight:bold;}
+    .selectedright{color:green; font-weight:bold;}
+    .explain{background:#f2f2f2; padding:8px; margin-top:8px; font-style:italic;}
+    img{max-width:400px; display:block; margin:6px 0;}
+  </style></head><body><h1>FL2021-chapter 4</h1><p><b>Điểm:</b> 10/34 &nbsp; <b>Thời gian làm bài:</b> 00:00:21 &nbsp; <b>Nộp bài:</b> 2026-08-03 16:02:43</p><p><b>Video giải đáp:</b> Không có video cho bài này</p><div class='qblock'><div class='qtitle'>Câu hỏi 1</div><div>Which of the following is an extension of equivalence partitioning?</div><div class='opt selectedwrong'>a.
+Decision tables   [Thí sinh đã chọn]</div><div class='opt'>b.
+Decision testing</div><div class='opt correct'>c.
+Boundary value analysis  [Đáp án đúng]</div><div class='opt'>d.
+State transition testing</div><div class='explain'>Lời giải: Refer 4.2.1 và 4.2.2</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 2</div><div>If test cases are derived from looking at the code, what type of test design technique is being used?</div><div class='opt selectedwrong'>a.
+Black-box   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+White-box  [Đáp án đúng]</div><div class='opt'>c.
+Specification-based</div><div class='opt'>d.
+Behavior-based</div><div class='explain'>Lời giải: Refer 4.1.2 nhìn cái bảng so sánh đó và chú ý vào "from looking at the code"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 3</div><div>Which of the following is a Black Box test design technique?</div><div class='opt selectedwrong'>a.
+Decision Coverage   [Thí sinh đã chọn]</div><div class='opt'>b.
+Error Guessing</div><div class='opt'>c.
+Statement Coverage</div><div class='opt correct'>d.
+Equivalence Partitioning  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 4.1.2</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 4</div><div>Which of the following would be a good test technique to use when under severe time pressure?</div><div class='opt selectedright'>a.
+Exploratory testing  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+Structure based testing</div><div class='opt'>c.
+Specification based testing</div><div class='opt'>d.
+Use Case testing</div><div class='explain'>Lời giải: Refer 4.4.2 và chú ý vào "under severe time pressure- dưới áp lực về thời gian" thì test nào nhanh và hiệu quả nhất sẽ áp dụng</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 5</div><div>A thermometer measures temperature in whole degrees only. If the temperature falls below 18 degrees, the heating is switched off. It is switched on again when the temperature reaches 21 degrees. What are the best values in degrees to cover all equivalence partitions?</div><div class='opt selectedright'>a.
+15, 19 and 25  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+17, 18, and 19</div><div class='opt'>c.
+18, 20 and 22</div><div class='opt'>d.
+16, 26, and 32</div><div class='explain'>Lời giải: Refer 4.2.2. Tự vẽ ra sơ đồ nhé</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 6</div><div>Which of the following are white-box test design techniques? a) Decision table testing. b) Decision coverage. c) Boundary value analysis. d) Error guessing. e) Statement testing.</div><div class='opt selectedwrong'>a.
+a and e   [Thí sinh đã chọn]</div><div class='opt'>b.
+b and d</div><div class='opt correct'>c.
+b and e  [Đáp án đúng]</div><div class='opt'>d.
+e and d</div><div class='explain'>Lời giải: Refer 4.1.2</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 7</div><div>A garden irrigation system allows the user to specify 2 inputs: 1. Frequency - The number of times the system should be automatically switched on per day; minimum once per day, maximum 5 times 2. Duration - The duration of operation, in whole minutes, each time it is switched on; ranging from 1 to 60 Applying 2-value boundary value analysis which of the following options has the correct test set of valid and invalid boundary values?</div><div class='opt selectedwrong'>a.
+Frequency 1, 5; Duration 1, 60   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Frequency 0, 1, 5, 6; Duration 59 seconds, 1 minute, 60 minutes, 60 minutes 1 second  [Đáp án đúng]</div><div class='opt'>c.
+Frequency 0, 1, 5, 6; Duration 0, 1, 30, 60, 61</div><div class='opt'>d.
+Frequency 0, 1, 2, 5, 6; Duration 0, 1, 30, 60, 61</div><div class='explain'>Lời giải: Refer 4.2.2 BVA, thực chất là xác định BVA của 2 cái input, trong đó duration tính theo minute nhưng dưới minute là second nữa</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 8</div><div>Which of the following is an experience-based testing technique?</div><div class='opt selectedright'>a.
+Error guessing  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+Intuitive testing</div><div class='opt'>c.
+Oracle-based testing</div><div class='opt'>d.
+Exhaustive testing</div><div class='explain'>Lời giải: Refer 4.1.2</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 9</div><div>Which of the following test techniques uses the requirements specifications as a test basis?</div><div class='opt selectedwrong'>a.
+Structure-based   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Black-box  [Đáp án đúng]</div><div class='opt'>c.
+White-box</div><div class='opt'>d.
+Exploratory</div><div class='explain'>Lời giải: Refer 4.1.2 chú ý "uses the requirements specifications"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 10</div><div>Which of the following is a good reason to use experience-based testing?</div><div class='opt selectedright'>a.
+You can find defects that might be missed by more formal techniques  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+You can test for defects that only experienced users would encounter</div><div class='opt'>c.
+You can target the developer's efforts to the areas that users will be more likely to use</div><div class='opt'>d.
+It is supported by strong tools and can be automated</div><div class='explain'>Lời giải: Refer 4.1.2 chọn A vì "might be missed by more formal techniques" có trong sách, kỹ thuật theo kinh nghiệm giúp tìm các lỗi bỏ sót bởi các kỹ thuật khác</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 11</div><div>You have designed test cases to provide 100% statement and 100% decision coverage for the following fragment of code. if width > length then biggest_dimension = width else biggest_dimension = length end_if The following has been added to the bottom of the code fragment above. print "Biggest dimension is " & biggest_dimension print "Width: " & width print "Length: " & length How many more test cases are required?</div><div class='opt selectedwrong'>a.
+One more test case will be required for 100 % decision coverage.   [Thí sinh đã chọn]</div><div class='opt'>b.
+Two more test cases will be required for 100 % statement coverage, one of which will be used to provide 100% decision coverage.</div><div class='opt correct'>c.
+None, existing test cases can be used.  [Đáp án đúng]</div><div class='opt'>d.
+One more test case will be required for 100% statement coverage.</div><div class='explain'>Lời giải: Refer 4.3.1. Cái này vẽ sơ đồ ra, chú ý là họ đã có Test case và bao phủ "100% statement and 100% decision coverage", giờ họ viết thêm 2 dòng code vào phần cuối của chương trình thì nó vẫn là lệnh khẳng định nên các TC đã có vẫn đi qua hết các lệnh này nên ta ko cần thêm TC nữa</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 12</div><div>Given the following fragment of code, how many tests are required for 100% decision coverage? if width > length then biggest_dimension = width if height > width then biggest_dimension = height end_if else biggest_dimension = length if height > length then biggest_dimension = height end_if end_if</div><div class='opt selectedwrong'>a.
+3   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+4  [Đáp án đúng]</div><div class='opt'>c.
+2</div><div class='opt'>d.
+1</div><div class='explain'>Lời giải: Refer 4.2.2 vẽ ra để xác định</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 13</div><div>If you are using error guessing to target your testing, which type of testing are you doing?</div><div class='opt selectedwrong'>a.
+Specification-based   [Thí sinh đã chọn]</div><div class='opt'>b.
+Structure-based</div><div class='opt correct'>c.
+Experience-based  [Đáp án đúng]</div><div class='opt'>d.
+Reference-based</div><div class='explain'>Lời giải: Refer 4.1.2 và chú ý "using error guessing"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 14</div><div>How is statement coverage determined?</div><div class='opt selectedwrong'>a.
+Number of test decision points divided by the number of test cases   [Thí sinh đã chọn]</div><div class='opt'>b.
+Number of decision outcomes tested divided by the total number of executable statements</div><div class='opt'>c.
+Number of possible test case outcomes divided by the total number of function points</div><div class='opt correct'>d.
+Number of executable statements tested divided by the total number of executable statements  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 4.3.1 định nghĩa công thức tính statement coverage</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 15</div><div>What is error guessing?</div><div class='opt selectedright'>a.
+A testing technique used to guess where a developer is likely to have made a mistake  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+A technique used for assessing defect metrics</div><div class='opt'>c.
+A development technique to verify that all error paths have been coded</div><div class='opt'>d.
+A planning technique used to anticipate likely schedule variances due to faults</div><div class='explain'>Lời giải: Refer 4.4.1 và chọn A vì "a mistake" dựa vào sai sót chung của LTV. Loại D vì "A planning technique" là kỹ thuật lập kế hoạch ko phải của test, loại C vì "A development technique" là kỹ thuật của LTV ko phải test, Loại B vì cũng ko phải kỹ thuật test</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 16</div><div>When exploratory testing is conducted using time-boxing and test charters, what is it called?</div><div class='opt selectedwrong'>a.
+Schedule-based testing   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Session-based testing  [Đáp án đúng]</div><div class='opt'>c.
+Risk-based testing</div><div class='opt'>d.
+Formal chartering</div><div class='explain'>Lời giải: Refer 4.4.2 và chú ý vào "using time-boxing and test charters" để tìm ra trong sách</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 17</div><div>You are testing an e-commerce transaction that has the following states and transitions: 1. Login (invalid) > Login 2. Login > Search 3. Search > Search 4. Search > Shopping Cart 5. Shopping Cart > Search 6. Shopping Cart > Checkout 7. Checkout > Search 8. Checkout > Logout For a state transition diagram, how many transitions should be shown?</div><div class='opt selectedwrong'>a.
+4   [Thí sinh đã chọn]</div><div class='opt'>b.
+6</div><div class='opt correct'>c.
+8  [Đáp án đúng]</div><div class='opt'>d.
+16</div><div class='explain'>Lời giải: Refer 4.2.4 state transition testing, nên vẽ sơ đồ ra rồi đếm số transition.</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 18</div><div>You are testing a banking application that allows a customer to withdraw 20, 100 or 500 dollars in a single transaction. The values are chosen from a drop-down list and no other values may be entered. How many equivalence partitions need to be tested to achieve 100% equivalence partition coverage?</div><div class='opt selectedwrong'>a.
+1   [Thí sinh đã chọn]</div><div class='opt'>b.
+2</div><div class='opt'>c.
+3</div><div class='opt correct'>d.
+4  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 4.2.1 EP, và "a drop-down list and no other values" nên ta có 3 value của drop down list và 1 giá trị là ko nhập gì mà ấn enter luôn là tổng 4 value</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 19</div><div>An automated air-conditioner is programmed to turn its heating unit on when the temperature falls below 17 and to turn its refrigeration unit on when the temperature exceeds 26. The air- conditioner is designed to operate at temperatures between -10 and +40. Given the above specification, which of the following sets of values shows that the equivalence partition test design technique has been used correctly?</div><div class='opt selectedright'>a.
+-11, -1, 18, 27, 51  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+-11, -1,12,18, 27, 51</div><div class='opt'>c.
+-11, 18, 51</div><div class='opt'>d.
+-1, 12, 18, 27</div><div class='explain'>Lời giải: Refer 4.2.1 EP bạn phải vẽ đúng sơ đồ</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 20</div><div>If you are testing a module of code, how do you determine the level of decision coverage you have achieved?</div><div class='opt selectedwrong'>a.
+By taking the number of decisions you have tested and dividing that by the total number of executable statements in the module   [Thí sinh đã chọn]</div><div class='opt'>b.
+By taking the number of decisions you have tested and dividing that by the total number of decisions in the module</div><div class='opt'>c.
+By taking the number of decisions you have tested and dividing that by the total lines of code in the module</div><div class='opt correct'>d.
+By taking the number of decision outcomes you have tested and dividing that by the total number of decision outcomes in the module  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 4.3.2 định nghĩa của decision coverage</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 21</div><div>(V4.0 bỏ câu này) Which of the following best describes the behaviors defined in a use case that should be covered by tests?</div><div class='opt selectedwrong'>a.
+Positive path and negative path   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Basic, exception and error  [Đáp án đúng]</div><div class='opt'>c.
+Normal, error, data, and integration</div><div class='opt'>d.
+Control flow, data flow and decision paths</div><div class='explain'>Lời giải: Refer 4.2.5 xem định nghĩa của use case chọn B. Loại D vì của whitebox test, A là category của test case, test data, Loại C vì ko có cái nào liên quan đến use case</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 22</div><div>You are testing a machine that scores exam papers and assigns grades. Based on the score achieved the grades are as follows: 1-49 = F, 50-59 = D-, 60-69 = D, 70-79 = C, 80-89 = B, 90-100=A If you apply equivalence partitioning, how many test cases will you need to achieve minimum test coverage?</div><div class='opt selectedwrong'>a.
+6   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+8  [Đáp án đúng]</div><div class='opt'>c.
+10</div><div class='opt'>d.
+12</div><div class='explain'>Lời giải: Refer 4.2.1 EP, vẽ ra ta có 6 EP valid và thêm 2 EP invalid là nhỏ hơn 1 và lớn hơn 100 nữa</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 23</div><div>You are testing a machine that scores exam papers and assigns grades. Based on the score achieved the grades are as follows: 1-49 = F, 50-59 = D-, 60-69 = D, 70-79 = C, 80-89 = B, 90-100=A If you apply two-value boundary value analysis, how many test cases will you need to achieve minimum test coverage?</div><div class='opt selectedwrong'>a.
+8   [Thí sinh đã chọn]</div><div class='opt'>b.
+10</div><div class='opt'>c.
+12</div><div class='opt correct'>d.
+14  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 4.2.2 BVA, vẽ ra và xác định BVA</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 24</div><div>A program validates a numeric field as follows: values less than 10 are rejected, values between 10 and 21 are accepted, values greater than or equal to 22 are rejected. Which of the following input values cover Most of the difference equivalence partitions?</div><div class='opt selectedwrong'>a.
+10,11,21   [Thí sinh đã chọn]</div><div class='opt'>b.
+3,20,21</div><div class='opt correct'>c.
+3,10,22  [Đáp án đúng]</div><div class='opt'>d.
+10,21,22</div><div class='explain'>Lời giải: Refer 4.2.1 vẽ ra</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 25</div><div>You have been given the following requirement: A user must log in to the system with a valid username and password. If they fail to enter the correct combination three times, they will receive an error and will have to wait 10 minutes before trying again. The test terminates when the user successfully logs in. How many test cases are needed to provide 100% state transition coverage?</div><div class='opt selectedright'>a.
+1  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+2</div><div class='opt'>c.
+4</div><div class='opt'>d.
+5</div><div class='explain'>Lời giải: Câu này phải vẽ sơ đồ state transition ra nhé (nhìn vào hình mình vẽ cho rồi đó), nó là dạng login trên trình duyệt, nhiều bạn đọc đề cứ thế lấy hình của ATM là không đúng đâu. Trang astqb.org nó chọn 1 TC là đi đc hết các State. Đi từ login sau đó nhập sai 3 lần vào trạng thái chờ 10 phút rồi về login lại và thành công là đi hết các trạng thái</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 26</div><div>You have been given the following conditions and results from those condition combinations. You can only have one form of payment. A PIN is only needed for a debit card. Given this information, using the decision table technique, what is the minimum number of test cases you would need to test these conditions?</div><div class='opt selectedwrong'>a.
+7   [Thí sinh đã chọn]</div><div class='opt'>b.
+13</div><div class='opt correct'>c.
+15  [Đáp án đúng]</div><div class='opt'>d.
+18</div><div class='explain'>Lời giải: Refer 4.2.3 tự vẽ ra bảng thu gọn Decision table</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 27</div><div>You are testing a thermostat for a heating/air conditioning system. You have been given the following requirements: • When the temperature is below 70 degrees, turn on the heating system • When the temperature is above 75 degrees, turn on the air conditioning system • When the temperature is between 70 and 75 degrees, inclusive, turn on fan only Which of the following is the minimum set of test temperature values to achieve 100% two-value boundary value analysis coverage?</div><div class='opt selectedwrong'>a.
+70, 75   [Thí sinh đã chọn]</div><div class='opt'>b.
+65, 72, 80</div><div class='opt correct'>c.
+69, 70, 75, 76  [Đáp án đúng]</div><div class='opt'>d.
+70, 71, 74, 75, 76</div><div class='explain'>Lời giải: Refer 4.2.2 BVA</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 28</div><div>Consider the following test cases that are used to test an accounting system: Given this information, what is the proper order in which to execute these test cases?</div><div class='opt selectedwrong'>a.
+5, 1, 3, 2, 4   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+1, 2, 4, 5, 3  [Đáp án đúng]</div><div class='opt'>c.
+1, 3, 2, 4, 5</div><div class='opt'>d.
+3, 4, 5, 1, 2</div><div class='explain'>Lời giải: Câu này cả 2 đáp án B và C đều chạy phù hợp với Dependency, priority thì đều chưa đúng lắm, nhưng trên astqb.org exam 2 chọn đáp án B vì phù hợp hơn</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 29</div><div>Which of the following represents an INVALID transition (N)?</div><div class='opt selectedright'>a.
+Off from Display Channel 1  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+Channel 2 from Display Channel 1</div><div class='opt'>c.
+Stby from Live</div><div class='opt'>d.
+Channel 2 from Live</div><div class='explain'>Lời giải: Nhìn vào bảng đối chiếu xem vào ô nào (ô nào mà đánh dấu là N (Not) là invalid)</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 30</div><div>Which of the following test cases and expected results is VALID?</div><div class='opt selectedright'>a.
+23 year old in insurance class A Premium is 90 and excess is 2,500  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+51 year old in insurance class C Premium is 70 and excess is 500</div><div class='opt'>c.
+31 year old in insurance class B Premium is 70 and excess is 1,500</div><div class='opt'>d.
+43 year old in insurance class C Premium is 90 and excess is 1,000</div><div class='explain'>Lời giải: Refer 4.2.3 nhìn vào bảng tím ra các input họ cho thì ứng với cột nào thì tìm đc output tương ứng</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 31</div><div>The digital rainbow Thermometer uses 7 colours to show the ambient temperature. Each colour spans a range of just 5, with an operating minimum and maximum of minus 5 and 30. Which of the following values is LEAST likely to have been identified when applying the boundary value test design technique?</div><div class='opt selectedwrong'>a.
+30   [Thí sinh đã chọn]</div><div class='opt'>b.
+0</div><div class='opt correct'>c.
+8  [Đáp án đúng]</div><div class='opt'>d.
+15</div><div class='explain'>Lời giải: Refer 4.2.2 BVA. Vẽ sơ đồ ra và câu hỏi nó hỏi "values is LEAST likely- là ít đúng nhất" thì ta vẽ sơ đồ từ -5 đến 30, mỗi vùng cách nhau 5 giá trị "spans a range of just 5"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 32</div><div>You have been given the following set of test cases to run. You have been instructed to run them in order by risk and to accomplish the testing as quickly as possible to provide feedback to the developers as soon as possible. Given this information, what is the best order in which to run these tests?</div><div class='opt selectedright'>a.
+2, 4, 5, 6, 1, 3  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+4, 3, 2, 5, 6, 1</div><div class='opt'>c.
+2, 5, 6, 4, 1, 3</div><div class='opt'>d.
+6, 1, 3, 2, 4, 5</div><div class='explain'>Lời giải: Thứ tự chạy test case</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 33</div><div>The decision table above reflects a golf club's pricing structure for green fees and buggy/cart hire. What is the expected result (actions) for each of the following two test cases (TC1 and TC2)? * TC 1 - Paul is not a full member, is a Loyalty Card holder and requests to play 18 holes with a buggy/cart * TC 2 - Cheryl is not at full member, doesn't have a Loyalty Card and requests to play 9 holes with a buggy/cart</div><div class='opt selectedwrong'>a.
+TC1 - £23 total charges including buggy hire; TC2 - £21 total charge including buggy hire   [Thí sinh đã chọn]</div><div class='opt'>b.
+TC1 - £18 total charges including buggy hire; TC2 - £16 total charge but no buggy allowed</div><div class='opt correct'>c.
+TC1 - £23 total charges including buggy hire; TC2 - £16 total charge but no buggy allowed  [Đáp án đúng]</div><div class='opt'>d.
+TC1 - £17 total charges but no buggy allowed; TC2 - £21 total charge including buggy hire</div><div class='explain'>Lời giải: Refer 4.2.3 nhìn vào bảng và đối chiếu xem TC1 và TC2 tương ứng với cột nào thì đọc expected result ra</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 34</div><div>You are testing a mobile app that allows users to find a nearby restaurant, based on the type of food they want to eat. Consider the following list of test cases, priorities (smaller number is high priority), and dependencies, in the following format:(refer picture) Which of the following is a possible test execution schedule that considers both priorities and dependencies?</div><div class='opt selectedwrong'>a.
+01.001, 01.002, 01.003, 01.005, 01.004   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+01.001, 01.002, 01.004, 01.003, 01.005  [Đáp án đúng]</div><div class='opt'>c.
+01.003, 01.004, 01 .002, 01.001, 01.002</div><div class='opt'>d.
+01.001, 01.002, 01.004, 01.005, 01.003</div><div class='explain'>Lời giải: Thứ tự chạy test case</div></div></body></html>

@@ -1,0 +1,106 @@
+﻿<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+  <head><meta charset='utf-8'>
+  <style>
+    body{font-family: Arial, sans-serif;}
+    h1{color:#c0392b;}
+    .qblock{margin-bottom:20px; padding:10px; border:1px solid #ccc;}
+    .qtitle{font-weight:bold; font-size:14px; margin-bottom:6px;}
+    .opt{margin:4px 0;}
+    .correct{color:green; font-weight:bold;}
+    .selectedwrong{color:red; font-weight:bold;}
+    .selectedright{color:green; font-weight:bold;}
+    .explain{background:#f2f2f2; padding:8px; margin-top:8px; font-style:italic;}
+    img{max-width:400px; display:block; margin:6px 0;}
+  </style></head><body><h1>FL2024- chuong 4 exam 23-24-25</h1><p><b>Điểm:</b> 5/23 &nbsp; <b>Thời gian làm bài:</b> 00:00:25 &nbsp; <b>Nộp bài:</b> 2026-08-03 16:12:16</p><p><b>Video giải đáp:</b> Không có video cho bài này</p><div class='qblock'><div class='qtitle'>Câu hỏi 1</div><div>Which of the following is an approach that can be used for exploratory testing?</div><div class='opt selectedwrong'>a.
+A. A tester analyses, designs and implements tests based on external rules and standards.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. A tester methodically executes tests from a list of possible failures, based on experience, defect and failure data.</div><div class='opt correct'>c.
+C. Time-boxed test sessions are created, during which a tester uses a test charter containing test objectives to guide the testing.  [Đáp án đúng]</div><div class='opt'>d.
+D. Tests are designed based on the guidance of stakeholders and experts outside the test team.</div><div class='explain'>Lời giải: Refer 4.4.2 Exploratory Testing thì ra đáp án C đúng. A sai vì "external rules and standards" là checklist based, B sai vì "based on experience, defect and failure data" là của error guessing, D sai vì "guidance of stakeholders and experts outside" là của Consultative mục 5.2.2</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 2</div><div>A car insurance policy has 3 rates of insurance depending on the age of the driver. For drivers aged between 17 and 25 inclusive they are charged at rate A, drivers aged between 26 and 50 inclusive are charged at rate B and those drivers aged over 50 are charged at rate C. You are designing test cases, which of the following three ages would test all valid equivalence partitions and therefore test rate A, B and C?</div><div class='opt selectedwrong'>a.
+A. 17, 25, 50.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. 10, 21, 55.</div><div class='opt correct'>c.
+C. 20, 35, 65.  [Đáp án đúng]</div><div class='opt'>d.
+D. 26, 45, 50.</div><div class='explain'>Lời giải: Refer 4.2.1 xem video chữa đề này ở Exam 23 câu 3</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 3</div><div>A holiday club restricts those booking the holiday, to people between the ages of 18 and 30 inclusive. Using two-point boundary values, what ages would be required to test the lower and upper boundary?</div><div class='opt selectedwrong'>a.
+A. 17, 18, 29, 30   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. 18, 19, 29, 30.</div><div class='opt correct'>c.
+C. 17, 18, 30, 31.  [Đáp án đúng]</div><div class='opt'>d.
+D. 16, 17, 18, 30, 31, 32.</div><div class='explain'>Lời giải: Refer 4.2.1 xem video chữa đề ở Exam 23 câu 8</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 4</div><div>Which of the following is NOT a valid use of decision coverage?</div><div class='opt selectedright'>a.
+A. Checking that all decisions are based on a numeric value.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+B. Checking that all decisions have been exercised in a business process.</div><div class='opt'>c.
+C. Checking that at least 100% decision coverage has been achieved, as this guarantees 100% statement coverage.</div><div class='opt'>d.
+D. Checking that all decisions have been exercised in a single program.</div><div class='explain'>Lời giải: Refer 4.3.2 white box test. A vì based on a numeric value, không phải lúc nào giá trị test cùng là số numberic</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 5</div><div>A student needs to score at least 50 points to pass. If they score at least 100 points they will achieve a merit and if they score at least 150 points they will achieve a distinction. Which two values are in the same partition?</div><div class='opt selectedwrong'>a.
+A. 55 and 120.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+B. 50 and 60.  [Đáp án đúng]</div><div class='opt'>c.
+C. 45 and 170.</div><div class='opt'>d.
+D. 45 and 55.</div><div class='explain'>Lời giải: Refer 4.2.1. Xem video chữa đề ở Exam 23 câu 13</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 6</div><div>Given the following decision tables, what is the expected result for the test case listed below? Test Case: Purchase a Toaster weighing 9kg for £10.</div><div class='opt selectedright'>a.
+No need to pay in cash, no free delivery.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+Must pay in cash, no free delivery.</div><div class='opt'>c.
+No need to pay in cash, free delivery.</div><div class='opt'>d.
+Must pay in cash, free delivery</div><div class='explain'>Lời giải: Refer 4.2.3 Gióng test case vào cái bảng và đọc đúng expected result. Xem video chữa đề này ở câu 20 của Exam 23</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 7</div><div>Which of the following BEST describes a methodical approach to the Error Guessing test technique?</div><div class='opt selectedwrong'>a.
+A tester dynamically designs and executes tests based on their knowledge, exploration of the test item and the results of previous tests.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+An experienced tester makes a list of potential defects and failures, and designs and runs tests to generate these failures should the defects be present in the code.  [Đáp án đúng]</div><div class='opt'>c.
+A tester designs, implements and executes tests to cover test conditions found in checklists that are based on what is important for the user.</div><div class='opt'>d.
+An inexperienced tester is asked to attempt to guess errors that may have been missed by experienced testers during formal test design</div><div class='explain'>Lời giải: Refer 4.4.1 thì là B đúng experienced tester makes a list of potential defects and failures, A sai vì dynamically designs and executes là của exploratory testing,C sai vì checklists , D sai vì inexperienced tester dự đoán lỗi của tester có kinh nghiệm</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 8</div><div>Which of the following BEST describes the concept behind error guessing?</div><div class='opt selectedwrong'>a.
+Error guessing requires you to imagine you are the user of the test object and guess mistakes the user could make interacting with it.   [Thí sinh đã chọn]</div><div class='opt'>b.
+Error guessing involves using your personal experience of development and the mistakes you made as a developer.</div><div class='opt correct'>c.
+Error guessing involves using your knowledge and experience of defects found in the past and typical mistakes made by developers.  [Đáp án đúng]</div><div class='opt'>d.
+Error guessing requires you to rapidly duplicate the development task to identify the sort of mistakes a developer might make.</div><div class='explain'>Lời giải: Refer 4.4.1 C đúng vì dùng "knowledge and experience of defects" A sai vì ko có kỹ thuật nào tưởng tượng user dùng sai, B sai vì sử dụng experience of development là kinh nghiệm lập trình ko phải kinh nghiệm test, D sai vì duplicate the development task</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 9</div><div>An input field takes the year of birth between 1900 and 2004. The two boundary values for testing this field are:</div><div class='opt selectedwrong'>a.
+0,1900,2004,2005   [Thí sinh đã chọn]</div><div class='opt'>b.
+1900, 2004</div><div class='opt correct'>c.
+1899,1900,2004,2005  [Đáp án đúng]</div><div class='opt'>d.
+1899, 1900, 1901,2003,2004,2005</div><div class='explain'>Lời giải: Refer 4.2.2 vẽ ra. Xem video chữa đề câu này ở Exam 23 câu số 28</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 10</div><div>A system is designed to accept values of examination marks as follows: Fail :0-39 inclusive Pass :40-59 inclusive Merit :60-79 inclusive Distinction :80-100 inclusive In which of the following sets of values are all values in different equivalence partitions?</div><div class='opt selectedwrong'>a.
+A. 25, 40, 60, 75   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+B. 0, 45, 79, 87  [Đáp án đúng]</div><div class='opt'>c.
+C. 35, 40, 59, 69</div><div class='opt'>d.
+D. 25, 39, 60, 81</div><div class='explain'>Lời giải: Refer 4.2, câu hỏi là xác định tất cả các giá trị test trong các phân vùng tương đương khác nhau. Xem video chữa đề này ở câu 3 của Exam 24</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 11</div><div>A washing machine has three temperature bands for different kinds of fabrics: fragile fabrics are washed at temperatures between 15 and 30 degrees Celsius; normal fabrics are washed at temperatures between 31 and 60 degrees Celsius; heavily soiled and tough fabrics are washed at temperatures between 61 and 100 degrees Celsius. Which of the following contains only values that are in different equivalence partitions?</div><div class='opt selectedwrong'>a.
+A. 15, 30, 60   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. 20, 35, 60</div><div class='opt correct'>c.
+C. 25, 45, 75  [Đáp án đúng]</div><div class='opt'>d.
+D. 12, 35, 55</div><div class='explain'>Lời giải: Refer 4.2.1 : Câu hỏi là đáp án nào chỉ chứa 1 giá trị trong các phân vùng tương đương khác nhau. Xem video chữa đề này ở câu 4 của Exam 24</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 12</div><div>Consider the following pseudo code: 1 Begin 2 Read Time 3 If Time < 12 Then 4 Print(Time, "am") 5 Endif 6 If Time > 12 Then 7 Print(Time −12, "pm") 8 Endif 9 If Time = 12 Then 10 Print (Time, "noon") 11 Endif 12 End How many test cases are needed to achieve 100 per cent decision coverage?</div><div class='opt selectedwrong'>a.
+A. 1   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. 2</div><div class='opt correct'>c.
+C. 3  [Đáp án đúng]</div><div class='opt'>d.
+D. 4</div><div class='explain'>Lời giải: Refer 4.3, vẽ sơ đồ ra và xác định số test case để bao phủ 100% decision coverage. Xem video chữa đề này ở câu 5 của Exam 24</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 13</div><div>Consider the following pseudo code: 1 Begin 2 Read Time 3 If Time < 12 Then 4 Print(Time, "am") 5 Endif 6 If Time > 12 Then 7 Print(Time −12, "pm") 8 Endif 9 If Time = 12 Then 10 Print (Time, "noon") 11 Endif 12 End If the test cases Time = 11 and Time = 15 were input, what level of decision coverage would be achieved?</div><div class='opt selectedwrong'>a.
+A. 100% or 6/6   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. 50% or 3/6</div><div class='opt'>c.
+C. 67% or 4/6</div><div class='opt correct'>d.
+D. 83% or 5/6  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 4.3 , vẽ sơ đồ ra và xác định 2 test case Time = 11 and Time = 15 đã bao phủ được bao nhiêu % decision coverage. Xem video chữa đề này ở câu 6 của Exam 24</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 14</div><div>A software component has the code shown below: Program BiggestA, Biggest: Integer Begin Read A Biggest = 10 While A > 0 Do If A > Biggest Then Biggest = A Endif Read A Enddo End The component has exit criteria for component testing that include 100% statement coverage. Which of the following test cases will satisfy this criterion?</div><div class='opt selectedwrong'>a.
+A. 0   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. 10, 0</div><div class='opt'>c.
+C. 10, 5, 0</div><div class='opt correct'>d.
+D. 10, 11, 0  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 4.3 vẽ sơ đồ ra. Xem video chữa đề này ở Tab Bài học của Exam 24 câu số 7</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 15</div><div>Which of the following describes structure-based (white-box) test case design techniques?</div><div class='opt selectedwrong'>a.
+A. Test cases are derived systematically from models of the system.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. Test cases are derived systematically from the tester's experience.</div><div class='opt correct'>c.
+C. Test cases are derived systematically from the delivered code.  [Đáp án đúng]</div><div class='opt'>d.
+D. Test cases are derived from the developers' experience.</div><div class='explain'>Lời giải: Refer 4.1.1 thì A là của Black box, B là Experience based, C là White box, D là Experience based</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 16</div><div>Which of the following is a structure-based (white-box) technique?</div><div class='opt selectedwrong'>a.
+A. Decision table testing   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. State transition testing</div><div class='opt correct'>c.
+C. Statement testing  [Đáp án đúng]</div><div class='opt'>d.
+D. Boundary value analysis</div><div class='explain'>Lời giải: Refer 4.1.1 thì C đúng, A, B,D sai là vì của black box test</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 17</div><div>Which of the following are most characteristic of structure-based testing? (i) Information about how the software is constructed is used to derive test cases. (ii) Statement coverage and/or decision coverage can be measured for existing test cases. (iii) The knowledge and experience of people are used to derive test cases. (iv) Test cases are derived from a model or specification of the system</div><div class='opt selectedright'>a.
+A. (i) and (ii)  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+B. (ii) and (iii)</div><div class='opt'>c.
+C. (ii) and (iv)</div><div class='opt'>d.
+D. (i) and (iii)</div><div class='explain'>Lời giải: Refer 4.1.1 chọn i và ii của white box test và loại trừ, iii là của experience based, iv là của black box</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 18</div><div>Arrive-and-Go airline wants to clarify its baggage handling policy, whilst maximizing revenues, and will introduce the following tariffs for all baggage per individual customer (weights are rounded up to the nearest 0.1Kg): The first 2Kg will be carried free of charge. The next 10 Kg will be carried for a flat charge of $20. An additional 15Kg will be charged a total charge of $27. Luggage over this amount will be charged at $5 per Kg, up to a maximum of 150Kg per person. No passenger may take more that 150Kg with them. Which of the following would constitute boundary values for baggage weights in the price calculation?</div><div class='opt selectedwrong'>a.
+1.9, 12.0, 14.9, 150.0   [Thí sinh đã chọn]</div><div class='opt'>b.
+2.0, 9.9, 15.0, 26.9</div><div class='opt'>c.
+0, 5.0, 10.0, 17.0</div><div class='opt correct'>d.
+2.0, 12.1, 27.0, 150.1  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 4.2.2. Xem video chữa đề Exam 25 câu 16</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 19</div><div>Company ABC is going to provide their employees with a bonus which will be based on the employee's length of service in the company. The bonus calculation will be zero if they have been with the company for less than two years, 10% of their salary for more than two but less than five years, and 25% for five to ten years, 35% for ten years or more. The interface will not allow a negative value to be input, but it will allow a zero to be input. How many equivalence partitions are needed to test the calculation of the bonus?</div><div class='opt selectedwrong'>a.
+4   [Thí sinh đã chọn]</div><div class='opt'>b.
+2</div><div class='opt'>c.
+3</div><div class='opt correct'>d.
+5  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 4.2.1. Xem video chữa đề Exam 25 câu 18</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 20</div><div>A wholesaler sells printer cartridges. The minimum order quantity is 5. There is a 20% discount for orders of 100 or more printer cartridges. You have been asked to prepare test cases using various values for the number of printer cartridges ordered. Which of the following groups contain three test inputs that would be generated using Boundary Value Analysis?</div><div class='opt selectedwrong'>a.
+5, 6, 20   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+4, 5, 99  [Đáp án đúng]</div><div class='opt'>c.
+4, 5, 80</div><div class='opt'>d.
+1, 20, 0100</div><div class='explain'>Lời giải: Refer 4.2.2. Xem video chữa đề Exam 25 câu 19</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 21</div><div>Which of the following test techniques is structure-based?</div><div class='opt selectedright'>a.
+Control flow testing  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+Use case testing</div><div class='opt'>c.
+State transition testing</div><div class='opt'>d.
+Decision table testing</div><div class='explain'>Lời giải: refer 4.3.4 Kỹ thuật kiểm thử nào sau đây dựa trên cấu trúc? xem bảng summary của white box test</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 22</div><div>Which of the following is an example of black-box dynamic testing?</div><div class='opt selectedwrong'>a.
+Code inspection   [Thí sinh đã chọn]</div><div class='opt'>b.
+Checking memory leaks for a program by executing it</div><div class='opt correct'>c.
+Functional Testing  [Đáp án đúng]</div><div class='opt'>d.
+Coverage analysis</div><div class='explain'>Lời giải: refer 4.1.1 A là của static test, B là dynamic analysis bởi tool tìm ra lỗi về bộ nhớ ko phải kỹ thuật black-box ( xem thêm 3.1.3) , D là của white box test, còn C</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 23</div><div>When testing a mission critical system, a high coverage should be achieved. Which of the following techniques should be implemented as a structural based coverage technique in order to achieve the highest coverage?</div><div class='opt selectedright'>a.
+multiple condition coverage  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+decision table</div><div class='opt'>c.
+use case testing</div><div class='opt'>d.
+statement coverage</div><div class='explain'>Lời giải: refer 4.3.4 nhìn vào bảng Summary của white box test sẽ thấy mức độ coverage cao nhất là A, B C loại vì của black box test, D thấp nhất</div></div></body></html>

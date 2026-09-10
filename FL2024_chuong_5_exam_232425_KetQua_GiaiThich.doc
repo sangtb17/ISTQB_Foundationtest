@@ -1,0 +1,70 @@
+﻿<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+  <head><meta charset='utf-8'>
+  <style>
+    body{font-family: Arial, sans-serif;}
+    h1{color:#c0392b;}
+    .qblock{margin-bottom:20px; padding:10px; border:1px solid #ccc;}
+    .qtitle{font-weight:bold; font-size:14px; margin-bottom:6px;}
+    .opt{margin:4px 0;}
+    .correct{color:green; font-weight:bold;}
+    .selectedwrong{color:red; font-weight:bold;}
+    .selectedright{color:green; font-weight:bold;}
+    .explain{background:#f2f2f2; padding:8px; margin-top:8px; font-style:italic;}
+    img{max-width:400px; display:block; margin:6px 0;}
+  </style></head><body><h1>FL2024- chuong 5 exam 23-24-25</h1><p><b>Điểm:</b> 4/14 &nbsp; <b>Thời gian làm bài:</b> 00:00:25 &nbsp; <b>Nộp bài:</b> 2026-08-03 16:10:55</p><p><b>Video giải đáp:</b> Không có video cho bài này</p><div class='qblock'><div class='qtitle'>Câu hỏi 1</div><div>Which of the following would NOT typically be covered in a test summary report?</div><div class='opt selectedwrong'>a.
+A. Any features of the system that were not tested along with reasons.   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+B. Whether there is any economic benefit in continuing testing beyond the planned date.  [Đáp án đúng]</div><div class='opt'>c.
+C. The risks associated with unresolved defects found during testing.</div><div class='opt'>d.
+D. An analysis of lessons learned to determine changes for future projects.</div><div class='explain'>Lời giải: refer 5.3.2 Contents for Test Reports, B sai vì any economic benefit không có trong nội dung test report, A được hiểu là nằm ở mục summary of test, C là mục risk, D là lession learn</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 2</div><div>Which of the following are product risks? a) Failure prone software delivered. b) Software does not perform its intended functions. c) Insufficient staff available for testing. d) Test environment not ready on time. e) Poor data integrity and quality.</div><div class='opt selectedwrong'>a.
+A. b, c and d.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. b, d and e.</div><div class='opt correct'>c.
+C. a, b and e.  [Đáp án đúng]</div><div class='opt'>d.
+D. b, c and e.</div><div class='explain'>Lời giải: refer 5.2.2</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 3</div><div>Tests have been specified for the latest software release and users have prioritised these. However, there are some dependencies between tests as shown in the table below (e.g. Test ID. '123' cannot be run until Test ID. '456' has been successfully completed). Which test execution schedule best meets the prioritisation and dependency conditions?</div><div class='opt selectedwrong'>a.
+3, 5, 7, 10, 2, 4, 6, 8, 9, 1   [Thí sinh đã chọn]</div><div class='opt'>b.
+5, 7, 4, 3, 9, 10, 1, 6, 8, 2</div><div class='opt'>c.
+6, 1, 2, 9, 4, 3, 5, 7, 8, 10.</div><div class='opt correct'>d.
+1, 4, 3, 5, 2, 7, 9, 10, 6, 8  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 5.1.5</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 4</div><div>Which one of the following statements about techniques for estimating test effort is correct?</div><div class='opt selectedwrong'>a.
+The metrics-based technique finds the most similar former project and uses its original estimate for the current project   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+The expert-based approach is based on the experience of the owners of the testing tasks or by subject matter experts.  [Đáp án đúng]</div><div class='opt'>c.
+The metrics-based technique uses metrics supplied by the current test team based on their subjective feel for effort required</div><div class='opt'>d.
+In an expert-based approach, the test lead with the most years in the role is chosen to produce the estimate</div><div class='explain'>Lời giải: Refer 5.1.4 thì ra đáp án B đúng, A sai vì "uses its original estimate for the current project" metrics based là dựa trên data thực tế của dự án đã đóng trong quá khứ không phải dựa vào estimate của dự án cũ, B sai vì "based on their subjective feel" dự trên cảm giác chủ quan của owners, D sai vì "the test lead with the most years" là không đủ, ko chính xác, còn nhiều người có thể estimate được</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 5</div><div>You are testing a mobile app that allows users to find a nearby restaurant, based on the type of food they want to eat. Consider the following list of test cases, priorities (smaller number is high priority), and dependencies, in the following format:(refer picture) Which of the following is a possible test execution schedule that considers both priorities and dependencies?</div><div class='opt selectedwrong'>a.
+01.001, 01.002, 01.003, 01.005, 01.004   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+01.001, 01.002, 01.004, 01.003, 01.005  [Đáp án đúng]</div><div class='opt'>c.
+01.003, 01.004, 01 .002, 01.001, 01.002</div><div class='opt'>d.
+01.001, 01.002, 01.004, 01.005, 01.003</div><div class='explain'>Lời giải: Refer 5.1.5 Xem xét các case có dependency là None để chạy đầu tiên ta có case 001, tiếp theo chỉ có 002 chạy đc tiếp, tiếp theo có 3 case 003,004,005 có thể chạy đc ta chọn case có priority cao nhất để chạy. nhớ rằng smaller number is high priority tức là 1 là cao nhất</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 6</div><div>Which of the TOW following statements about test estimation approaches are CORRECT?</div><div class='opt selectedwrong'>a.
+With the expert-based approach, a group of expert users identified by the client recommends the necessary testing budget.   [Thí sinh đã chọn]</div><div class='opt selectedright'>b.
+With the expert-based approach, the test managers responsible for the different testing activities predict the expected testing effort.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt correct'>c.
+With the metrics-based approach, an average of the testing effort recorded from several past projects is used  [Đáp án đúng]</div><div class='opt'>d.
+With the metrics-based approach, the estimate is based on test measures from the project and so this estimate is only available after the testing starts.</div><div class='explain'>Lời giải: Refer 5.1.4 kỹ thuật estimation là có expert based dựa trên owner hoặc expert (TM hoặc PM) và metric based dựa trên dự án cũ past project. Nên chọn đc B, C. A sai vì "expert users" và D sai vì " only available after the testing starts" estimation phải có đầu tiên chứ ko phải sau khi test bắt đầu</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 7</div><div>Which of the following is a product risk?</div><div class='opt selectedright'>a.
+Poor system reliability  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+Poor communication between developers and testers</div><div class='opt'>c.
+Poor quality of test data</div><div class='opt'>d.
+Lack of needed tester training</div><div class='explain'>Lời giải: Refer 5.2.2 B cà D là project risk, còn C cũng là project risk vì test data là dữ liệu do dự án tạo ra để test</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 8</div><div>During system testing phase of a word processor, a tester finds that on opening a file from a particular set of files ,which are part of a critical workflow, the word processor crashes .which of the following is the next step the tester should prior to recording the deviation?</div><div class='opt selectedwrong'>a.
+Send an email to the developers and not report the bug   [Thí sinh đã chọn]</div><div class='opt'>b.
+Report the bug as is without any further action</div><div class='opt'>c.
+Try to identify the code fragment causing the problem</div><div class='opt correct'>d.
+Try to recreate the incident before reporting  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 5.5 Tester tìm ra đc 1 dấu hiệu lỗi là incident, để có thông tin đầy đủ chính xác cho việc report incident, tester cần cố tạo lại nó. A B sai vì send email và report bug luôn là ko nên. C sai vì đó là của lập trình viên</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 9</div><div>Which of the following is a project risk?</div><div class='opt selectedwrong'>a.
+System too costly to operate   [Thí sinh đã chọn]</div><div class='opt correct'>b.
+Skill and/or staff shortage  [Đáp án đúng]</div><div class='opt'>c.
+Poor system performance</div><div class='opt'>d.
+Vital function not implemented</div><div class='explain'>Lời giải: Refer 5.2.2 , A,C,D là của product risk</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 10</div><div>When is testing complete?</div><div class='opt selectedwrong'>a.
+A. When time and budget are exhausted.   [Thí sinh đã chọn]</div><div class='opt'>b.
+B. When there is enough information for sponsors to make an informed decision about release.</div><div class='opt correct'>c.
+C. When there are no remaining high priority defects outstanding.  [Đáp án đúng]</div><div class='opt'>d.
+D. When every data combination has been exercised successfully.</div><div class='explain'>Lời giải: Refer 5.1.3 Exit criteria thì C phù hợp là tiêu chí quan trọng nhất đánh giá hoàn thành "- (importance) Residual risks: issues/ open serious defect, untested"</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 11</div><div>What can a risk-based approach to testing provide?</div><div class='opt selectedright'>a.
+A. The types of test techniques to be employed.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+B. The total tests needed to provide 100 per cent coverage.</div><div class='opt'>c.
+C. An estimation of the total cost of development.</div><div class='opt'>d.
+D. Only that test execution is effective at reducing risk.</div><div class='explain'>Lời giải: Refer 5.2.3 thì A đúng Risk based giúp xác định test techniques. B sai vì 100% coverage là ko có, C sai là vì cost of development, D sai vì only</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 12</div><div>A new system is about to be developed. Which of the following functions has the highest level of risk?</div><div class='opt selectedright'>a.
+A. Likelihood of failure = 20%; impact value = $100,000  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+B. Likelihood of failure = 10%; impact value = $150,000</div><div class='opt'>c.
+C. Likelihood of failure = 1%; impact value = $500,000</div><div class='opt'>d.
+D. Likelihood of failure = 2%; impact value = $200,000</div><div class='explain'>Lời giải: Refer 5.2.1 cách tính Risk level = likelihood (probability) x Impact (harm) . Chỉ cần nhân đáp án vào là thấy A lớn nhất</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 13</div><div>Which of the following is the most important difference between the metrics-based approach and the expert-based approach to test estimation?</div><div class='opt selectedright'>a.
+The metrics-based approach uses calculations from historical data while the expert based approach relies on team wisdom.  [Đáp án đúng]  [Thí sinh đã chọn]</div><div class='opt'>b.
+The metrics-based approach can be used to verify an estimate created using the expert-based approach, but not vice versa</div><div class='opt'>c.
+The expert-based approach takes longer than the metrics-based approach.</div><div class='opt'>d.
+The metrics-based approach is more accurate than the expert-based approach.</div><div class='explain'>Lời giải: Refer 5.1.4 Điều nào sau đây là sự khác biệt quan trọng nhất giữa metrics-based và expert-based ? theo sách chọn A, còn các B C D đang so sánh 2 kỹ thuật này ko có căn cứ</div></div><div class='qblock'><div class='qtitle'>Câu hỏi 14</div><div>How would you estimate the amount of re-testing likely to be required?</div><div class='opt selectedwrong'>a.
+Metrics from previous similar projects   [Thí sinh đã chọn]</div><div class='opt'>b.
+Discussions with the development team</div><div class='opt'>c.
+Time allocated for regression testing</div><div class='opt correct'>d.
+a & b  [Đáp án đúng]</div><div class='explain'>Lời giải: Refer 5.1.4. Bạn ước tính effort cho re-test như thế nào? cần có a là metric based và b là expert based nên chọn D</div></div></body></html>
