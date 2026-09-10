@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: istqb-html-manager
+    runtime: python
+    plan: free
+    rootDir: .
+    buildCommand: pip install -r html_web_app/requirements.txt
+    startCommand: waitress-serve --listen=0.0.0.0:$PORT html_web_app.app:app
+    healthCheckPath: /healthz
+    disk:
+      name: quizdata
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.3
+      - key: PYTHONUTF8
+        value: 1
+      - key: FLASK_ENV
+        value: production
+      - key: DATA_DIR
+        value: /data
+      - key: MAX_CONTENT_MB
+        value: 16
+      - key: PORT
+        value: 8000
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_USER
+        sync: false
+      - key: ADMIN_PASS
+        sync: false
