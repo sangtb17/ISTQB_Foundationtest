@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Trắc Nghiệm</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-light: #2b6cb0;
+            --secondary-color: #319795;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --incorrect-bg: #fed7d7;
+            --incorrect-border: #e53e3e;
+            --explain-bg: #ebf8ff;
+            --explain-border: #3182ce;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stats-item {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .score-display {
+            color: var(--primary-light);
+            font-size: 16px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .option-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 14.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-light);
+            background-color: #ebf8ff;
+            font-weight: 500;
+        }
+
+        .option-item.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #22543d;
+            font-weight: 600;
+        }
+
+        .option-item.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #742a2a;
+        }
+
+        .btn-toggle-explain {
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-toggle-explain:hover {
+            background-color: #e2e8f0;
+            border-color: #a0aec0;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--explain-bg);
+            border-left: 4px solid var(--explain-border);
+            border-radius: 6px;
+            font-size: 14px;
+            color: #2b6cb0;
+        }
+
+        .explanation-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c5282;
+        }
+
+        .action-bar {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn-submit {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(49, 151, 149, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c7a7b;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background-color: #718096;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(113, 128, 150, 0.3);
+            transition: all 0.2s;
+            margin-left: 15px;
+        }
+
+        .btn-reset:hover {
+            background-color: #4a5568;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 id="quiz-title">Bộ Đề Trắc Nghiệm</h1>
+        <p>Luyện Tập</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stats-item">Tổng số câu: <span id="total-count">0</span></div>
+        <div class="stats-item score-display" id="score-display">Điểm số: -- / --</div>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <div class="action-bar">
+        <button class="btn-submit" onclick="submitQuiz()">Nộp Bài & Kiểm Tra Đáp Án</button>
+        <button class="btn-reset" onclick="resetQuiz()">Làm Lại</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    "id": 1,
+    "question": "<div>During which stage of the fundamental test process is the testability of requirements evaluated?</div>",
+    "options": [
+      "a.\nA. Test Design.",
+      "b.\nB. Test Analysis.",
+      "c.\nC. Test Execution.",
+      "d.\nD. Test Planning."
+    ],
+    "correct": 1,
+    "explanation": "Refer 1.4.1 đánh giá khả năng test của requirement là của Analysis"
+  },
+  {
+    "id": 2,
+    "question": "<div>Which of the following BEST describes a Test Case?</div>",
+    "options": [
+      "a.\nA. A testable aspect of a component or system identified as a basis for testing.",
+      "b.\nB. A description of the test objectives to be achieved and the means and the schedule for achieving them.",
+      "c.\nC. A set of preconditions, inputs, actions, expected results and postconditions developed based on test conditions.",
+      "d.\nD. A source to determine expected results to compare with the actual result of the system under test."
+    ],
+    "correct": 2,
+    "explanation": "Glossary tra test case ra đáp án C. A là của test condition, B là test plan, D là test oracle"
+  },
+  {
+    "id": 3,
+    "question": "<div>During the development of a software change for a system, the developer makes a mistake in his work, which leads to a fault in the code. Unfortunately, the fault is not found by software testing and is released into live. What is the DEFINITE consequence of this mistake?</div>",
+    "options": [
+      "a.\nA. If the defect is executed, the system may fail.",
+      "b.\nB. Loss of money, time, or business reputation.",
+      "c.\nC. The system will fail, causing a defect.",
+      "d.\nD. Contractual requirements have not been met by testing."
+    ],
+    "correct": 0,
+    "explanation": "Refer 1.2.3 Hậu quả cuối cùng của Mistake là gì? ta hiểu là Failure. Nhưng A đúng vì có may fail. B sai ko liên quan đến tiền, C sai vì will fail là chắc chắn sẽ fail ( hiểu là không phải tất cả các defect đều làm cho hệ thống fail, ví dụ như lỗi sai conding convention). D sai vì ko liên quan đến contract"
+  },
+  {
+    "id": 4,
+    "question": "<div>Which of the following are benefits of an independent test team, and which are drawbacks? a) Independent testers can find different defects. b) Developers may put less emphasis on quality. c) Independent testers can be seen as the reason for delayed projects. d) Independent testers can verify assumptions made during the specification of a system</div>",
+    "options": [
+      "a.\na and b are benefits, c and d are drawbacks.",
+      "b.\nb and c are benefits, a and d are drawbacks.",
+      "c.\na and d are benefits, b and c are drawbacks.",
+      "d.\nc and d are benefits, a and b are drawbacks."
+    ],
+    "correct": 2,
+    "explanation": "Refer 1.5.3"
+  },
+  {
+    "id": 5,
+    "question": "<div>What is quality assurances?</div>",
+    "options": [
+      "a.\nThe total costs incurred on quality activities and issues and often split into prevention costs, appraisal costs, internal failure costs and external failure costs.",
+      "b.\nThe degree to which a component or system protects information and data so that persons or other components or systems have the degree of access appropriate to their types and levels of authorization.",
+      "c.\nPart of quality management focused on providing confidence that quality requirements will be fulfilled.",
+      "d.\nThe degree to which a component, system or process meets specified requirements and/or user/customer needs and expectations."
+    ],
+    "correct": 2,
+    "explanation": "Refer 1.2.2 và Glossary tra quality assurance ra C là đúng, A sai vì là cost of quality, B sai vì protects information and data là của security, D sai là định nghĩa của quality"
+  },
+  {
+    "id": 6,
+    "question": "<div>Which of the following provides the BEST description of a test ware?</div>",
+    "options": [
+      "a.\nA document specifying a sequence of actions for the execution of a test. Also known as test script or manual test script.",
+      "b.\nA set of input values and expected results, with execution preconditions and execution postconditions, developed for a particular test condition.",
+      "c.\nAn attribute of a system specified by requirements documentation (for example reliability, usability or design constraints) that is executed in a test.",
+      "d.\nWork products produced during the test process for use in planning, designing, executing, evaluating and reporting on testing"
+    ],
+    "correct": 3,
+    "explanation": "Refer 1.4.3 và Glossary để tra từ. D là đúng, A là của test scripts, B là test case, C là non-functional"
+  },
+  {
+    "id": 7,
+    "question": "<div>The testing approach with the least independence is:</div>",
+    "options": [
+      "a.\nHaving another developer on the same team write the tests",
+      "b.\nHaving a tester on an independent team write the tests",
+      "c.\nHaving the users write the tests",
+      "d.\nHaving the developer write tests for his own code"
+    ],
+    "correct": 3,
+    "explanation": "refer 1.5.3 Mức độc lập thấp nhất là D"
+  },
+  {
+    "id": 8,
+    "question": "<div>Which option is part of the implementation and execution area of the fundamental test process?</div>",
+    "options": [
+      "a.\nDeveloping the tests.",
+      "b.\nComparing actual and expected results",
+      "c.\nWriting a test summary.",
+      "d.\nAnalysing lessons learnt for future releases."
+    ],
+    "correct": 1,
+    "explanation": "Refer 1.4 tìm ra B. A là của Design, C là của Monitoring, D là của Completion test"
+  },
+  {
+    "id": 9,
+    "question": "<div>Which statement is most true?</div>",
+    "options": [
+      "a.\nA.Different testing is needed depending upon the application.",
+      "b.\nB. All software is tested in the same way.",
+      "c.\nC. A technique that finds defects will always find defects.",
+      "d.\nD. A technique that has found no defects is not useful."
+    ],
+    "correct": 0,
+    "explanation": "Refer 1.3 nói về 7 nguyên lý test thì A là nguyên lý 6 Test phụ thuộc vào ngữ cảnh và phần mềm khác nhau. B sai All, C sai kỹ thuật tìm ra lỗi luôn luôn ( always) tìm ra lỗi là sai, D sai \"kỹ thuật không tìm ra lỗi là không hữu ích\""
+  },
+  {
+    "id": 10,
+    "question": "<div>A bug or defect is:?</div>",
+    "options": [
+      "a.\nA. A mistake made by a person;",
+      "b.\nB. A run-time problem experienced by a user;",
+      "c.\nC. The result of an error or mistake;",
+      "d.\nD. The result of a failure, which may lead to an error?"
+    ],
+    "correct": 2,
+    "explanation": "Refer 1.2.3 sơ đồ Error- Defect- Failure thì tìm ra là C. Defect là kết quả của 1 error"
+  },
+  {
+    "id": 11,
+    "question": "<div>Which of the following is correct? Debugging is:</div>",
+    "options": [
+      "a.\nA. Testing/checking whether the software performs correctly.",
+      "b.\nB. Checking that a previously reported defect has been corrected.",
+      "c.\nC. Identifying the cause of a defect, repairing the code and checking the fix is correct.",
+      "d.\nD. Checking that no unintended consequences have occurred as a result of a fix."
+    ],
+    "correct": 2,
+    "explanation": "Refer 1.1.2 Debugging. D sai vì là định nghĩa của regression test, A là hoạt động test, B là retest"
+  },
+  {
+    "id": 12,
+    "question": "<div>Which list of levels of tester independence is in the correct order, starting with the most independent first?</div>",
+    "options": [
+      "a.\nA. Tests designed by the author; tests designed by another member of the development team; tests designed by someone from a different company.",
+      "b.\nB. Tests designed by someone from a different department within the company; tests designed by the author; tests designed by someone from a different company.",
+      "c.\nC. Tests designed by someone from a different company; tests designed by someone from a different department within the company; tests designed by another member of the development team.",
+      "d.\nD. Tests designed by someone from a different department within the company; tests designed by someone from a different company; tests designed by the author."
+    ],
+    "correct": 2,
+    "explanation": "Refer 1.5.3 thứ tự của test independence đúng tứ mức độc lập cao nhất trở xuống, C là đúng nhất"
+  },
+  {
+    "id": 13,
+    "question": "<div>Which of the following defines the expected result of a test?</div>",
+    "options": [
+      "a.\nA. Test case",
+      "b.\nB. Test procedure",
+      "c.\nC. Test execution schedule",
+      "d.\nD. Test condition"
+    ],
+    "correct": 0,
+    "explanation": "Glossary tra cứu định nghĩa Test case, có chứa thông tin về expected result của 1 cái test"
+  },
+  {
+    "id": 14,
+    "question": "<div>When assembling a test team to work on an enhancement to an existing system, which of the following has the highest level of test independence?</div>",
+    "options": [
+      "a.\nA. A business analyst who wrote the original requirements for the system.",
+      "b.\nB. A permanent programmer who reviewed some of the new code, but has not written any of it.",
+      "c.\nC. A permanent tester who found most defects in the original system.",
+      "d.\nD. A contract tester who has never worked for the organization before."
+    ],
+    "correct": 3,
+    "explanation": "Refer1.5.3 các mức độ độc lập thì D là cao nhất vì contract tester là thuê ngoài về"
+  },
+  {
+    "id": 15,
+    "question": "<div>The following statements relate to activities that are part of the fundamental test process. i. Evaluating the testability of requirements. ii. Repeating testing activities after changes. iii. Designing the test environment set-up. iv. Developing and prioritizing test cases. v. Verifying the environment is set up correctly. Which statement below is TRUE?</div>",
+    "options": [
+      "a.\nA. (i) and (ii) are part of analysis and design, (iii), (iv) and (v) are part of test implementation and execution.",
+      "b.\nB. (i) and (iii) , (iv) are part of analysis and design, (ii) and (v) are part of test implementation and execution.",
+      "c.\nC. (i) and (v) are part of analysis and design, (ii), (iii) and (iv) are part of test implementation and execution.",
+      "d.\nD. (i) and (iv) are part of analysis and design, (ii), (iii) and (v) are part of test implementation and execution."
+    ],
+    "correct": 1,
+    "explanation": "Refer 1.4.1"
+  },
+  {
+    "id": 16,
+    "question": "<div>Which statement correctly describes the public and profession aspects of the code of ethics?</div>",
+    "options": [
+      "a.\nA. Public: Certified software testers shall act in the best interests of their client and employer (being consistent with the wider public interest). Profession: Certified software testers shall advance the integrity and reputation of their industry consistent with the public interest.",
+      "b.\nB. Public: Certified software testers shall advance the integrity and reputation of the profession consistent with the public interest. Profession: Certified software testers shall consider the wider public interest in their actions.",
+      "c.\nC. Public: Certified software testers shall consider the wider public interest in their actions. Profession: Certified software testers shall participate in lifelong learning regarding the practice of their profession and shall promote an ethical approach to the practice of their profession.",
+      "d.\nD. Public: Certified software testers shall consider the wider public interest in their actions. Profession: Certified software testers shall advance the integrity and reputation of their industry consistent with the public interest."
+    ],
+    "correct": 3,
+    "explanation": "Theo 1 tài liệu trên mạng chúng tôi đọc đc thì \"the code of ethics\" được coi là 1 \"set of rules or regulary about good and bad behavior\" cần phải được tuân thủ theo khi phát triển và test phần mềm ( confidential information là 1 ví dụ rất rõ về cái này) , các rules này xuất phát từ nhiều nguồn khác nhau: The benefit and interest of public (consider act in the interest of public là xem xét đến các mối quan tâm của cộng đồng), Professional ( tester should follow the set of values, principles, standards and advance the integrity of their profession tester nên tuân theo các rules, standards, principles mà team đưa ra để đảm bảo tính toàn vẹn và chuyên nghiệp)"
+  },
+  {
+    "id": 17,
+    "question": "<div>Which of the following are valid justifications for developers testing their own code during unit testing? (i) Their lack of independence is mitigated by independent testing during system and acceptance testing. (ii)A person with a good understanding of the code can find more defects more quickly using white-box techniques. (iii)Developers have a better understanding of the requirements than testers. (iv)Testers write unnecessary incident reports because they find minor differences between the way in which the system behaves and the way in which it is specified to work.</div>",
+    "options": [
+      "a.\nA. (i) and (ii)",
+      "b.\nB. (i) and (iv)",
+      "c.\nC. (ii) and (iii)",
+      "d.\nD. (iii) and (iv)"
+    ],
+    "correct": 0,
+    "explanation": "Refer 1.5.3 câu hỏi là giải thích về việc developer thực hiện unit test trên code của anh ta thì là i đúng vì thiếu độc lập ( khách quan) nên cần phải có tester độc lập test ở phase sau, ii đúng vì developer hiểu biết về code, tìm lỗi và sửa lỗi nhanh hơn. iii sai vì developer không thể hiểu requirement hơn tester độc lập, iv sai vì \"unnecessary incident reports\""
+  },
+  {
+    "id": 18,
+    "question": "<div>Which one of the following describes the major benefit of verification early in the life cycle?</div>",
+    "options": [
+      "a.\nIt allows the identification of changes in user requirements.",
+      "b.\nIt facilitates timely set up of the test environment.",
+      "c.\nIt reduces defect multiplication.",
+      "d.\nIt allows testers to become involved early in the project."
+    ],
+    "correct": 2,
+    "explanation": "Refer 1.1.1 và 1.2.3 chú ý vào từ \"verification early\" tìm sớm lỗi sẽ ko phát sinh nhiều vào trong các tài liệu khác"
+  },
+  {
+    "id": 19,
+    "question": "<div>Even though a test that once revealed many defects is part of the regression suite, no new test cases have been created for the module under test in a long time. What test principle is the test team forgetting?</div>",
+    "options": [
+      "a.\nAbsence-of-errors fallacy",
+      "b.\nDefect clustering",
+      "c.\nTests wear out",
+      "d.\nEarly testing"
+    ],
+    "correct": 2,
+    "explanation": "refer 1.3. chú ý \"no new test cases have been created\""
+  },
+  {
+    "id": 20,
+    "question": "<div>Test objectives vary between projects and so must be stated in the test plan. Which one of the following test objectives might conflict with the proper tester mindset?</div>",
+    "options": [
+      "a.\nShow that the system works before we ship it.",
+      "b.\nFind as many defects as possible",
+      "c.\nReduce the overall level of product risk",
+      "d.\nPrevent defects through early involvement"
+    ],
+    "correct": 0,
+    "explanation": "Refer 1.3 Test ko chứng minh được hệ thống làm việc hay không vì thế mà \"test objectives\" và test mindset có thể bị mâu thuẫn với nhau"
+  },
+  {
+    "id": 21,
+    "question": "<div>Which of the following characterises the cost of faults?</div>",
+    "options": [
+      "a.\nThey are cheapest to find in the early development phases and the most expensive to fix in the latest test phases.",
+      "b.\nThey are easiest to find during system testing but the most expensive to fix then.",
+      "c.\nFaults are cheapest to find in the early development phases but the most expensive to fix then.",
+      "d.\nAlthough faults are most expensive to find during early development phases, they are cheapest to fix then."
+    ],
+    "correct": 0,
+    "explanation": "Refer 1.1.1 đặc điểm của chi phí về lỗi?"
+  },
+  {
+    "id": 22,
+    "question": "<div>Which activity in the Fundamental Test Process creates test suites for efficient test execution?</div>",
+    "options": [
+      "a.\nImplementation and execution",
+      "b.\nAnalysis and design",
+      "c.\nPlanning and control",
+      "d.\nTest closure"
+    ],
+    "correct": 0,
+    "explanation": "refer 1.4.1 chú ý \"creates test suites\""
+  },
+  {
+    "id": 23,
+    "question": "<div>The list below (a to e) describes one major task for each of the five main activities of the fundamental test process. Which option (A to D) places the tasks in the correct order, by time? a) Create bi-directional traceability between test basis and test cases. b) Check test logs against exit criteria. c) Define the objectives of testing. d) Check planned deliverables have been delivered. e) Comparing actual results with expected results.</div>",
+    "options": [
+      "a.\na, c, b, e, d",
+      "b.\nc, a, d, e, b",
+      "c.\nc, a, e, b, d",
+      "d.\nd, a, c, b, e"
+    ],
+    "correct": 2,
+    "explanation": "Refer 1.4.1 Thứ tự nào diễn ra là đúng? chọn c là task của test plan, a là của test design, e là test execution, b là evaluate exit criteria trong giai đoạn chạy test, d là của test completion"
+  },
+  {
+    "id": 24,
+    "question": "<div>Testing and Debugging are key activities in the software development lifecycle. Which of the following are DEBUGGING activities? a) Designing tests to find failures. b) Locating the cause of failures. c) Analysing and fixing the defects. d) Executing tests to show failures.</div>",
+    "options": [
+      "a.\na and d.",
+      "b.\na and b.",
+      "c.\nb and c.",
+      "d.\nc and d."
+    ],
+    "correct": 2,
+    "explanation": "refer 1.1.2 Kiểm tra và gỡ lỗi là các hoạt động chính trong vòng đời phát triển phần mềm. Hoạt động nào sau đây là hoạt động DEBUGGING? chọn b c"
+  },
+  {
+    "id": 25,
+    "question": "<div>Testing and Debugging are key activities in the software development lifecycle. Which of the following are TESTING activities? a) Designing tests to find failures. b) Locating the cause of failures. c) Analysing and fixing the defects. d) Executing tests to show failures.</div>",
+    "options": [
+      "a.\na and d",
+      "b.\na and b.",
+      "c.\nb and c.",
+      "d.\nc and d."
+    ],
+    "correct": 0,
+    "explanation": "refer 1.1.2 Kiểm tra và gỡ lỗi là các hoạt động chính trong vòng đời phát triển phần mềm. Hoạt động nào sau đây là hoạt động THỬ NGHIỆM? chọn a, d là của testing"
+  },
+  {
+    "id": 26,
+    "question": "<div>Which of the following options BEST explains the \"Tests wear out\" principle of testing?</div>",
+    "options": [
+      "a.\nIf we do not regularly review and revise our tests, we'll stop finding defects.",
+      "b.\nRepeatedly running a set of tests will ensure that a system is defect free.",
+      "c.\nDefects are, paradoxically, often contained in a small number of modules.",
+      "d.\nTesting, like spraying pesticide, is an effective bug/defect removal activity"
+    ],
+    "correct": 0,
+    "explanation": "refer 1.3. chọn A vì \"not regularly review and revise our tests\" Test case không đc review và chỉnh sửa thường xuyên"
+  },
+  {
+    "id": 27,
+    "question": "<div>What does the term \"Tests wear out\" refer to?</div>",
+    "options": [
+      "a.\nThe phenomena where a piece of code that has a lot of bugs is likely to have more hidden, yet unfound bugs",
+      "b.\nThe decreasing efficiency of debugging when done in code that has many bugs",
+      "c.\nReduced effectiveness of test cases that are repeated and focused on the same scenarios",
+      "d.\nThe redundancy of testing the same objects in both black and white box techniques"
+    ],
+    "correct": 2,
+    "explanation": "refer 1.3 Thuật ngữ \"Thử nghiệm hao mòn\" ám chỉ điều gì? chú ý chọn C vì \"Repeated and focused on the same scenarios\""
+  },
+  {
+    "id": 28,
+    "question": "<div>In foundation level syllabus you will find the main basic principles of testing. Which of the following sentences describes one of these basic principles?</div>",
+    "options": [
+      "a.\nComplete testing of software is attainable if you have enough resources and test tools",
+      "b.\nFor a software system, it is not possible, under normal conditions, to test all input and output combinations",
+      "c.\nA goal of testing is to show that the software is defect free",
+      "d.\nWith automated testing you can make statements with more confidence about the quality of a product than with manual testing"
+    ],
+    "correct": 1,
+    "explanation": "refer 1.3 Câu nào sau đây mô tả một trong những nguyên tắc cơ bản này? chú ý vào \"it is not possible\" chọn B"
+  },
+  {
+    "id": 29,
+    "question": "<div>Which of the following is NOT a valid objective of testing?</div>",
+    "options": [
+      "a.\nEnsuring required coverage of a test object",
+      "b.\nInvestigating and fixing defects in the software under test",
+      "c.\nGaining confidence that the system is fit-for-purpose",
+      "d.\nProviding information for stakeholders' decision making"
+    ],
+    "correct": 1,
+    "explanation": "refer 1.1.1 chọn B vì là của debug"
+  }
+];
+
+let userAnswers = {};
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  document.getElementById('total-count').textContent = quizData.length;
+
+  container.innerHTML = quizData.map((q, idx) => `
+    <div class="question-card" id="card-${q.id}">
+      <div class="question-title">Câu ${idx + 1}: ${q.question}</div>
+      <ul class="options-list">
+        ${q.options.map((opt, optIdx) => `
+          <li class="option-item" 
+              id="opt-${q.id}-${optIdx}" 
+              onclick="selectOption(${q.id}, ${optIdx})">
+            ${opt}
+          </li>
+        `).join('')}
+      </ul>
+      
+      <button class="btn-toggle-explain" onclick="toggleExplanation(${q.id})">
+        💡 Lời giải / Tham chiếu
+      </button>
+
+      <div class="explanation-box" id="explain-${q.id}">
+        <strong>💡 Giải thích chi tiết:</strong>
+        <div>${q.explanation}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectOption(qId, optionIdx) {
+  userAnswers[qId] = optionIdx;
+  
+  // Highlight selected option
+  const options = document.querySelectorAll(`#card-${qId} .option-item`);
+  options.forEach((opt, idx) => {
+    if (idx === optionIdx) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
+}
+
+function toggleExplanation(qId) {
+  const box = document.getElementById(`explain-${qId}`);
+  if (box.style.display === 'none' || box.style.display === '') {
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function submitQuiz() {
+  let score = 0;
+  
+  quizData.forEach(q => {
+    const userAns = userAnswers[q.id];
+    const card = document.getElementById(`card-${q.id}`);
+    
+    // Highlight correct & incorrect answers
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected');
+      
+      if (optIdx === q.correct) {
+        optElem.classList.add('correct');
+      }
+      if (userAns !== undefined && userAns === optIdx && userAns !== q.correct) {
+        optElem.classList.add('incorrect');
+      }
+    });
+
+    if (userAns === q.correct) {
+      score++;
+    }
+
+    // Tự động mở lời giải sau khi nộp bài
+    document.getElementById(`explain-${q.id}`).style.display = 'block';
+  });
+
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: ${score} / ${quizData.length} (${Math.round(score/quizData.length*100)}%)`;
+  scoreDisplay.style.fontWeight = 'bold';
+  
+  alert(`Bạn đã hoàn thành bài thi! Điểm số: ${score}/${quizData.length}`);
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  
+  quizData.forEach(q => {
+    // Xóa các class highlight
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected', 'correct', 'incorrect');
+    });
+    
+    // Ẩn giải thích
+    document.getElementById(`explain-${q.id}`).style.display = 'none';
+  });
+
+  // Reset điểm
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: -- / --`;
+  scoreDisplay.style.fontWeight = 'normal';
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Khởi chạy khi load trang
+window.onload = function() {
+    const titleMatch = window.location.pathname.match(/([^/\\]+)\.html$/);
+    if(titleMatch) {
+        document.getElementById('quiz-title').textContent = decodeURIComponent(titleMatch[1]);
+    }
+    renderQuiz();
+};
+</script>
+
+</body>
+</html>
