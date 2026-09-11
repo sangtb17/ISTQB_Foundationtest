@@ -251,11 +251,21 @@ body {
     font-weight: 600;
 }
 
+.section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
+    font-size: 1.35rem;
+    font-weight: 600;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
 .sort-toggle-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    margin-left: 0.8rem;
     padding: 0.35rem 0.8rem;
     background: rgba(0, 210, 255, 0.12);
     border: 1px solid rgba(0, 210, 255, 0.35);

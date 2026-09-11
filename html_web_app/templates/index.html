@@ -80,12 +80,14 @@
             </div>
 
             <!-- Folders List -->
-            {% if folders %}
             <section class="folders-section">
-                <h2>Thư mục</h2>
-                <button type="button" class="sort-toggle-btn" onclick="toggleSort()" title="Sắp xếp A-Z / Z-A">
-                    <span class="sort-icon">⇅</span> <span class="sort-order-name">{{ 'Z-A' if sort=='desc' else 'A-Z' }}</span>
-                </button>
+                <h2 class="section-head">
+                    Thư mục
+                    <button type="button" class="sort-toggle-btn" onclick="toggleSort()" title="Sắp xếp A-Z / Z-A">
+                        <span class="sort-icon">⇅</span> <span class="sort-order-name">{{ 'Z-A' if sort=='desc' else 'A-Z' }}</span>
+                    </button>
+                </h2>
+                {% if folders %}
                 <div class="folder-grid">
                     {% for folder in folders %}
                     <div class="folder-card glass-panel" data-folder="{{ folder }}">
@@ -115,12 +117,21 @@
                     </div>
                     {% endfor %}
                 </div>
+                {% else %}
+                <div class="empty-state glass-panel">
+                    <p>Không có thư mục w tym folderze.</p>
+                </div>
+                {% endif %}
             </section>
-            {% endif %}
 
             <!-- Files List -->
             <section class="file-list-section">
-                <h2>Danh sách File HTML</h2>
+                <h2 class="section-head">
+                    Danh sách File HTML
+                    <button type="button" class="sort-toggle-btn" onclick="toggleSort()" title="Sắp xếp A-Z / Z-A">
+                        <span class="sort-icon">⇅</span> <span class="sort-order-name">{{ 'Z-A' if sort=='desc' else 'A-Z' }}</span>
+                    </button>
+                </h2>
                 {% if files %}
                 <div class="file-grid">
                     {% for file in files %}
