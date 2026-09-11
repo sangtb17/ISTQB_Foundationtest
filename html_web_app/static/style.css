@@ -251,6 +251,31 @@ body {
     font-weight: 600;
 }
 
+.sort-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-left: 0.8rem;
+    padding: 0.35rem 0.8rem;
+    background: rgba(0, 210, 255, 0.12);
+    border: 1px solid rgba(0, 210, 255, 0.35);
+    border-radius: 8px;
+    color: var(--primary-color);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.sort-toggle-btn:hover {
+    background: rgba(0, 210, 255, 0.22);
+}
+
+.sort-icon {
+    font-size: 0.9rem;
+}
+
 .folder-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));

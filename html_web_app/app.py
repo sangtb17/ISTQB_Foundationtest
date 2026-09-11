@@ -95,7 +95,7 @@ def get_all_folders(base_path):
 @app.route('/<path:req_path>')
 def index(req_path=''):
     abs_path = os.path.join(UPLOAD_FOLDER, req_path)
-    
+
     # Kiểm tra bảo mật
     if not is_safe(abs_path):
         flash('Đường dẫn không hợp lệ.', 'error')
@@ -118,8 +118,12 @@ def index(req_path=''):
         elif item.lower().endswith('.html') and os.path.isfile(item_path):
             html_files.append(item)
 
-    folders.sort()
-    html_files.sort(reverse=True)
+    # Sort toggle A-Z / Z-A (mặc daso asc)
+    sort = request.args.get('sort', 'asc')
+    if sort not in ('asc', 'desc'):
+        sort = 'asc'
+    folders.sort(key=str.casefold, reverse=(sort == 'desc'))
+    html_files.sort(key=str.casefold, reverse=(sort == 'desc'))
 
     all_folders = get_all_folders(UPLOAD_FOLDER)
     all_folders.sort()
@@ -139,7 +143,8 @@ def index(req_path=''):
                            files=html_files, 
                            current_path=req_path,
                            breadcrumbs=breadcrumbs,
-                           all_folders=all_folders)
+                           all_folders=all_folders,
+                           sort=sort)
 
 @app.route('/upload', methods=['POST'])
 def upload_file():

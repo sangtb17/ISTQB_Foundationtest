@@ -83,6 +83,9 @@
             {% if folders %}
             <section class="folders-section">
                 <h2>Thư mục</h2>
+                <button type="button" class="sort-toggle-btn" onclick="toggleSort()" title="Sắp xếp A-Z / Z-A">
+                    <span class="sort-icon">⇅</span> <span class="sort-order-name">{{ 'Z-A' if sort=='desc' else 'A-Z' }}</span>
+                </button>
                 <div class="folder-grid">
                     {% for folder in folders %}
                     <div class="folder-card glass-panel" data-folder="{{ folder }}">
@@ -284,6 +287,15 @@
                 closeAllDropdowns();
             }
         });
+
+        // Sort toggle A-Z / Z-A by reloading with ?sort= param
+        const currentSort = '{{ sort }}';
+        function toggleSort() {
+            const next = (currentSort === 'desc') ? 'asc' : 'desc';
+            const url = new URL(window.location.href);
+            url.searchParams.set('sort', next);
+            window.location.href = url.toString();
+        }
     </script>
 </body>
 </html>
