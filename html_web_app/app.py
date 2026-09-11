@@ -46,6 +46,28 @@ try:
                 break
 except OSError:
     pass
+
+def _seed_folders_if_missing(*folder_names):
+    """Chép các thư mục con (vd: F2026_ Đề thi tổng hợp) từ repo vào DATA_DIR
+    nếu chưa tồn tại. Chạy lại mỗi lần deploy nên idempotent — thư mục đã có
+    trên Disk /data sẽ được giữ nguyên và không bị ghi đè."""
+    for folder_name in folder_names:
+        dest = os.path.join(UPLOAD_FOLDER, folder_name)
+        if os.path.isdir(dest):
+            continue
+        for _cand in (os.path.join(PARENT_DIR, 'seed_data', folder_name),
+                      os.path.join(PARENT_DIR, folder_name),
+                      os.path.join(os.getcwd(), 'seed_data', folder_name),
+                      os.path.join(os.getcwd(), folder_name)):
+            if os.path.isdir(_cand):
+                try:
+                    shutil.copytree(_cand, dest)
+                    print(f"[seed] da tao folder: {folder_name}")
+                except OSError as e:
+                    print(f"[seed] khong tao duoc {folder_name}: {e}")
+                break
+
+_seed_folders_if_missing('F2026_ Đề thi tổng hợp')
 try:
     MAX_MB = int(os.getenv('MAX_CONTENT_MB', '200'))
 except ValueError:
