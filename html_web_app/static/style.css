@@ -258,9 +258,7 @@ body {
 }
 
 .folder-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: block;
     padding: 1rem 1.2rem;
     transition: transform 0.25s, border-color 0.25s;
 }
@@ -268,6 +266,70 @@ body {
 .folder-card:hover {
     transform: translateY(-3px);
     border-color: var(--folder-color);
+}
+
+.folder-view {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.folder-card.editing .folder-view {
+    display: none;
+}
+
+.folder-view-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    flex-shrink: 0;
+}
+
+.btn-rename:hover {
+    background: rgba(0, 210, 255, 0.2);
+    transform: scale(1.15);
+}
+
+.folder-edit-form {
+    display: none;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.folder-card.editing .folder-edit-form {
+    display: flex;
+}
+
+.folder-rename-input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    background: rgba(0,0,0,0.3);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.btn-save {
+    color: #69f0ae;
+}
+
+.btn-save:hover {
+    background: rgba(76, 175, 80, 0.25);
+    transform: scale(1.15);
+}
+
+.btn-cancel {
+    color: #ff8a80;
+}
+
+.btn-cancel:hover {
+    background: rgba(255, 82, 82, 0.25);
+    transform: scale(1.15);
 }
 
 .folder-link {

@@ -197,6 +197,42 @@ def create_folder():
 
     return redirect(url_for('index', req_path=current_path))
 
+@app.route('/rename_folder', methods=['POST'])
+def rename_folder():
+    current_path = request.form.get('current_path', '')
+    old_name = request.form.get('old_name', '').strip()
+    new_name = request.form.get('new_name', '').strip()
+
+    if not old_name or not new_name:
+        flash('Tên thư mục không được để trống.', 'error')
+        return redirect(url_for('index', req_path=current_path))
+    if old_name == new_name:
+        return redirect(url_for('index', req_path=current_path))
+    for bad in ('/', '\\', '..'):
+        if bad in new_name or bad in old_name:
+            flash('Tên thư mục không được chứa / \\ hoặc ..', 'error')
+            return redirect(url_for('index', req_path=current_path))
+
+    src = os.path.join(UPLOAD_FOLDER, current_path, old_name)
+    dst = os.path.join(UPLOAD_FOLDER, current_path, new_name)
+    if not (is_safe(src) and is_safe(dst)):
+        flash('Đường dẫn không hợp lệ.', 'error')
+        return redirect(url_for('index', req_path=current_path))
+    if not os.path.isdir(src):
+        flash('Thư mục không tồn tại.', 'error')
+        return redirect(url_for('index', req_path=current_path))
+    if os.path.exists(dst):
+        flash('Đã tồn tại thư mục cùng tên.', 'error')
+        return redirect(url_for('index', req_path=current_path))
+
+    try:
+        os.rename(src, dst)
+        flash(f'Đã đổi tên: {old_name} → {new_name}', 'success')
+    except Exception as e:
+        flash(f'Lỗi khi đổi tên: {str(e)}', 'error')
+
+    return redirect(url_for('index', req_path=current_path))
+
 @app.route('/move_file', methods=['POST'])
 def move_file():
     current_path = request.form.get('current_path', '')

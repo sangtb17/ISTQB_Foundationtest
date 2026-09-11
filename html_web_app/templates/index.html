@@ -70,16 +70,29 @@
                 <h2>Thư mục</h2>
                 <div class="folder-grid">
                     {% for folder in folders %}
-                    <div class="folder-card glass-panel">
-                        <a href="{{ url_for('index', req_path=(current_path + '/' + folder).strip('/')) }}" class="folder-link">
-                            <span class="folder-icon">📁</span>
-                            <span class="folder-name">{{ folder }}</span>
-                        </a>
-                        <form action="{{ url_for('delete_item') }}" method="post" onsubmit="return confirm('Bạn có chắc muốn xóa thư mục này và tất cả file bên trong không?');">
+                    <div class="folder-card glass-panel" data-folder="{{ folder }}">
+                        <div class="folder-view">
+                            <a href="{{ url_for('index', req_path=(current_path + '/' + folder).strip('/')) }}" class="folder-link">
+                                <span class="folder-icon">📁</span>
+                                <span class="folder-name">{{ folder }}</span>
+                            </a>
+                            <div class="folder-view-actions">
+                                <button type="button" class="btn-icon btn-rename" title="Đổi tên thư mục" onclick="startRename(this)">✏️</button>
+                                <form action="{{ url_for('delete_item') }}" method="post" onsubmit="return confirm('Bạn có chắc muốn xóa thư mục này và tất cả file bên trong không?');">
+                                    <input type="hidden" name="current_path" value="{{ current_path }}">
+                                    <input type="hidden" name="item_name" value="{{ folder }}">
+                                    <input type="hidden" name="is_folder" value="true">
+                                    <button type="submit" class="btn-icon btn-danger" title="Xóa thư mục">🗑️</button>
+                                </form>
+                            </div>
+                        </div>
+                        <form action="{{ url_for('rename_folder') }}" method="post" class="folder-edit-form" onsubmit="return submitRename(this)">
                             <input type="hidden" name="current_path" value="{{ current_path }}">
-                            <input type="hidden" name="item_name" value="{{ folder }}">
-                            <input type="hidden" name="is_folder" value="true">
-                            <button type="submit" class="btn-icon btn-danger" title="Xóa thư mục">🗑️</button>
+                            <input type="hidden" name="old_name" value="{{ folder }}">
+                            <span class="folder-icon">📁</span>
+                            <input type="text" name="new_name" value="{{ folder }}" class="folder-rename-input" maxlength="100" autocomplete="off">
+                            <button type="submit" class="btn-icon btn-save" title="Lưu">✔</button>
+                            <button type="button" class="btn-icon btn-cancel" title="Hủy (Esc)" onclick="cancelRename(this)">✖</button>
                         </form>
                     </div>
                     {% endfor %}
@@ -192,6 +205,57 @@
         // Close dropdown on outside click
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.move-dropdown-wrap')) {
+                closeAllDropdowns();
+            }
+        });
+
+        // Inline rename folder
+        function closeAllRenames(except) {
+            document.querySelectorAll('.folder-card.editing').forEach(card => {
+                if (card !== except) card.classList.remove('editing');
+            });
+        }
+
+        function startRename(btn) {
+            const card = btn.closest('.folder-card');
+            closeAllRenames(card);
+            card.classList.add('editing');
+            const input = card.querySelector('.folder-rename-input');
+            input.focus();
+            input.select();
+        }
+
+        function cancelRename(btn) {
+            const card = btn.closest('.folder-card');
+            const input = card.querySelector('.folder-rename-input');
+            input.value = card.dataset.folder;
+            card.classList.remove('editing');
+        }
+
+        function submitRename(form) {
+            const card = form.closest('.folder-card');
+            const input = form.querySelector('.folder-rename-input');
+            const val = input.value.trim();
+            if (!val) {
+                alert('Tên thư mục không được để trống.');
+                input.focus();
+                return false;
+            }
+            if (val.includes('/') || val.includes('\\') || val.includes('..')) {
+                alert('Tên thư mục không được chứa / \\ hoặc ..');
+                input.focus();
+                return false;
+            }
+            if (val === card.dataset.folder) {
+                card.classList.remove('editing');
+                return false;
+            }
+            return true;
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeAllRenames(null);
                 closeAllDropdowns();
             }
         });
