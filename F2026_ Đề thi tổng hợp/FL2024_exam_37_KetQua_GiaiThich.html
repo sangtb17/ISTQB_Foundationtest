@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Trắc Nghiệm</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-light: #2b6cb0;
+            --secondary-color: #319795;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --incorrect-bg: #fed7d7;
+            --incorrect-border: #e53e3e;
+            --explain-bg: #ebf8ff;
+            --explain-border: #3182ce;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stats-item {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .score-display {
+            color: var(--primary-light);
+            font-size: 16px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .option-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 14.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-light);
+            background-color: #ebf8ff;
+            font-weight: 500;
+        }
+
+        .option-item.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #22543d;
+            font-weight: 600;
+        }
+
+        .option-item.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #742a2a;
+        }
+
+        .btn-toggle-explain {
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-toggle-explain:hover {
+            background-color: #e2e8f0;
+            border-color: #a0aec0;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--explain-bg);
+            border-left: 4px solid var(--explain-border);
+            border-radius: 6px;
+            font-size: 14px;
+            color: #2b6cb0;
+        }
+
+        .explanation-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c5282;
+        }
+
+        .action-bar {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn-submit {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(49, 151, 149, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c7a7b;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background-color: #718096;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(113, 128, 150, 0.3);
+            transition: all 0.2s;
+            margin-left: 15px;
+        }
+
+        .btn-reset:hover {
+            background-color: #4a5568;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 id="quiz-title">Bộ Đề Trắc Nghiệm</h1>
+        <p>Luyện Tập</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stats-item">Tổng số câu: <span id="total-count">0</span></div>
+        <div class="stats-item score-display" id="score-display">Điểm số: -- / --</div>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <div class="action-bar">
+        <button class="btn-submit" onclick="submitQuiz()">Nộp Bài & Kiểm Tra Đáp Án</button>
+        <button class="btn-reset" onclick="resetQuiz()">Làm Lại</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    "id": 1,
+    "question": "<div class=\"qtext\">A decision contains independent atomic conditions. If 100% Modified Condition/Decision Coverage (MC/DC) is achieved using the minimum number of test cases, which of the following statements must be TRUE for each atomic condition? 1. Each atomic condition has been exercised with a TRUE outcome at least once. 2. Each atomic condition has been exercised with a FALSE outcome at least once. 3. Each atomic independently condition has been shown to affect 1 and 2. Which of the following represents the correct set of requirements?</div>",
+    "options": [
+      "a. 1,2 correct",
+      "b. 2,3 correct",
+      "c. 1,3 correct",
+      "d. 1,2,3 correct"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.3 White box test, định nghĩa đúng của MC/DC"
+  },
+  {
+    "id": 2,
+    "question": "<div class=\"qtext\">You are testing a new automated \"Auto-Landing\" module. A failure in this module is classified as Catastrophic, potentially leading to the loss of the aircraft. According to ISTQB Advanced Level guidance and aviation standards like DO-178C, which safety-related coverage criterion MUST be met?</div>",
+    "options": [
+      "a. 100% Statement Coverage",
+      "b. 100% Decision Coverage",
+      "c. 100% Modified Condition/Decision Coverage (MC/DC)",
+      "d. 100% Multiple Condition Coverage (MCC)"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.3 White box test, định nghĩa đúng của MC/DC"
+  },
+  {
+    "id": 3,
+    "question": "<div class=\"qtext\">You are testing a new automated \"Auto-Landing\" module. This is the safety-critical module that have to compliant with many standards like DO-178C, which of following category should be classified for a failure in the \"Auto-Landing\" module which potentially leading to the loss of the aircraft?</div>",
+    "options": [
+      "a. Catastrophic",
+      "b. Hazardous",
+      "c. Major",
+      "d. Minor"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.3 White box test, định nghĩa đúng của MC/DC"
+  },
+  {
+    "id": 4,
+    "question": "<div class=\"qtext\">Which of the following statements best describes the testing principle \"context-driven testing\"? chúng tôi đã tra cứu thì thấy ý nghĩa của context-driven testing là bằng với test is context dependent 1 nguyên lý của test</div>",
+    "options": [
+      "a. Testing is performed differently depending on the type of software, the risks involved, and the project environment.",
+      "b. The same testing process and techniques should be applied to all projects regardless of the product being developed.",
+      "c. Testing activities should only start once the code is fully developed and the environment is ready",
+      "d. The main goal of testing is to prove that the software is 100% free of defects before it is released."
+    ],
+    "correct": 0,
+    "explanation": "Refer 1.3 7 nguyên lý của hoạt động test, test phụ thuộc vào ngữ cảnh"
+  },
+  {
+    "id": 5,
+    "question": "<div class=\"qtext\">Which of the following is a primary responsibility of a tester in a CI/CD pipeline?</div>",
+    "options": [
+      "a. Manually executing all regression test cases before every code commit to the repository",
+      "b. Identifying which tests should be automated and integrated into the build process for rapid feedback",
+      "c. Being the sole owner of product quality and deciding alone when a build is ready for production.",
+      "d. Postponing all non-functional testing until the final delivery stage to avoid slowing down the pipeline"
+    ],
+    "correct": 1,
+    "explanation": "Refer 2.1 Phần CI/CD trong Devops là nói về test automation, và phản hồi sớm"
+  },
+  {
+    "id": 6,
+    "question": "<div class=\"qtext\">A software project is facing a tight deadline and the team has identified that several potential risks were not documented during the initial risk analysis phase (unknown risks). Which test technique is the MOST appropriate to help identify and mitigate these undocumented risks during test execution?</div>",
+    "options": [
+      "a. Statement Coverage",
+      "b. Decision Testing",
+      "c. Experience-Based Testing (EBT)",
+      "d. Equivalence Partitioning"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.3, với cái risk mà chưa đc biết đến (unknown risks) thì ko thể dùng black box và white box test đc, chỉ có thể dùng EBT là test theo kinh nghiệm để tìm thêm những cái có thể bỏ xót. Ngoài ra có nhiều dấu hiệu của câu hỏi để thấy đáp án chỉ có thể là EBT như a tight deadline thời gian rất eo hẹp"
+  },
+  {
+    "id": 7,
+    "question": "<div class=\"qtext\">A Machine Learning (ML) model is used to manage the lifecycle of an autonomous credit scoring system. The system moves through different stages: Data Ingestion, Model Training, Validation, and Deployment. A transition occurs from Model Training to Validation once the training dataset is processed. If the model meets the accuracy threshold, it moves to Deployment; otherwise, it triggers a \"Retrain\" event and moves back to Model Training. Which test technique is MOST suitable to verify that the ML lifecycle correctly handles these sequences of events and prevents unauthorized movements between stages?</div>",
+    "options": [
+      "a. Equivalence Partitioning",
+      "b. Statement Coverage",
+      "c. State Transition Testing",
+      "d. Decision Table Testing"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2.3 Câu hỏi nó hỏi kỹ thuật nào phù hợp để mô tả đc Machine learning kiểm soát đc các event và .... thì kỹ thuật phù hợp là state transition"
+  },
+  {
+    "id": 8,
+    "question": "<div class=\"qtext\">A risk analysis was conducted for a new high-traffic e-commerce mobile application. The analysis identified that the likelihood of failure is extremely high during flash sale events, where thousands of users are expected to browse and purchase items simultaneously. If the system fails under this pressure, the financial impact will be significant. Based on this product-risk assessment, which type of testing should be prioritized to mitigate the risk associated with high user volume?</div>",
+    "options": [
+      "a. Performance Testing",
+      "b. Functional Testing",
+      "c. Structure-based Testing",
+      "d. Regression Testing"
+    ],
+    "correct": 0,
+    "explanation": "Refer 2.3 test types. Câu hỏi nói về 1 cái risk nghiêm trọng, họ hỏi là test nào giúp giảm cái rủi ro cao đó với high user volume - số lượng lớn người dùng nên ta chọn đc performance"
+  },
+  {
+    "id": 9,
+    "question": "<div class=\"qtext\">During the risk analysis phase of a new financial application, the team performs product-likely testing assessments to prioritize the test effort. They identify a high risk that the system's response time will degrade significantly when the number of concurrent users exceeds 5,000. To mitigate this specific high-likelihood product risk, which type of testing should be included in the test plan?</div>",
+    "options": [
+      "a. Decision Table Testing",
+      "b. Performance Testing",
+      "c. Statement Coverage",
+      "d. Exploratory Testing"
+    ],
+    "correct": 1,
+    "explanation": "Refer 2.3 test types. Họ nói về 1 cái risk liên quan đến việc nếu hệ thống mà vượt quá 5.000 user thì thời gian phản hồi chậm, vậy test nào giúp giảm rủi ro này"
+  },
+  {
+    "id": 10,
+    "question": "<div class=\"qtext\">Which metric is most commonly used during the Test Monitoring and Control activity to provide an objective measurement of the testing progress relative to the planned schedule?</div>",
+    "options": [
+      "a. Number of defects found",
+      "b. Number of defects passed",
+      "c. % of executed test cases",
+      "d. Number of requirements identified"
+    ],
+    "correct": 2,
+    "explanation": "Refer 5.4 test metrics. Nó hỏi metric nào đo về tiến độ test progress mà có liên quan đến kế hoạch the planned schedule. Test progress thường là tỷ lệ % như % TC chạy, % Requirement done, % bug đc sửa. Thì thấy A, B,D mới có chỉ 1 con số Number của cái gì đó thôi nên ko thể nào là đo về progress đc, chỉ chọn đc C"
+  },
+  {
+    "id": 11,
+    "question": "<div class=\"qtext\">Which test level focuses on the behavior and capabilities of a whole system or product, often considering end-to-end tasks and the non-functional behaviors of the entire system?</div>",
+    "options": [
+      "a. Component Testing",
+      "b. Integration Testing",
+      "c. System Testing",
+      "d. Acceptance Testing"
+    ],
+    "correct": 2,
+    "explanation": "Refer 2.2 test level. Họ hỏi cái level nào mà test cho toàn bộ hệ thống entire system"
+  },
+  {
+    "id": 12,
+    "question": "<div class=\"qtext\">A development team is using AI transfer learning to build a new medical imaging model. They are taking a pre-trained model (trained on general objects) and fine-tuning it with a smaller, specialized dataset of X-ray images. During the integration phase, the team needs to verify that the newly added layers correctly process the input data without needing to see the internal weights of the original pre-trained base. Which testing approach or technique is MOST suitable for validating the external behavior of this fine-tuned AI system?</div>",
+    "options": [
+      "a. Security scan",
+      "b. Unit test",
+      "c. Black-box testing",
+      "d. Static analysis"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.1.1. Câu hỏi là cái kỹ thuật nào phù hợp để kiểm tra external behavior của hệ thống AI, xem sách thì chỉ có Black box mới test cái behavior thôi. Còn D và A là tool phân tích tĩnh của chương 3 liên quan đến rà soát code, B là unit test thì lại càng ko kiểm tra về behavior"
+  },
+  {
+    "id": 13,
+    "question": "<div class=\"qtext\">Which of the following is a primary objective of testing throughout the software development lifecycle?</div>",
+    "options": [
+      "a. To prove that the software is completely free of all bugs and errors.",
+      "b. To identify defects and reduce the level of risk to software quality.",
+      "c. To increase the quality and reliability of the software by fixing all found defects.",
+      "d. To ensure that the development team follows the project schedule."
+    ],
+    "correct": 1,
+    "explanation": "Refer 1.1 test objectives. Thì thấy là theo sách chọn B vì identify defects là đúng, A loại vì to prove là chứng minh là hệ thống ko có lỗi, D và C ko phải mục tiêu của test nó có thể là mục tiêu của dự án"
+  },
+  {
+    "id": 14,
+    "question": "<div class=\"qtext\">A software testing team is working on an airborne system where safety is the highest priority. They are required to identify and categorize failure conditions (such as Catastrophic, Hazardous, or Major) to determine the necessary level of software assurance. Which of the following standards is MOST likely being followed in this context?</div>",
+    "options": [
+      "a. ISO/IEC 29119",
+      "b. DO-178B (or DO-178C)",
+      "c. ISO 9001",
+      "d. IEEE 829"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.3 White box test, chuẩn an toàn DO 178B mô tả về các lỗi này Catastrophic, Hazardous, or Major"
+  },
+  {
+    "id": 15,
+    "question": "<div class=\"qtext\">A software company is behind schedule and decides to apply Error Guessing to quickly identify potential defects in the user interface. Which of the following statements BEST describes the factor that makes this technique effective?</div>",
+    "options": [
+      "a. It is most effective when performed by testers with little to no experience, as they have a",
+      "b. It is most effective when performed by testers with significant experience, as they use their knowledge of past failures and typical programmer errors.",
+      "c. It is a formal technique that requires no prior knowledge of the system or similar applications.",
+      "d. It is only effective when performed by developers who wrote the code, as they know exactly where the bugs are"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.3.1 Test Error guessing thì cần phải có tester có kinh nghiệm về các similar project thì mới test đc nên chọn B là tester phải có kinh nghiệm, D loại vì only bởi developer là sai rồi, C loại vì formal technique cái này của Experience based là dạng informal, A loại vì little to no experience"
+  },
+  {
+    "id": 16,
+    "question": "<div class=\"qtext\">A system has three independent input fields. Each input field has been divided into exactly 3 equivalent partitions. If the test objective is to test every possible combination of these partitions, how many test cases are required?</div>",
+    "options": [
+      "a. 3",
+      "b. 6",
+      "c. 9",
+      "d. 27"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.2 EP. Câu này vì nó hỏi tất cả các TH kết hợp đc của EP thì là 27 (3*3*3), nếu câu hỏi hỏi minimum TC thì sẽ là 3"
+  },
+  {
+    "id": 17,
+    "question": "<div class=\"qtext\">A tester is evaluating a software application to ensure it meets its requirements. During this process, the tester performs execution of the code by running the application with various inputs and verifying the outputs. Which of the following describes the type of testing being performed, in contrast to techniques that examine the code without running it?</div>",
+    "options": [
+      "a. Static testing",
+      "b. System testing",
+      "c. Integration testing",
+      "d. Dynamic testing"
+    ],
+    "correct": 3,
+    "explanation": "Refer 3.1.3 Câu hỏi nó hỏi kỹ thuật test nào mà nó tương phản với kỹ thuật kiểm tra code ko cần phải chạy (in contrast to techniques that examine the code without running it) vì thế nêu ko chạy code thì là static test, trái ngược với nó là Dynamic test"
+  },
+  {
+    "id": 18,
+    "question": "<div class=\"qtext\">A tester is evaluating a software application to ensure it meets its requirements. During this process, the tester performs execution of the code by running the application with various inputs and verifying the outputs. Which of the following techniques that examine the code without running it?</div>",
+    "options": [
+      "a. Static testing",
+      "b. Integration test",
+      "c. System test",
+      "d. Dynamic test"
+    ],
+    "correct": 0,
+    "explanation": "Refer 3.1.3 kỹ thuật rà soát code mà ko chạy nó là static testing"
+  },
+  {
+    "id": 19,
+    "question": "<div class=\"qtext\">When testing a system that incorporates Artificial Intelligence (AI), testers face new challenges that are not typically found in traditional software. Which of the following refers to a specific testing concern where the model may produce unfair or inaccurate results due to non-representative training data?</div>",
+    "options": [
+      "a. Consistency environment",
+      "b. Bias and Fairness (including training data bias)",
+      "c. Statement Coverage",
+      "d. Equivalence Partitioning"
+    ],
+    "correct": 1,
+    "explanation": "Câu hỏi này nó lấy từ đề của AI mà các kỹ thuật bình thường ko dùng dc vì nó liên quan đến test phần đào tạo cho AI với dự liệu ko chính xác"
+  },
+  {
+    "id": 20,
+    "question": "<div class=\"qtext\">In an Agile development environment, which of the following activities or practices is primarily intended to provide the fastest (rapid) feedback on code changes to the developers?</div>",
+    "options": [
+      "a. Retrospective",
+      "b. Sprint Planning",
+      "c. Continuous Integration (and automated Unit Testing)",
+      "d. Daily Stand-up"
+    ],
+    "correct": 2,
+    "explanation": "Refer 2.1 phần Deops. cái nào đưa ra phản hồi nhanh nhất cho LTV dựa trên thay đổi code là CI Tích hợp và build liên tục sẽ trả kết quả nhanh cho LTV về code"
+  },
+  {
+    "id": 21,
+    "question": "<div class=\"qtext\">When using a test execution tool that primarily functions through capture/replay (recording manual test actions to be replayed later), which of the following is a common risk or characteristic that must be considered?</div>",
+    "options": [
+      "a. Automated test cases must be created by testers with extensive programming experience.",
+      "b. Automated test cases are inherently easy to maintain when the software changes.",
+      "c. Automated test cases are automatically data-driven without further configuration",
+      "d. Automated test cases (recorded manual tests) may become unstable in use"
+    ],
+    "correct": 3,
+    "explanation": "Refer 6.2 Người ta hỏi về rủi ro nào của việc sử dụng tool Capture/Replay là tool tự động record và sinh script đó. Tool này thường là unstable và rất tốn công sức để maintain mỗi khi giao diện thay đổi nên chọn D, B nó bảo dễ maintain là sai nhé"
+  },
+  {
+    "id": 22,
+    "question": "<div class=\"qtext\">Which of the following is the BEST example of a product risk?</div>",
+    "options": [
+      "a. The development team does not have sufficient experience with the new programming language.",
+      "b. The test environment may not be ready in time for the planned test execution phase.",
+      "c. The software fails to perform its intended functions correctly under specific conditions in the delivered product.",
+      "d. The third-party contractor might delay the delivery of a critical software component"
+    ],
+    "correct": 2,
+    "explanation": "Refer 5.5 Risk management. nó hỏi về product risk thì bạn chỉ cần phân loại đâu là product risk và đâu là project risk thôi. A development team ko đủ ... là project risk, B test environment cũng là project risk, D third-party contractor hợp đồng với bên thứ 3 là project risk, C là phần mềm có thể lỗi tính năng gì đó khi delivery cho KH là product risk"
+  }
+];
+
+let userAnswers = {};
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  document.getElementById('total-count').textContent = quizData.length;
+
+  container.innerHTML = quizData.map((q, idx) => `
+    <div class="question-card" id="card-${q.id}">
+      <div class="question-title">Câu ${idx + 1}: ${q.question}</div>
+      <ul class="options-list">
+        ${q.options.map((opt, optIdx) => `
+          <li class="option-item" 
+              id="opt-${q.id}-${optIdx}" 
+              onclick="selectOption(${q.id}, ${optIdx})">
+            ${opt}
+          </li>
+        `).join('')}
+      </ul>
+      
+      <button class="btn-toggle-explain" onclick="toggleExplanation(${q.id})">
+        💡 Lời giải / Tham chiếu
+      </button>
+
+      <div class="explanation-box" id="explain-${q.id}">
+        <strong>💡 Giải thích chi tiết:</strong>
+        <div>${q.explanation}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectOption(qId, optionIdx) {
+  userAnswers[qId] = optionIdx;
+  
+  // Highlight selected option
+  const options = document.querySelectorAll(`#card-${qId} .option-item`);
+  options.forEach((opt, idx) => {
+    if (idx === optionIdx) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
+}
+
+function toggleExplanation(qId) {
+  const box = document.getElementById(`explain-${qId}`);
+  if (box.style.display === 'none' || box.style.display === '') {
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function submitQuiz() {
+  let score = 0;
+  
+  quizData.forEach(q => {
+    const userAns = userAnswers[q.id];
+    const card = document.getElementById(`card-${q.id}`);
+    
+    // Highlight correct & incorrect answers
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected');
+      
+      if (optIdx === q.correct) {
+        optElem.classList.add('correct');
+      }
+      if (userAns !== undefined && userAns === optIdx && userAns !== q.correct) {
+        optElem.classList.add('incorrect');
+      }
+    });
+
+    if (userAns === q.correct) {
+      score++;
+    }
+
+    // Tự động mở lời giải sau khi nộp bài
+    document.getElementById(`explain-${q.id}`).style.display = 'block';
+  });
+
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: ${score} / ${quizData.length} (${Math.round(score/quizData.length*100)}%)`;
+  scoreDisplay.style.fontWeight = 'bold';
+  
+  alert(`Bạn đã hoàn thành bài thi! Điểm số: ${score}/${quizData.length}`);
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  
+  quizData.forEach(q => {
+    // Xóa các class highlight
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected', 'correct', 'incorrect');
+    });
+    
+    // Ẩn giải thích
+    document.getElementById(`explain-${q.id}`).style.display = 'none';
+  });
+
+  // Reset điểm
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: -- / --`;
+  scoreDisplay.style.fontWeight = 'normal';
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Khởi chạy khi load trang
+window.onload = function() {
+    const titleMatch = window.location.pathname.match(/([^/\\]+)\.html$/);
+    if(titleMatch) {
+        document.getElementById('quiz-title').textContent = decodeURIComponent(titleMatch[1]);
+    }
+    renderQuiz();
+};
+</script>
+
+</body>
+</html>

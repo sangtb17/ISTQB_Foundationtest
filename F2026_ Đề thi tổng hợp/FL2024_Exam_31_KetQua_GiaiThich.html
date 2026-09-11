@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Trắc Nghiệm</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-light: #2b6cb0;
+            --secondary-color: #319795;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --incorrect-bg: #fed7d7;
+            --incorrect-border: #e53e3e;
+            --explain-bg: #ebf8ff;
+            --explain-border: #3182ce;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stats-item {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .score-display {
+            color: var(--primary-light);
+            font-size: 16px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .option-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 14.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-light);
+            background-color: #ebf8ff;
+            font-weight: 500;
+        }
+
+        .option-item.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #22543d;
+            font-weight: 600;
+        }
+
+        .option-item.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #742a2a;
+        }
+
+        .btn-toggle-explain {
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-toggle-explain:hover {
+            background-color: #e2e8f0;
+            border-color: #a0aec0;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--explain-bg);
+            border-left: 4px solid var(--explain-border);
+            border-radius: 6px;
+            font-size: 14px;
+            color: #2b6cb0;
+        }
+
+        .explanation-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c5282;
+        }
+
+        .action-bar {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn-submit {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(49, 151, 149, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c7a7b;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background-color: #718096;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(113, 128, 150, 0.3);
+            transition: all 0.2s;
+            margin-left: 15px;
+        }
+
+        .btn-reset:hover {
+            background-color: #4a5568;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 id="quiz-title">Bộ Đề Trắc Nghiệm</h1>
+        <p>Luyện Tập</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stats-item">Tổng số câu: <span id="total-count">0</span></div>
+        <div class="stats-item score-display" id="score-display">Điểm số: -- / --</div>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <div class="action-bar">
+        <button class="btn-submit" onclick="submitQuiz()">Nộp Bài & Kiểm Tra Đáp Án</button>
+        <button class="btn-reset" onclick="resetQuiz()">Làm Lại</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    "id": 1,
+    "question": "<div class=\"qtext\">Which of following is the best example of defect that cause to harm?</div>",
+    "options": [
+      "a. A defect that causes raw sewage to be dumped into the ocean",
+      "b. A usability defect that results in user dissatisfaction",
+      "c. A defect that causes slow response time when running reports",
+      "d. A regression defect that causes the desktop window to display in green"
+    ],
+    "correct": 0,
+    "explanation": "Câu hỏi hỏi lỗi nào sau đây gây nguy hiểm (harm) cả 4 đáp án đều là lỗi, nên chọn A vì lỗi gây ra ô nhiễm vào trong đại dương là nguy hiểm nhất"
+  },
+  {
+    "id": 2,
+    "question": "<div class=\"qtext\">What is quality assurances?</div>",
+    "options": [
+      "a. The total costs incurred on quality activities and issues and often split into prevention costs, appraisal costs, internal failure costs and external failure costs.",
+      "b. The degree to which a component or system protects information and data so that persons or other components or systems have the degree of access appropriate to their types and levels of authorization.",
+      "c. Part of quality management focused on providing confidence that quality requirements will be fulfilled.",
+      "d. The degree to which a component, system or process meets specified requirements and/or user/customer needs and expectations."
+    ],
+    "correct": 2,
+    "explanation": "Tra glossary từ Quality Assurance thì bạn tìm đc định nghĩa này là đáp án C \" QA là 1 phần của Quality management và tập trung vào quality requirements will be fulfilled\" . cũng tra glossary thì A là cost of quality nên ko đúng, B có từ \"protects information and data\" là định nghĩa của security, Tra glossary thì D là định nghĩa của quality - thỏa mãn các yêu câu và mong muốn của người dùng."
+  },
+  {
+    "id": 3,
+    "question": "<div class=\"qtext\">Which of the following BEST describes how value is added by maintaining traceability between the test basis and test artifacts?</div>",
+    "options": [
+      "a. Maintenance testing can be fully automated based on changes to the initial requirements",
+      "b. It is possible to determine if a new test case has increased coverage of the requirements",
+      "c. Test managers can identify which testers found the highest severity defects",
+      "d. Areas that may be impacted by side-effects of a change can be targeted by confirmation testing"
+    ],
+    "correct": 1,
+    "explanation": "Refer 1.4.3 giá trị của việc duy trì traceability giữa test basis và các nhân tố của test? A sai vì fully automated ( tự động hóa toàn bộ là ko thể và traceability cũng ko liên quan đến việc automated test). C sai ở chỗ dịch ra là nó giúp Test manager xác định đc tester nào tìm đc lỗi có mức độ nghiêm trọng nhất ( ko bao giờ làm cái này), D thoạt nhìn tưởng đúng nhưng bạn để ý từ \" confirmation testing\" cái này retest lại 1 lỗi thì ko liên quan đến phân tích ảnh hưởng, cái phân tích ảnh hưởng là phải dùng cho Regression test. Cuối cùng chọn B vì sách có nói traceability hỗ trợ đo requirement coverage, giúp xác định TC mới để tăng độ bao phủ của Req lên."
+  },
+  {
+    "id": 4,
+    "question": "<div class=\"qtext\">A bug or defect is:</div>",
+    "options": [
+      "a. A mistake made by a person;",
+      "b. A run-time problem experienced by a user;",
+      "c. The result of an error or mistake",
+      "d. The result of a failure, which may lead to an error"
+    ],
+    "correct": 2,
+    "explanation": "Refer 1.2.3. defect là kết quả của error hoặc mistake"
+  },
+  {
+    "id": 5,
+    "question": "<div class=\"qtext\">Which of the following statements contains a valuable objective for a test team?</div>",
+    "options": [
+      "a. The goal is to fulfill all testing activity requirements as specified in the project handbook.",
+      "b. The goal is to cause as many failures as possible so that faults can be identified and corrected.",
+      "c. The goal is to prove that all faults are identified.",
+      "d. The goal is to prove that failures may not be caused any more by the remaining defects."
+    ],
+    "correct": 1,
+    "explanation": "Refer 1.1.1 là đang hỏi mục tiêu của test, nên chọn đáp án B. Tìm đc càng nhiều nguyên nhân của lỗi (trigger failure) càng tốt để sửa. Loại C, D vì từ prove, loại A vì fullfill all test..."
+  },
+  {
+    "id": 6,
+    "question": "<div class=\"qtext\">What is the purpose of performing regression testing when system maintenance activities have occurred?</div>",
+    "options": [
+      "a. To ensure no unauthorized changes have been applied to the system",
+      "b. To assess the scope of maintenance performed on the system",
+      "c. To identify any maintainability issues with the code",
+      "d. To ensure the overall system has not regressed"
+    ],
+    "correct": 3,
+    "explanation": "Refer 2.4 Maintenance test. Mục đích của regression test là D. đảm bảo rằng toàn bộ hệ thống ko bị lỗi hồi quy. Loại A vì unauthorized change ( ý cái này là change requirement chưa đc duyệt) ko liên quan đến regression test, B cũng loại vì assess the scope là đang nói đến impact analysis, loại C vì maintainability issues là yêu cầu về non-functional"
+  },
+  {
+    "id": 7,
+    "question": "<div class=\"qtext\">How many test cases are needed to achieve 100 % statement coverage? if ((temperature &lt; 0) or (temperature &gt; 100)) { alert (\"DANGER\"); if ((speed &gt; 100) and (load &lt;= 50)) { speed = 50; } } else { check = false; }</div>",
+    "options": [
+      "a. 5",
+      "b. 4",
+      "c. 2",
+      "d. 3"
+    ],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 8,
+    "question": "<div class=\"qtext\">Consider the following decision table for Car rental. ( image) Given this decision table, what is the expected result for the following test cases? TC1: A 26-year-old on business but with violations or accidents on his driving record TC2: A 62-year-old tourist with a clean driving record</div>",
+    "options": [
+      "a. TC1: Don’t supply car; TC2: Supply car with premium charge.",
+      "b. TC1: Supply car with premium charge; TC2: Supply car with no premium charge.",
+      "c. TC1: Don’t supply car; TC2: Supply car with no premium charge",
+      "d. TC1: Supply car with premium charge; TC2: Don’t supply car."
+    ],
+    "correct": 2,
+    "explanation": "Gióng 2 TC vào cái bảng và đọc Actions ra là đc"
+  },
+  {
+    "id": 9,
+    "question": "<div class=\"qtext\">Which option BEST describes how the level of risk is determined?</div>",
+    "options": [
+      "a. The likelihood of an adverse event happening multiplied by the cost of preventing it.",
+      "b. The consequences of potential problem multiplied by the cost of possible legal action.",
+      "c. The impact of an adverse event multiplied by the likelihood of that event occurring.",
+      "d. The likelihood and the probability of a hazard occurring."
+    ],
+    "correct": 2,
+    "explanation": "Chapter 5. đây là công thức tính của risk level = impact x likelihood"
+  },
+  {
+    "id": 10,
+    "question": "<div class=\"qtext\">You are working as a tester on an online banking system. Availability is considered one of the top products (quality) risks for the system. You find a reproducible failure that results in customers losing their connections to the bank Web site when transferring funds between common types of accounts and being unable to reconnect for between three and five minutes. Which of the following would be a good summary for a defect report for this failure, one that captures both the essence of the failure and its impact on stakeholders?</div>",
+    "options": [
+      "a. Web server logs show error 0x44AB27 when running test 07.005, which is not an expected error message in /tmp filesystem",
+      "b. Developers have introduced major availability defect which will seriously upset our customers",
+      "c. Performance is slow and reliability flaky under load",
+      "d. Typical funds-transfer transaction results in termination of customer session, with a delay in availability when attempting to reconnect"
+    ],
+    "correct": 3,
+    "explanation": "Chapter 5 defect management. Defect title = defect summary nên các thông tin viết ngắn gọn đặc điểm quan trọng nhất của lỗi, ko cho các thông tin quá chi tiết như mã code, TC ID vì thế ta loại A, B thì lại quá chung chung ko thấy bất cứ thông tin nào liên quan đến lỗi trên, C loại vì đây ko nhắc đến lỗi về performance. Chọn đc D là tóm đc nội dung của lỗi"
+  },
+  {
+    "id": 11,
+    "question": "<div class=\"qtext\">Which TWO of the following statements about test estimation approaches is CORRECT?</div>",
+    "options": [
+      "a. With the metrics-based approach, the estimate is based on test measures from the project and so this estimate is only available after the testing starts",
+      "b. With the expert-based approach, a group of expert users identified by the client recommends the necessary testing budget",
+      "c. With the expert-based approach, the test managers responsible for the different testing activities predict the expected testing effort",
+      "d. With the metrics-based approach, an average of the testing effort recorded from several past projects is used"
+    ],
+    "correct": 3,
+    "explanation": "Chương 5 Estimation. Theo định nghĩa thi expert based là dự đoán bởi owner hoặc expert (TM, PM )của dự án có thể ước lượng các task của dự án nên chọn C đúng. Câu D chúng tôi đã sửa lại so với câu hỏi gốc vì nêu giống câu hỏi gốc ko có đáp án nào đúng thứ 2 cả, D là định nghĩa của metric based. A loại vì nó bảo estimate chỉ có sau khi test bắt đầu là sai (only available after the testing starts ) . B sai vì expert users ko thể là người đưa ra estimate đc"
+  },
+  {
+    "id": 12,
+    "question": "<div class=\"qtext\">Which of the following tools is most useful for reporting test metrics?</div>",
+    "options": [
+      "a. Test management tool",
+      "b. Static analysis tool",
+      "c. Coverage tool",
+      "d. Security tool"
+    ],
+    "correct": 0,
+    "explanation": "Chương 6 tool để đo đạc và làm báo cáo test metric phải là A"
+  },
+  {
+    "id": 13,
+    "question": "<div class=\"qtext\">With which of the following categories is a test comparator tool USUALLY associated?</div>",
+    "options": [
+      "a. Tool support for performance and monitoring.",
+      "b. Tool support for static testing.",
+      "c. Tool support for test execution and logging.",
+      "d. Tool support for the management of testing and tests"
+    ],
+    "correct": 2,
+    "explanation": "Xem chapter 6"
+  },
+  {
+    "id": 14,
+    "question": "<div class=\"qtext\">Which of the following statements CORRECTLY reflects the value of static testing?</div>",
+    "options": [
+      "a. By introducing reviews, we have found that both the quality of specifications and the time required for development and testing have increased",
+      "b. Using static testing means we have better control and cheaper defect management due to the ease of detecting defects later in the lifecycle",
+      "c. Now that we require the use of static analysis, missed requirements have decreased and communication between testers and developers has improved",
+      "d. Since we started using static analysis, we find coding defects that might have not been found by performing only dynamic testing"
+    ],
+    "correct": 3,
+    "explanation": "Refer 3.1.3. Loại A vì nó bảo dùng review lại tăng ( increase) time là sai, loại B vì đoạn đầu có vẻ đúng nhưng đọc kỹ later in the lifecycle - tìm thấy muộn trong vòng đời thì lại sai, Loại C vì static analysis là tool phân tích tĩnh nên ko tìm đc lỗi về missed requirement ( cái này phải review mới tìm đc), Chọn D vì đúng value của static testing ( static analysis tìm ra lỗi coding defect cái mà có thể ko tìm đc bởi Dynamic testing."
+  },
+  {
+    "id": 15,
+    "question": "<div class=\"qtext\">Which of the following is a true statement about exploratory testing? Choose 2 options.</div>",
+    "options": [
+      "a. More experienced testers who have tested similar applications and technologies are likely to do better than less experienced testers at exploratory testing",
+      "b. Exploratory testing does not identify any additional tests beyond those that would result from formal test techniques",
+      "c. The time required to complete an exploratory testing session cannot be predicted in advance",
+      "d. Exploratory testing can involve the use of both black-box techniques and white-box techniques"
+    ],
+    "correct": 3,
+    "explanation": "refer 4.4. So với câu gốc chúng tôi đã sửa đáp án D để phù hợp với câu hỏi chọn 2 lựa chọn đúng. A đúng vì tester nhiều kinh nghiệm các dự án similar thì test khám phá tốt, D đúng vì test khám phá sử dụng cho cả 2 kỹ thuật black và white box. Loại B vì nó bảo exploratory test yêu cầu thêm thời gian so với các kỹ thuật khác, loại C vì nó bảo thời gian test khám phá theo session base ko dự đoán đc là sai"
+  },
+  {
+    "id": 16,
+    "question": "<div class=\"qtext\">A fitness app measures the number of steps that are walked each day and provides feedback to encourage the user to keep fit. The feedback for different numbers of steps should be: Up to 1000 - Couch Potato! Above 1000, up to 2000 - Lazy Bones! Above 2000, up to 4000 - Getting There! Above 4000, up to 6000 - Not Bad! Above 6000 - Way to Go! Which of the following sets of test inputs would achieve the BEST equivalence partition coverage?</div>",
+    "options": [
+      "a. 0, 1000, 2000, 3000, 4000",
+      "b. 1000, 2001, 4000, 4001, 6000",
+      "c. 123, 2345, 3456, 4567, 5678",
+      "d. 666, 999, 2222, 5555, 6666"
+    ],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 17,
+    "question": "<div class=\"qtext\">You have been given the following story: “As a plant lover who travels frequently, I want to have an automated watering system, so that my plants won’t die.” You have also been given the following acceptance criteria: 1. The water should turn on when the temperature is &gt; 85 degrees and the moisture content of the soil changes from “normal” to “dry”. 2. The water should be dispersed for 5 minutes at the rate of 0.5 ounces per minute. Which of the following is the first test case that should be written for the acceptance-test driven implementation?</div>",
+    "options": [
+      "a. Set the soil moisture level to “wet”, then increase the heat and verify that the moisture level changes to “normal” and then to “dry” and then to “parched”",
+      "b. Set the temperature > 85 degrees and verify that the temperature is increased accordingly",
+      "c. Set the temperature to < 85 degrees and the moisture to “dry” and verify that no water is dispersed",
+      "d. Set the temperature to > 85 degrees and the moisture to “dry” and verify that water is dispersed"
+    ],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 18,
+    "question": "<div class=\"qtext\">You have been given the following story: “As a plant lover who travels frequently, I want to have an automated watering system, so that my plants won’t die.” You have also been given the following acceptance criteria: 1. The water should turn on when the temperature is &gt; 85 degrees and the moisture content of the soil changes from “normal” to “dry”. 2. The water should be dispersed for 5 minutes at the rate of 0.5 ounces per minute. Which one of the following provides the proper values to use to achieve 100% two-value boundary value analysis coverage with the minimum number of test cases?</div>",
+    "options": [
+      "a. Temperature at 85 and 86, moisture at “dry” and “normal”",
+      "b. Temperature at 85 and 86, moisture at “dry” and “normal”, water disbursement for 5 minutes and 5 minutes 1 second, rate at 0.5 and 0.4",
+      "c. Temperature at 85 and 86, moisture at “dry” and “normal”, water disbursement for 5 minutes and 4 minutes 59 seconds, rate at 0.5 and 0.6",
+      "d. Temperature at 85 and 84, moisture at “dry” and “normal”"
+    ],
+    "correct": 0,
+    "explanation": "Đáp án A, refer đề của Agile tester trên astqb.org họ giải thích là cái \"The water should be dispersed for 5 minutes at the rate of 0.5 ounces per minute. \" ko phải là input mà nó là output (expected) cần kiểm tra xem nước có tưới đúng trong 5 phút và với tốc độ 0.5 nên B C là sai,, D thì 85 và 84 cùng phân vùng"
+  },
+  {
+    "id": 19,
+    "question": "<div class=\"qtext\">The followings details about main phases of a formal review, which is NOT correct?</div>",
+    "options": [
+      "a. Planning: defining the scope, purpose and quality characteristics to be evaluated",
+      "b. Kick-off meeting: access to the work product under review, receives everything needed to perform the review",
+      "c. Rework: analyze and discusse all these anomalies at the physical meeting",
+      "d. Follow up: checking that the exit criteria are reached"
+    ],
+    "correct": 2,
+    "explanation": "refer 3.2.1 review process, các đáp án khác mô tả đúng, C đang mô tả cho Review meeting chứ ko phải Rework"
+  },
+  {
+    "id": 20,
+    "question": "<div class=\"qtext\">Which of following statement does NOT correctly describe a valid approach to Component testing?</div>",
+    "options": [
+      "a. Functional testing of the interfaces between modules",
+      "b. Functional testing of the component in isolation",
+      "c. Structure-based testing of the code without recording incidents",
+      "d. Automation tests that are run until the component passes"
+    ],
+    "correct": 0,
+    "explanation": "refer 2.2 chọn A vì the interfaces là của integration test"
+  },
+  {
+    "id": 21,
+    "question": "<div class=\"qtext\">You are testing a mobile app that allows customers to access and manage their bank accounts. You are running a test suite that involves evaluating each screen and each field on each screen against a general list of user interface best practices, derived from a popular book on the topic, that maximize attractiveness, ease-of-use, and accessibility for such apps. Which of the following options BEST categorizes the test technique you are using?</div>",
+    "options": [
+      "a. Specification-based",
+      "b. Exploratory",
+      "c. Checklist-based",
+      "d. Error guessing"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.4 Checklist vì Test được dẫn ra từ a popular book một cuốn sách nổi tiếng nào đó chứ ko phải từ Requirement"
+  },
+  {
+    "id": 22,
+    "question": "<div class=\"qtext\">A product owner says that your role as a tester on an Agile team is to catch all the bugs before the end of each iteration. Which of the following is a testing principle that could be used to respond to this statement?</div>",
+    "options": [
+      "a. Defect clustering",
+      "b. Testing shows the presence of defects",
+      "c. Absence of error fallacy",
+      "d. Root cause analysis"
+    ],
+    "correct": 1,
+    "explanation": "Refer 1.3. Ở đây chỉ nói bạn tìm ra tất cả các lỗi trước khi kết thúc 1 iteration nên chỉ chọn đc B là đúng, ko có thông tin về cụm lỗi nên ko chọn A, C thì cũng chọn vì ko nói gì về việc phần mềm thỏa mãn fullfill user's need, và D không phải là việc của test, đây là của debug"
+  },
+  {
+    "id": 23,
+    "question": "<div class=\"qtext\">You are going to be testing a small camera. To keep it simple, there are only two buttons: the power button and the shutter button. The camera will act as an automatic focus and exposure camera when the shutter button is pressed halfway and then stopped for 0.4 seconds before the button press is completed. If the shutter button is simply pressed all the way without stop-ping, the camera will act as a single exposure, infinity focus camera. Given the following state transition diagram, how many 0-switch transition would its matching state transition table contain?</div>",
+    "options": [
+      "a. 24",
+      "b. 20",
+      "c. 18",
+      "d. 6"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.2.3 state transition testing, ở đây họ hỏi bạn phải tạo bảng state transition table và trong cái bảng đó chứa bao nhiêu ô ( vì mỗi ô là 1 test case gồm có cả TC valid và invalid)"
+  },
+  {
+    "id": 24,
+    "question": "<div class=\"qtext\">You are going to be testing a small camera. To keep it simple, there are only two buttons: the power button and the shutter button. The camera will act as an automatic focus and exposure camera when the shutter button is pressed halfway and then stopped for 0.4 seconds before the button press is completed. If the shutter button is simply pressed all the way without stop-ping, the camera will act as a single exposure, infinity focus camera. Given the following state transition diagram, how many 1-switch segments would there be?</div>",
+    "options": [
+      "a. 5",
+      "b. 7",
+      "c. 9",
+      "d. 11"
+    ],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 25,
+    "question": "<div class=\"qtext\">A web application for calculation of mortgage loan has 3 input fields: 1. Civil status: Married /Not married 2. Equity: 0 – 100,000 EUR, 100,001 – 500,000 EUR, more than 500,000 EUR 3. Requested amount of the loan: 0 – 100,000 EUR, 100,001 – 500,000 EUR, 500,001 – 800,000 EUR In addition, 2 different loan types can be chosen. The application has to be tested for 2 web browsers. How many test cases are necessary to cover all possible combinations in equivalence class testing?</div>",
+    "options": [
+      "a. 32",
+      "b. 36",
+      "c. 72",
+      "d. 64"
+    ],
+    "correct": 3,
+    "explanation": "Không hiểu vì sao lại ra đc 64 như trên mạng, đã tính mọi cách rồi, mình chỉ ra đc hoặc là 36 hoặc 72 thôi."
+  },
+  {
+    "id": 26,
+    "question": "<div class=\"qtext\">Which set of test data (representing ages of human beings in years) given below shows equivalence partitioning to verify if a customer is in its thirties (A person whose age is between thirty and thirty-nine years, inclusive) or not?</div>",
+    "options": [
+      "a. 30, 39, 45",
+      "b. 25, 30, 40",
+      "c. 30, 35, 25",
+      "d. 20, 35, 39"
+    ],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 27,
+    "question": "<div class=\"qtext\">Which of the following is NOT true about Condition Determination Testing and Coverage?</div>",
+    "options": [
+      "a. 100% decision condition coverage implies 100% condition determination coverage",
+      "b. A white box test design technique in which test cases are independently affect a decision outcome that have been exercised by a test case suite.",
+      "c. The percentage of all single condition outcomes that independently affect a decision outcome that have been exercised by a test case suite.",
+      "d. The possible combination of true/false conditions that can affect decisions are identified."
+    ],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 28,
+    "question": "<div class=\"qtext\">Which of the following statements BEST describes how test cases are derived from a use case?</div>",
+    "options": [
+      "a. Test cases are created to exercise defined basic, exceptional and error behaviors performed by the system under test in collaboration with actors.",
+      "b. Test cases are derived by identifying the components included in the use case and creating integration tests that exercise the interactions of these components.",
+      "c. Test cases are generated by analyzing the interactions of the actors with the system to ensure the user interfaces are easy to use.",
+      "d. Test cases are derived to exercise each of the decision points in the business process flows of the use case, to achieve 100% decision coverage of these flows."
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.2.5 Use case testing. Dựa vào định nghĩa của use case thì chọn đáp án A đúng mô tả: basic, exceptional and error. Loại B vì \"identifying the components\" nhớ là use case phải test từ system trở lên do đó ko test component integration test, Loại C vì \"user interfaces are easy to use\" cái này là đang mô tả về usability test (1 loại của non functional test). Loại D vì \"100% decision coverage\" là đang nói về White box test"
+  },
+  {
+    "id": 29,
+    "question": "<div class=\"qtext\">An online form has a \"Title\" input field The valid values for this field are: Mr, Ms. Mrs. Which of the following is a correct list of the equivalence classes of the input values for this field?</div>",
+    "options": [
+      "a. Any one of: Mr, Mrs., Ms; any other input",
+      "b. Mr: Ms; Mrs.: no input; any other input",
+      "c. Any one of: Mr, Mrs., Ms; no input, any other input",
+      "d. Mr; Mrs.; Ms; any other input"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.2.1. Dropdown list có 3 phân vùng Mr, Mrs, Ms, và 1 phân vùng khác với 3 cái kia nên chọn D. Câu này trên mạng chị tìm thấy một số nơi để là A nhưng nhiều trang khác là D ( chị nghĩ từ any one of- một trong số các giá trị là sai vì nó đang hỏi có bao nhiêu phân vùng tương đương cho trường này?"
+  },
+  {
+    "id": 30,
+    "question": "<div class=\"qtext\">After a record of poor quality software releases (incorrect menu selection options, new features that do not work, users allowed to change security levels without administrator rights), you have been asked to review the test capability in your company. You have limited time to do the review before the next project, which type of testing would be MOST appropriate to review first?</div>",
+    "options": [
+      "a. Functional testing",
+      "b. Non-functional testing",
+      "c. Performance testing",
+      "d. Structural testing"
+    ],
+    "correct": 3,
+    "explanation": "Refer chapter 2.3 Test type, Họ nói là thơi gian bị giới hạn thì cái test type nào phù hợp để review đầu tiên. Lúc đầu mình thấy các lỗi họ đưa ra là thuộc về functional thì Nếu là câu hỏi là Run test cho loại nào đầu tiên thì tất nhiên chọn functional rồi, phần mô tả ko liên quan gì đến non-functional và performance cả. Nên loại C, D đi vì ko mô tả gì về performance hay security cũng ko phải nhé ( users allowed to change security levels without administrator rights -- cái này đang mô tả tính năng chứ ko phải security). Nhưng câu hỏi là review cái nào phừ hợp ( chứ nó ko hỏi chạy test) nên giữa A và D thì thấy review nên dùng Whitebox test sẽ nhanh hơn, tập trung vào phần code đang sai (đáp án này trên mạng và giải thích trên mạng nhé, mình thì vẫn chưa hiểu sao câu này chọn D)"
+  },
+  {
+    "id": 31,
+    "question": "<div class=\"qtext\">For a mandatory input field 'ZIP code\" the following rules are given: 1 - The valid ZIP code format is 5 numeric digits 2 - The code has to exist in the pest office's official ZIP code list Using equivalence classes partitioning, how many test cases are required to test this field?</div>",
+    "options": [
+      "a. 6",
+      "b. 4",
+      "c. 8",
+      "d. 3"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.2.1 EP. Ở đây có \"a mandatory input field\" nên là có 1 EP để trống, \"1 - The valid ZIP code format is 5 numeric digits\" yêu cầu này thì có 3 EP là valid 5 digits, invalid &lt; 5 digits, invalid &gt; 5 digits, và \"2 - The code has to exist in the pest office's official ZIP code list\" yêu cầu này có 2 EP là có tồn tại và ko tồn tại. Như vậy tổng là 6 cái EP vậy cần 6 cái test case cho 1 field này."
+  },
+  {
+    "id": 32,
+    "question": "<div class=\"qtext\">A software system checks age in order to determine which welcome screen to display Age groups are Group I: 0-12 Group II: 13-18 Group III: over 18 Which of the below represent boundary values?</div>",
+    "options": [
+      "a. (0, 12, 13,18,19)",
+      "b. (-1,0,11,12,13,14,18,19)",
+      "c. (4,5,15,20)",
+      "d. (-1.0,12,13,18,19)"
+    ],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 33,
+    "question": "<div class=\"qtext\">Consider the following excerpt from a test report 'We tested the module AX45T and we got only 1 failure. To recreate the failure, we used test file PR624_DR78_TCB0022 pkr, available under the PR624_DR78 repository in the CK01 server\". Which incident report objective does this excerpt satisfy?</div>",
+    "options": [
+      "a. Provides developers with information to isolate the failure",
+      "b. Does not belong to an incident report",
+      "c. Provides Project Managers with information on the project risks.",
+      "d. Provides test managers with information to report test progress."
+    ],
+    "correct": 0,
+    "explanation": "Refer 5.6 Defect management. Câu hỏi là mục tiêu nào của incident report mà đoạn văn trên đã thỏa mãn? Với đoạn mô tả trên có chữa các mã module, mã file đính kèm rất chi tiết cụ thể thì đoạn này nằm trong Description của 1 báo cáo lỗi nên nó thỏa mãn 1 mục tiêu của incident report là mục tiêu A: giúp Dev cô lập và tái hiện lỗi"
+  },
+  {
+    "id": 34,
+    "question": "<div class=\"qtext\">Which of the following test types is a part of the V-Model?</div>",
+    "options": [
+      "a. Black-box testing",
+      "b. White-box testing",
+      "c. Experience-based testing",
+      "d. Component testing"
+    ],
+    "correct": 3,
+    "explanation": "Refer 2.1. trên mạng đang để đáp án là D, chúng tôi chưa thể giải thích đc vì sao đành giữ nguyên đáp án của họ. vì D là test levels nên mình ko chọn D nhưng mạng chọn nên giữ nguyên thôi"
+  },
+  {
+    "id": 35,
+    "question": "<div class=\"qtext\">Which of the following is NOT an example of a typical risk-based testing activity?</div>",
+    "options": [
+      "a. The evaluation of a risk-management tools to decide which tool to use for future projects",
+      "b. The focus of testing is shifted to an area in the system where tests find with more defects than expected",
+      "c. Brainstorming sessions are held with a wide variety of stakeholders to identify possible failures in the system",
+      "d. Tests are prioritized to ensure that those associated with critical parts of the system are executed earlier"
+    ],
+    "correct": 2,
+    "explanation": "Refer 5.5 phần Test Priority. Nó hỏi cái nào sau đây ko phải ví dụ về risk based testing? trên mạng đang chọn là B. B dịch là buổi họp brainstorming đc tổ chức với nhiều các bên liên quan tham gia vào xác định các lỗi tiềm ẩn trong phần mềm ( họ giải thích là ko liên quan đến risk based testing)"
+  },
+  {
+    "id": 36,
+    "question": "<div class=\"qtext\">Which of the following tool types is the most useful one for a test manager?</div>",
+    "options": [
+      "a. Modeling tool",
+      "b. Static analysis too",
+      "c. Coverage measurement tool",
+      "d. Defect tracking tool"
+    ],
+    "correct": 3,
+    "explanation": "Refer 6.1. A và B các bạn tìm syllabus hoặc trên mạng thì là tool thuộc category về Support for Static testing, C là tool thuộc về Support for Execution test ( automation test). Còn mỗi D là tool thuộc nhóm Support for management test. Nên chọn D"
+  },
+  {
+    "id": 37,
+    "question": "<div class=\"qtext\">Where and by whom is Beta testing normally performed?</div>",
+    "options": [
+      "a. By customers or potential customers at their own locations",
+      "b. By an independent test team at the developing organization's location",
+      "c. At the developing organization's site, but not by the developing team",
+      "d. By customers or potential customers at the developing organization's site"
+    ],
+    "correct": 0,
+    "explanation": "Refer 2.2 Test level. Beta test là của Acceptance test level, đc thực hiện bởi Khách hàng tại môi trường của họ nên ta chọn A đúng. C, D thì là đang nói về Alpha test. Còn B test bới an independent test team là của đội dự án ko thuộc Acceptance test"
+  },
+  {
+    "id": 38,
+    "question": "<div class=\"qtext\">Which of the following defect types are LEAST likely to be discovered when using static analysis tools?</div>",
+    "options": [
+      "a. Variables that are never used",
+      "b. Coding standard violations",
+      "c. Memory leaks",
+      "d. Uncalled functions and procedures"
+    ],
+    "correct": 2,
+    "explanation": "Refer 3.1.3 . Câu hỏi là defect types nào hầu như ko phát hiện đc bới static analysis tool thì chọn C vì Memory leaks là phát hiện bởi dynamic analysis. Còn A, B, D đều là lỗi trong code và tìm đc bởi static analysis, trong đó D có nghĩa là các function hoặc procedures ko đc gọi đến ( cái này nhiều bạn hiểu nhầm là lỗi của dynamic nhưng thực ra dynamic ko phát hiện đc lỗi này nhé, đây gọi là dead code- code chết)"
+  },
+  {
+    "id": 39,
+    "question": "<div class=\"qtext\">Assume you are a test analyst working on a banking project to upgrade an existing automated teller machine system to allow customers to obtain cash advances from supported credit cards. The system should allow cash advances from 20 dollars to 500 dollars, inclusively, for all supported credit cards. The correct list of supported credit cards is American Express, Visa, Japan Credit Bank, Eurocard, and MasterCard. Assume that, in the following list of valid test cases, the first item in the parenthesized triple represents the credit card, the second item represents the amount to withdraw, and the third item represents the expected result. Which of the following selections gives a set of test cases that covers the equivalence partitions for credit cards and shows the correct expected result?</div>",
+    "options": [
+      "a. (American Express, \n20\n,\n𝑠\n𝑢\n𝑐\n𝑐\n𝑒\n𝑒\n𝑑\n)\n;\n(\n𝑉\n𝑖\n𝑠\n𝑎\n,\n20,succeed);(Visa,100, succeed); (Japan Credit Bank, \n500\n,\n𝑠\n𝑢\n𝑐\n𝑐\n𝑒\n𝑒\n𝑑\n)\n;\n(\n𝐸\n𝑢\n𝑟\n𝑜\n𝑐\n𝑎\n𝑟\n𝑑\n,\n500,succeed);(Eurocard,200, succeed); (Master- Card, $400, succeed)",
+      "b. (American Express, \n20\n,\n𝑠\n𝑢\n𝑐\n𝑐\n𝑒\n𝑒\n𝑑\n)\n;\n(\n𝑉\n𝑖\n𝑠\n𝑎\n,\n20,succeed);(Visa,600, fail); (Japan Credit Bank, \n500\n,\n𝑓\n𝑎\n𝑖\n𝑙\n)\n;\n(\n𝐸\n𝑢\n𝑟\n𝑜\n𝑐\n𝑎\n𝑟\n𝑑\n,\n500,fail);(Eurocard,200, succeed); (MasterCard, $400, succeed)",
+      "c. (American Express, \n20\n,\n𝑠\n𝑢\n𝑐\n𝑐\n𝑒\n𝑒\n𝑑\n)\n;\n(\n𝐽\n𝑎\n𝑝\n𝑎\n𝑛\n𝐶\n𝑟\n𝑒\n𝑑\n𝑖\n𝑡\n𝐵\n𝑎\n𝑛\n𝑘\n,\n20,succeed);(JapanCreditBank,500, succeed); (Eurocard, \n200\n,\n𝑠\n𝑢\n𝑐\n𝑐\n𝑒\n𝑒\n𝑑\n)\n;\n(\n𝑀\n𝑎\n𝑠\n𝑡\n𝑒\n𝑟\n𝐶\n𝑎\n𝑟\n𝑑\n,\n200,succeed);(MasterCard,400, succeed)",
+      "d. (American Express, \n20\n,\n𝑠\n𝑢\n𝑐\n𝑐\n𝑒\n𝑒\n𝑑\n)\n;\n(\n𝑉\n𝑖\n𝑠\n𝑎\n,\n20,succeed);(Visa,600, succeed); (Japan Credit Bank, \n500\n,\n𝑠\n𝑢\n𝑐\n𝑐\n𝑒\n𝑒\n𝑑\n)\n;\n(\n𝐸\n𝑢\n𝑟\n𝑜\n𝑐\n𝑎\n𝑟\n𝑑\n,\n500,succeed);(Eurocard,200, succeed); (Master- Card, $400, succeed)"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.2.1 EP. Có 5 card và tiền đc rút là từ 20 đến 500 dollar. Nó hỏi đáp án nào mà TC bao phủ hết các EP về card và lại đúng expected. Rất dễ các bạn tìm đáp án A có 5 TC đủ 5 card và đúng expected. Các đáp án khác bị sai về expected resulte"
+  },
+  {
+    "id": 40,
+    "question": "<div class=\"qtext\">Assume you are a test analyst working on a banking project to upgrade an existing automated teller machine system to allow customers to obtain cash advances from supported credit cards. The system should allow cash advances from 20 dollars to 500 dollars, inclusively, for all supported credit cards. The correct list of supported credit cards is American Express, Visa, Japan Credit Bank, Eurocard, and MasterCard. The user interface starts with a default amount of 100 dollars for advances, and the ATM keypad is used to increase or decrease that amount in 20-dollar increments. Assume that, in each TC = ( card type, amount, expected result) Which of the following selections gives a set of test cases that covers the boundary values for cash advances and shows the correct expected result?</div>",
+    "options": [
+      "a. (American Express, \n20\n,\n𝑠\n𝑢\n𝑐\n𝑐\n𝑒\n𝑒\n𝑑\n)\n;\n(\n𝑉\n𝑖\n𝑠\n𝑎\n,\n20,succeed);(Visa,500, succeed); (Japan Credit Bank, \n520\n,\n𝑓\n𝑎\n𝑖\n𝑙\n)\n;\n(\n𝐸\n𝑢\n𝑟\n𝑜\n𝑐\n𝑎\n𝑟\n𝑑\n,\n520,fail);(Eurocard,0, fail)",
+      "b. (American Express, \n20\n,\n𝑠\n𝑢\n𝑐\n𝑐\n𝑒\n𝑒\n𝑑\n)\n;\n(\n𝑉\n𝑖\n𝑠\n𝑎\n,\n20,succeed);(Visa,600, fail); (Japan Credit Bank, \n500\n,\n𝑓\n𝑎\n𝑖\n𝑙\n)\n;\n(\n𝐸\n𝑢\n𝑟\n𝑜\n𝑐\n𝑎\n𝑟\n𝑑\n,\n500,fail);(Eurocard,200, succeed); (MasterCard, $400, succeed)",
+      "c. (American Express, \n20\n,\n𝑠\n𝑢\n𝑐\n𝑐\n𝑒\n𝑒\n𝑑\n)\n;\n(\n𝐽\n𝑎\n𝑝\n𝑎\n𝑛\n𝐶\n𝑟\n𝑒\n𝑑\n𝑖\n𝑡\n𝐵\n𝑎\n𝑛\n𝑘\n,\n20,succeed);(JapanCreditBank,500, succeed); (Eurocard, \n520\n,\n𝑠\n𝑢\n𝑐\n𝑐\n𝑒\n𝑒\n𝑑\n)\n;\n(\n𝑀\n𝑎\n𝑠\n𝑡\n𝑒\n𝑟\n𝐶\n𝑎\n𝑟\n𝑑\n,\n520,succeed);(MasterCard,400, succeed)",
+      "d. (American Express, \n20\n,\n𝑠\n𝑢\n𝑐\n𝑐\n𝑒\n𝑒\n𝑑\n)\n;\n(\n𝑉\n𝑖\n𝑠\n𝑎\n,\n20,succeed);(Visa,600, fail); (Japan Credit Bank, \n500\n,\n𝑠\n𝑢\n𝑐\n𝑐\n𝑒\n𝑒\n𝑑\n)\n;\n(\n𝐸\n𝑢\n𝑟\n𝑜\n𝑐\n𝑎\n𝑟\n𝑑\n,\n500,succeed);(Eurocard,200, succeed); (MasterCard, $400, succeed)"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.2.2 BVA. Nó hỏi về TC nào bao phủ BVA của rút tiền? tiền đc rút từ 20 đến 500 dollar, keypad có 2 nút tăng và giảm mỗi lần là 20 đô. nên ta có các giá trị biên valid: 20, 500, invalid: 0, 520. Nên chỉ cần chọn đáp án có 4 TC chứa 4 BVA này và có expected result đúng là đc"
+  },
+  {
+    "id": 41,
+    "question": "<div class=\"qtext\">Which testing technique is the most suitable for testing the functionality of a fully computerized elevator ?</div>",
+    "options": [
+      "a. Decision table testing",
+      "b. State Transition Testing",
+      "c. Use case testing",
+      "d. Man machine interface testing"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.3. Nó hỏi kỹ thuật nào phù hợp để test tính năng của cái thang máy? Thang máy là hệ thống nhúng và phải an toàn cao vì ảnh hưởng đến con người, ngoài ra ko có dữ liệu nào khác nên chỉ chọn đáp án B như trong sách có nói là kỹ thuật phù hợp cho hệ thống nhúng và chuyển động"
+  },
+  {
+    "id": 42,
+    "question": "<div class=\"qtext\">Which of the following statements correctly matches constructs of Given/When/Then with a relevant phrase in order to create a correct test case for the given requirement?</div>",
+    "options": [
+      "a. GIVEN ii) WHEN i) THEN vi)",
+      "b. GIVEN ii) WHEN iv) THEN v)",
+      "c. GIVEN iii) WHEN ii) THEN iv)",
+      "d. GIVEN ii) WHEN v) AND vi) THEN i)"
+    ],
+    "correct": 0,
+    "explanation": ""
+  }
+];
+
+let userAnswers = {};
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  document.getElementById('total-count').textContent = quizData.length;
+
+  container.innerHTML = quizData.map((q, idx) => `
+    <div class="question-card" id="card-${q.id}">
+      <div class="question-title">Câu ${idx + 1}: ${q.question}</div>
+      <ul class="options-list">
+        ${q.options.map((opt, optIdx) => `
+          <li class="option-item" 
+              id="opt-${q.id}-${optIdx}" 
+              onclick="selectOption(${q.id}, ${optIdx})">
+            ${opt}
+          </li>
+        `).join('')}
+      </ul>
+      
+      <button class="btn-toggle-explain" onclick="toggleExplanation(${q.id})">
+        💡 Lời giải / Tham chiếu
+      </button>
+
+      <div class="explanation-box" id="explain-${q.id}">
+        <strong>💡 Giải thích chi tiết:</strong>
+        <div>${q.explanation}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectOption(qId, optionIdx) {
+  userAnswers[qId] = optionIdx;
+  
+  // Highlight selected option
+  const options = document.querySelectorAll(`#card-${qId} .option-item`);
+  options.forEach((opt, idx) => {
+    if (idx === optionIdx) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
+}
+
+function toggleExplanation(qId) {
+  const box = document.getElementById(`explain-${qId}`);
+  if (box.style.display === 'none' || box.style.display === '') {
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function submitQuiz() {
+  let score = 0;
+  
+  quizData.forEach(q => {
+    const userAns = userAnswers[q.id];
+    const card = document.getElementById(`card-${q.id}`);
+    
+    // Highlight correct & incorrect answers
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected');
+      
+      if (optIdx === q.correct) {
+        optElem.classList.add('correct');
+      }
+      if (userAns !== undefined && userAns === optIdx && userAns !== q.correct) {
+        optElem.classList.add('incorrect');
+      }
+    });
+
+    if (userAns === q.correct) {
+      score++;
+    }
+
+    // Tự động mở lời giải sau khi nộp bài
+    document.getElementById(`explain-${q.id}`).style.display = 'block';
+  });
+
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: ${score} / ${quizData.length} (${Math.round(score/quizData.length*100)}%)`;
+  scoreDisplay.style.fontWeight = 'bold';
+  
+  alert(`Bạn đã hoàn thành bài thi! Điểm số: ${score}/${quizData.length}`);
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  
+  quizData.forEach(q => {
+    // Xóa các class highlight
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected', 'correct', 'incorrect');
+    });
+    
+    // Ẩn giải thích
+    document.getElementById(`explain-${q.id}`).style.display = 'none';
+  });
+
+  // Reset điểm
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: -- / --`;
+  scoreDisplay.style.fontWeight = 'normal';
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Khởi chạy khi load trang
+window.onload = function() {
+    const titleMatch = window.location.pathname.match(/([^/\\]+)\.html$/);
+    if(titleMatch) {
+        document.getElementById('quiz-title').textContent = decodeURIComponent(titleMatch[1]);
+    }
+    renderQuiz();
+};
+</script>
+
+</body>
+</html>

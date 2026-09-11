@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Trắc Nghiệm</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-light: #2b6cb0;
+            --secondary-color: #319795;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --incorrect-bg: #fed7d7;
+            --incorrect-border: #e53e3e;
+            --explain-bg: #ebf8ff;
+            --explain-border: #3182ce;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stats-item {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .score-display {
+            color: var(--primary-light);
+            font-size: 16px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .option-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 14.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-light);
+            background-color: #ebf8ff;
+            font-weight: 500;
+        }
+
+        .option-item.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #22543d;
+            font-weight: 600;
+        }
+
+        .option-item.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #742a2a;
+        }
+
+        .btn-toggle-explain {
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-toggle-explain:hover {
+            background-color: #e2e8f0;
+            border-color: #a0aec0;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--explain-bg);
+            border-left: 4px solid var(--explain-border);
+            border-radius: 6px;
+            font-size: 14px;
+            color: #2b6cb0;
+        }
+
+        .explanation-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c5282;
+        }
+
+        .action-bar {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn-submit {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(49, 151, 149, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c7a7b;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background-color: #718096;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(113, 128, 150, 0.3);
+            transition: all 0.2s;
+            margin-left: 15px;
+        }
+
+        .btn-reset:hover {
+            background-color: #4a5568;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 id="quiz-title">Bộ Đề Trắc Nghiệm</h1>
+        <p>Luyện Tập</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stats-item">Tổng số câu: <span id="total-count">0</span></div>
+        <div class="stats-item score-display" id="score-display">Điểm số: -- / --</div>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <div class="action-bar">
+        <button class="btn-submit" onclick="submitQuiz()">Nộp Bài & Kiểm Tra Đáp Án</button>
+        <button class="btn-reset" onclick="resetQuiz()">Làm Lại</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    "id": 1,
+    "question": "<div class=\"qtext\">Which of the following is a cause of defects about fitness tracker system? i) Because he was unfamiliar with the domain of fitness training, the author of the assumed that users wanted heartbeat in beats per hour. ii) The tester of the smartphone interface had not been trained in state transition testing, so missed a major defect. iii) An incorrect configuration variable implemented for the GPS function could cause location problems during daylight saving times. iv) Because she had never worked on wearable devices before, the designer of the user interface misunderstood the effects of reflected sunlight</div>",
+    "options": [
+      "a. i",
+      "b. i,ii",
+      "c. i,ii,iii",
+      "d. i,ii,iv"
+    ],
+    "correct": 3,
+    "explanation": "Refer 1.2.3 phần định nghĩa về error, defect, failure. Câu hỏi là cause of defects chính là error nên các đáp án nào chỉ về người làm sai thì là đáp án đúng, ở đây có I. he was unfamiliar, ii) The tester, iv) Because she had never worked đều là nói về con người làm sai"
+  },
+  {
+    "id": 2,
+    "question": "<div class=\"qtext\">Which of the following is Not a factor affecting testing effort ?</div>",
+    "options": [
+      "a. Functionality coverage",
+      "b. Test outcomes",
+      "c. Characteristics of development process",
+      "d. Characteristics of product"
+    ],
+    "correct": 0,
+    "explanation": "refer 5.1.4 các nhân tố ko ảnh hưởng đến estimate theo sách thì là A"
+  },
+  {
+    "id": 3,
+    "question": "<div class=\"qtext\">Which of the following is a primary benefit of gathering and analyzing test coverage metrics?</div>",
+    "options": [
+      "a. It helps to automate the selection of test data for complex scenarios.",
+      "b. It provides an objective measurement of progress and product risk.",
+      "c. It guarantees that no critical defects remain in the code.",
+      "d. It allows developers to fix code errors without requiring re-testing."
+    ],
+    "correct": 1,
+    "explanation": "refer 5.3.1 nó hỏi về lợi ích của việc thu thập test coverage metric, xem cả công thức tính về coverage của chương 4 thì test coverage là đo về tiến độ"
+  },
+  {
+    "id": 4,
+    "question": "<div class=\"qtext\">Which of the following tools is most useful for reporting test metrics or monitoring testing as a whole, rather than focusing on a specific area?</div>",
+    "options": [
+      "a. Test management tool",
+      "b. Static analysis tool",
+      "c. Model-Based testing tool",
+      "d. Coverage tool"
+    ],
+    "correct": 0,
+    "explanation": "Refer 6.1 tool để report metrics là gì?"
+  },
+  {
+    "id": 5,
+    "question": "<div class=\"qtext\">You are a tester participating in a retrospective meeting, which of the following BEST describes a task that you should do?</div>",
+    "options": [
+      "a. I should bring in topics that are related to testing only. All other topics will be covered by different participants",
+      "b. I participate in a retrospective meeting as an observer, ensuring that the meeting follows the retrospective rules and agile values",
+      "c. I should provide feedback and input on all activities conducted by the team during the sprint",
+      "d. I should only attend and participate in a retrospective meeting if I have any feedback and input related to activities conducted by the team during the sprint"
+    ],
+    "correct": 2,
+    "explanation": "Refer 2.1.5 Retrospective meeting là buổi họp rút kinh nghiệm và cải tiến quy trình nên mọi người đc tham gia vào thảo luận tự do và đóng góp ý kiến về tất cả các hoạt động của dự án"
+  },
+  {
+    "id": 6,
+    "question": "<div class=\"qtext\">The term “burn down chart” refers to which of the following?</div>",
+    "options": [
+      "a. A chart showing which team members are working the most, and are likely to be under stress",
+      "b. A chart showing the progress of each user story, and when they are likely to be completed",
+      "c. A chart showing the amount of work left to be done, versus the time allocated for the iteration",
+      "d. A chart showing defects that have been fixed, and when the remaining defects are likely to be fixed"
+    ],
+    "correct": 2,
+    "explanation": "Refer 1.4 test activities. burndown chart là biểu đồ theo dõi tiến độ công việc của cả dự án Agile nó ko nằm trong test report, nó quản lý cv của cả dự án, cho biết 2 đường là đường plan và đường remaining"
+  },
+  {
+    "id": 7,
+    "question": "<div class=\"qtext\">An insurance application calculates premiums based on the applicant's age with the following rules: - Applicants below 1 year old receive the insurance for free. - Applicants below 18 years old (but at least 1 year old) are charged \n300.\n−\n𝐴\n𝑝\n𝑝\n𝑙\n𝑖\n𝑐\n𝑎\n𝑛\n𝑡\n𝑠\n𝑓\n𝑟\n𝑜\n𝑚\n18\n𝑡\n𝑜\n70\n𝑦\n𝑒\n𝑎\n𝑟\n𝑠\n𝑜\n𝑙\n𝑑\n𝑖\n𝑛\n𝑐\n𝑙\n𝑢\n𝑠\n𝑖\n𝑣\n𝑒\n𝑎\n𝑟\n𝑒\n𝑐\nℎ\n𝑎\n𝑟\n𝑔\n𝑒\n𝑑\n300.−Applicantsfrom18to70yearsoldinclusivearecharged500. Assuming age is processed as an integer number, what is the minimum number of test cases required to achieve 100% coverage for both Equivalence Partitioning and 2-value Boundary Value Analysis?</div>",
+    "options": [
+      "a. 1",
+      "b. 3",
+      "c. 6",
+      "d. 9"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2.2 BVA"
+  },
+  {
+    "id": 8,
+    "question": "<div class=\"qtext\">During the risk identification process, stakeholders analyze various sources to uncover potential product risks, including both known and unknown risks. Which of the following is NOT a direct factor or source used to identify these risks?</div>",
+    "options": [
+      "a. Risk management",
+      "b. Requirement analysis",
+      "c. Stakeholder feedback / Interviews",
+      "d. Equivalence Partitions"
+    ],
+    "correct": 3,
+    "explanation": "Refer 5.2 Nguồn nào ko dc sử dụng để xác định risk thì chọn D vì EP là kỹ thuật thiết kế TC"
+  },
+  {
+    "id": 9,
+    "question": "<div class=\"qtext\">Which of the following is an advantage of having the whole team responsible for quality?</div>",
+    "options": [
+      "a. Companies no longer need to recruit and train software testing specialists",
+      "b. Test automation tasks are now the responsibility of the development team instead of the test team",
+      "c. Role barriers are eliminated, and team members contribute to project success based on their unique skills and perspectives",
+      "d. Project costs are lower because the need for a specialized test team is eliminated"
+    ],
+    "correct": 2,
+    "explanation": "Refer 1.5.2 whole team approach"
+  },
+  {
+    "id": 10,
+    "question": "<div class=\"qtext\">Which activities below best represent responsibilities that are consistent with agile development’s Whole Team approach? select TWO</div>",
+    "options": [
+      "a. Testers are responsible for developing unit tests which they pass on to the developers for testing",
+      "b. Business representatives are expected to select the tools the team will use during the project",
+      "c. Testers are expected to work with customer representatives to create acceptance tests",
+      "d. The whole team, not just testers, has responsibility for the quality of the product",
+      "e. Developers are expected to test non-functional requirements (performance, usability, security, etc.)"
+    ],
+    "correct": 3,
+    "explanation": "Refer 1.5.2 về Whole team approach thì định nghĩa là mọi người đều có skill và knowledge để thực hiện any tas, everybody có trách nhiệm về quality, ta chọn C,D"
+  },
+  {
+    "id": 11,
+    "question": "<div class=\"qtext\">Which of the following is a benefit of early and frequent feedback?</div>",
+    "options": [
+      "a. The total number of defects found during the project is much higher than on traditional software development projects such as waterfall",
+      "b. There is less rework because customers see the product regularly",
+      "c. It is easy to determine the developer who introduces the most defects when integrating code",
+      "d. There is enough time to complete all features scheduled for the given iteration"
+    ],
+    "correct": 1,
+    "explanation": "Refer 3.2.1 Feedback sớm có các lợi ích gì ( chọn less rework)"
+  },
+  {
+    "id": 12,
+    "question": "<div class=\"qtext\">Which of the following is considered a primary task of a person in a testing role during the test design phase?</div>",
+    "options": [
+      "a. Writing code for automated test fixtures and reviewing developer unit tests.",
+      "b. Developing high-level test conditions and setting up the physical test environment.",
+      "c. Designing test cases and designing specific data combinations to support the root cause analysis through proper defect classification.",
+      "d. Defining test exit criteria and approving the overall test budget."
+    ],
+    "correct": 2,
+    "explanation": "Refer 1.4 Vai trò tester trong Design là C"
+  },
+  {
+    "id": 13,
+    "question": "<div class=\"qtext\">You are testing software that controls the amount of water sprayed by an automatic sprinkler system, based on the previous 3 days' weather (3 possible conditions: sunny, cloudy, rainy) Maximum water: sunny, sunny, sunny. No water: two or more rainy days. Varying amounts: Other mixes. Question: How many minimum test cases are required to cover all weather combinations according to Equivalence Partitioning criteria?</div>",
+    "options": [
+      "a. 1",
+      "b. 3",
+      "c. 21",
+      "d. 27"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2 nó hỏi các loại hình thời tiết để tính lượng nước tưới cho cây trồng, Input ta có 2 loại input là cá cặp kết hợp thời tiết của 3 ngày và loại cỏ ( cỏ có 5 loại cỏ). Tính kết hợp của thời tiết trong 3 ngày có 3 loại hình S, C, R thì 3*3= 27 TH về thời tiết, nhưng nếu mưa 2 ngày trở lên thì ko tưới nước nên ta gom vào có 7 TH là có 2 ngày mưa trở lên gom về 1 Vậy có 21 TH về thời tiết. Vì kỹ thuật EP nên ta cần 21 TC minimum để test"
+  },
+  {
+    "id": 14,
+    "question": "<div class=\"qtext\">You review SPEC for a library system: Librarians: 1. Register new borrowers 2. Return books from borrowers 3. Accept fines from borrowers 4. Add new books to the system with their ISBN, author and title 5. Remove books from the system 6. Get system responses within 3 seconds Borrowers : 7. Borrow a maximum of 3 books at one time 8. View the history of books they have borrowed/reserved 9. Be fined for failing to return a book within 3 weeks 10. Get system responses within 3 seconds 11. Borrow a book at no cost for a maximum of 4 weeks 12. Reserve books (if they are on-loan) All users: 13. Can search for books by ISBN, author, or title 14. Can browse the system catalogue 15. The system shall respond to user requests within 3 seconds 16. The user interface shall be easy-to-use Is correct?</div>",
+    "options": [
+      "a. 6-10, 6-15, 9-11",
+      "b. 6-10, 9-11",
+      "c. 6-10, 6-15, 7-12",
+      "d. 6-15, 7-12"
+    ],
+    "correct": 2,
+    "explanation": "refer 3.2.2 review types. Câu này làm rồi trước đây họ hỏi cặp nào mâu thuẫn với nhau nhưng giờ họ sửa đề và hỏi cặp nào là đúng về yêu cầu khi review theo checklist? họ đã sửa đề của ý số 6 trùng với 10, 6 trùng với 15 và thêm nữa 7-12 cũng hợp lý với nhau. Nên câu này chọn các cặp đúng là C"
+  },
+  {
+    "id": 15,
+    "question": "<div class=\"qtext\">You are going to be testing a small camera. To keep it simple, there are only two buttons: the power button and the shutter button. The camera will act as an automatic focus and exposure camera when the shutter button is pressed halfway and then stopped for 0.4 seconds before the button press is completed. If the shutter button is simply pressed all the way without stop-ping, the camera will act as a single exposure, infinity focus camera. Given the following state transition diagram, how many rows would its matching state transition table contain?</div>",
+    "options": [
+      "a. 6",
+      "b. 10",
+      "c. 14",
+      "d. 18"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.2.4 state transition, bài này vẽ bảng state table gồm row là có các trạng thái A, B,C,D, còn cột là các event gồm: Click power button, Press shutter/1st halfway, Press shutter/2nd halfway, Press shutter/ whole way, Done take picture. vẽ ra ta đc bảng có 20 ô ( 4*5) là tương đương 20 TC tuy nhiên AI giải thích là có 2 ô ko xảy ra trong thực tế ( chúng tôi đoán là ở state A ko ấn đc shutter/ 1st và shutter/ 2nd) vì thế đáp án họ chọn 18. cái này cần có kinh nghiệm sử dụng máy ảnh"
+  },
+  {
+    "id": 16,
+    "question": "<div class=\"qtext\">A decision contains independent atomic conditions. If 100% Modified Condition/Decision Coverage (MC/DC) is achieved using the minimum number of test cases, which of the following statements must be TRUE for each atomic condition? 1. Each atomic condition has been exercised with a TRUE outcome at least once. 2. Each atomic condition has been exercised with a FALSE outcome at least once. 3. Each atomic independently condition has been shown to affect 1 and 2. Which of the following represents the correct set of requirements?</div>",
+    "options": [
+      "a. 1,2 correct",
+      "b. 2,3 correct",
+      "c. 1,3 correct",
+      "d. 1,2,3 correct"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.3.5 mục định nghĩa của MC/DC"
+  },
+  {
+    "id": 17,
+    "question": "<div class=\"qtext\">Which of minimum Test case to cover all statements and decision coverage of this code?</div>",
+    "options": [
+      "a. 1",
+      "b. 2",
+      "c. 3",
+      "d. 4"
+    ],
+    "correct": 2,
+    "explanation": ""
+  }
+];
+
+let userAnswers = {};
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  document.getElementById('total-count').textContent = quizData.length;
+
+  container.innerHTML = quizData.map((q, idx) => `
+    <div class="question-card" id="card-${q.id}">
+      <div class="question-title">Câu ${idx + 1}: ${q.question}</div>
+      <ul class="options-list">
+        ${q.options.map((opt, optIdx) => `
+          <li class="option-item" 
+              id="opt-${q.id}-${optIdx}" 
+              onclick="selectOption(${q.id}, ${optIdx})">
+            ${opt}
+          </li>
+        `).join('')}
+      </ul>
+      
+      <button class="btn-toggle-explain" onclick="toggleExplanation(${q.id})">
+        💡 Lời giải / Tham chiếu
+      </button>
+
+      <div class="explanation-box" id="explain-${q.id}">
+        <strong>💡 Giải thích chi tiết:</strong>
+        <div>${q.explanation}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectOption(qId, optionIdx) {
+  userAnswers[qId] = optionIdx;
+  
+  // Highlight selected option
+  const options = document.querySelectorAll(`#card-${qId} .option-item`);
+  options.forEach((opt, idx) => {
+    if (idx === optionIdx) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
+}
+
+function toggleExplanation(qId) {
+  const box = document.getElementById(`explain-${qId}`);
+  if (box.style.display === 'none' || box.style.display === '') {
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function submitQuiz() {
+  let score = 0;
+  
+  quizData.forEach(q => {
+    const userAns = userAnswers[q.id];
+    const card = document.getElementById(`card-${q.id}`);
+    
+    // Highlight correct & incorrect answers
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected');
+      
+      if (optIdx === q.correct) {
+        optElem.classList.add('correct');
+      }
+      if (userAns !== undefined && userAns === optIdx && userAns !== q.correct) {
+        optElem.classList.add('incorrect');
+      }
+    });
+
+    if (userAns === q.correct) {
+      score++;
+    }
+
+    // Tự động mở lời giải sau khi nộp bài
+    document.getElementById(`explain-${q.id}`).style.display = 'block';
+  });
+
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: ${score} / ${quizData.length} (${Math.round(score/quizData.length*100)}%)`;
+  scoreDisplay.style.fontWeight = 'bold';
+  
+  alert(`Bạn đã hoàn thành bài thi! Điểm số: ${score}/${quizData.length}`);
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  
+  quizData.forEach(q => {
+    // Xóa các class highlight
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected', 'correct', 'incorrect');
+    });
+    
+    // Ẩn giải thích
+    document.getElementById(`explain-${q.id}`).style.display = 'none';
+  });
+
+  // Reset điểm
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: -- / --`;
+  scoreDisplay.style.fontWeight = 'normal';
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Khởi chạy khi load trang
+window.onload = function() {
+    const titleMatch = window.location.pathname.match(/([^/\\]+)\.html$/);
+    if(titleMatch) {
+        document.getElementById('quiz-title').textContent = decodeURIComponent(titleMatch[1]);
+    }
+    renderQuiz();
+};
+</script>
+
+</body>
+</html>

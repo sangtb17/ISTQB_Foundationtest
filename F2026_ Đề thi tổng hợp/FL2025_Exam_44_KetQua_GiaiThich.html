@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Trắc Nghiệm</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-light: #2b6cb0;
+            --secondary-color: #319795;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --incorrect-bg: #fed7d7;
+            --incorrect-border: #e53e3e;
+            --explain-bg: #ebf8ff;
+            --explain-border: #3182ce;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stats-item {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .score-display {
+            color: var(--primary-light);
+            font-size: 16px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .option-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 14.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-light);
+            background-color: #ebf8ff;
+            font-weight: 500;
+        }
+
+        .option-item.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #22543d;
+            font-weight: 600;
+        }
+
+        .option-item.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #742a2a;
+        }
+
+        .btn-toggle-explain {
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-toggle-explain:hover {
+            background-color: #e2e8f0;
+            border-color: #a0aec0;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--explain-bg);
+            border-left: 4px solid var(--explain-border);
+            border-radius: 6px;
+            font-size: 14px;
+            color: #2b6cb0;
+        }
+
+        .explanation-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c5282;
+        }
+
+        .action-bar {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn-submit {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(49, 151, 149, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c7a7b;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background-color: #718096;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(113, 128, 150, 0.3);
+            transition: all 0.2s;
+            margin-left: 15px;
+        }
+
+        .btn-reset:hover {
+            background-color: #4a5568;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 id="quiz-title">Bộ Đề Trắc Nghiệm</h1>
+        <p>Luyện Tập</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stats-item">Tổng số câu: <span id="total-count">0</span></div>
+        <div class="stats-item score-display" id="score-display">Điểm số: -- / --</div>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <div class="action-bar">
+        <button class="btn-submit" onclick="submitQuiz()">Nộp Bài & Kiểm Tra Đáp Án</button>
+        <button class="btn-reset" onclick="resetQuiz()">Làm Lại</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    "id": 1,
+    "question": "<div class=\"qtext\">Which of the following is an example of shift-right testing?</div>",
+    "options": [
+      "a. Static code analysis",
+      "b. Usability testing befor release",
+      "c. A/B testing in production",
+      "d. Unit testing"
+    ],
+    "correct": 2,
+    "explanation": "Tra glossary khái niệm \"shift-right testing -A test approach to test a system continuously in production\" là test ở production nên chọn C, A/B testing là test ngẫu nhiên với 1 số lượng user trên môi trường thật để đánh giá xem phần thay đổi của hệ thống có lỗi gì ko trước khi lên production hoàn toàn"
+  },
+  {
+    "id": 2,
+    "question": "<div class=\"qtext\">What is the main difference between verification and validation?</div>",
+    "options": [
+      "a. Verification ensures that the software behaves as expected in real-world scenarios, while validation checks for coding standards.",
+      "b. Verification involves dynamic testing, while validation is purely documentation-based.",
+      "c. Verification checks whether the product is being built correctly, while validation checks whether the right product is being built.",
+      "d. There is no difference; both terms refer to executing the code to find defects."
+    ],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 3,
+    "question": "<div class=\"qtext\">Which statement about verification and validation is correct?</div>",
+    "options": [
+      "a. Both are only performed during testing phases.",
+      "b. Verification confirms the software meets design specifications, Validation confirms the software fitness for use",
+      "c. Validation is part of design; verification is part of acceptance testing",
+      "d. Verification is always automated, while validation is always manual."
+    ],
+    "correct": 1,
+    "explanation": "Refer 1.1.1 phân biệt 2 định nghĩa này như trong sách Verification = conformance to specs; Validation = fitness for purpose."
+  },
+  {
+    "id": 4,
+    "question": "<div class=\"qtext\">What is the correct role of test automation in software testing?</div>",
+    "options": [
+      "a. To completely replace all manual testing activities",
+      "b. To find all defects in the software automatically",
+      "c. To support manual testing by executing repetitive and regression tests efficiently",
+      "d. To allow developers to skip writing unit tests"
+    ],
+    "correct": 2,
+    "explanation": "Refer 6.2 phần benefit of automation. Chọn C vì nó giúp giảm các công việc lặp lại (repetitive) ví dụ như regression test"
+  },
+  {
+    "id": 5,
+    "question": "<div class=\"qtext\">Which factor of the following is LEAST likely to directly influence the selection of test cases for regression testing?</div>",
+    "options": [
+      "a. Impact analysis of recent changes",
+      "b. Risk of failure in critical features",
+      "c. Tester’s individual skill level",
+      "d. Previous defect-prone areas"
+    ],
+    "correct": 2,
+    "explanation": "Refer 2.2.3 Regression test và 2.3 Maintenance test. Nhân tố nào ít ảnh hưởng nhất đến việc chọn test case cho Regression test? chọn C ( kỹ năng của 1 cá nhân ko dùng để lựa chọn TC, nó chỉ ảnh hưởng đến năng suất và chất lượng của test))"
+  },
+  {
+    "id": 6,
+    "question": "<div class=\"qtext\">Which importance factor of a tester should be selected for regression testing?</div>",
+    "options": [
+      "a. Recent code changes and scope of system",
+      "b. Areas with a high frequency of defects",
+      "c. The skill and experience of the tester performing the regression test",
+      "d. Critical business functions"
+    ],
+    "correct": 2,
+    "explanation": "Refer 2.3 nhân tố Tester cần xem xét khi chọn TC cho Regression test là A. size of change và size of software, B. là mật độ lỗi cao, D là risk của tính năng nghiêm trọng đều là các nhân tố ảnh hưởng đến scope của regression test, câu hỏi đang hỏi tester chọn TC dựa vào cái gì nên chọn C dựa vào skill và experience"
+  },
+  {
+    "id": 7,
+    "question": "<div class=\"qtext\">You need to test the login page of a web site. The page contains fields for user name and password. Which test design techniques are most appropriate for this case?</div>",
+    "options": [
+      "a. Decision coverage, fault attack",
+      "b. Decision table testing, state transition testing",
+      "c. Exploratory testing, statement coverage.",
+      "d. Equivalence partitioning. Boundary value analysis."
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.1. Kỹ thuật để test tính năng Login có combination của user và password thì tốt nhất là Decision table và kết hợp thêm State Transition testing"
+  },
+  {
+    "id": 8,
+    "question": "<div class=\"qtext\">Which of the following statements BEST describes how system complexity can create challenges when testing an AI-based system?</div>",
+    "options": [
+      "a. Testing for bias may require data that the team does not have",
+      "b. Manual generation of white-box tests can be difficult",
+      "c. Determining whether a system is ethical can be subjective",
+      "d. It can be difficult to find representative data to train a model"
+    ],
+    "correct": 1,
+    "explanation": "Refer câu 28 của đề AI testing họ chọn B và giải thích như sau. A sai vì Bias ( quen thuộc) test các cái quen thuộc ko dùng cho hệ thống phức tạp. C loại vì từ Ethical ( Đạo đức của hệ thống đc đánh giá chủ quan). D loại vì Train a model ko phải là công việc của test"
+  },
+  {
+    "id": 9,
+    "question": "<div class=\"qtext\">Which factor should a tester consider when selecting test cases for regression testing?</div>",
+    "options": [
+      "a. Test case execution time",
+      "b. Regression test scope",
+      "c. Development budget",
+      "d. Number of executed test cases"
+    ],
+    "correct": 1,
+    "explanation": "Refer 2.3 Chọn test case cho regression test dựa vào scope của nó"
+  },
+  {
+    "id": 10,
+    "question": "<div class=\"qtext\">Which of the following statements about Experience Based Techniques (EBT) is correct?</div>",
+    "options": [
+      "a. EBT require broad and deep knowledge in testing but not necessarily in the application or technological domain",
+      "b. EBT is based on the ability of the test engineer to implement various testing techniques.",
+      "c. EBT use tests derived from the test engineers' previous experience with similar technologies.",
+      "d. EBT is done as a second stage of testing, after non-experienced-based testing took place."
+    ],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 11,
+    "question": "<div class=\"qtext\">An input screen accepts 3 inputs; each of these has 3 equivalence classes. How many test cases are required for testing all combinations of equivalence classes?</div>",
+    "options": [
+      "a. 3",
+      "b. 6",
+      "c. 9",
+      "d. Can’t be determined"
+    ],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 12,
+    "question": "<div class=\"qtext\">You have been asked to improve the way test automation tools are being used in your company. Which one of the following is the BEST approach?</div>",
+    "options": [
+      "a. Selecting and automating scripts that test new functionality to find the most defects.",
+      "b. Using a keyword-driven testing approach to separate the actions and data from the tool's script.",
+      "c. Ensuring that all data, inputs and actions are stored in the tool's script for ease of maintenance",
+      "d. Keeping expected results separate from the automation tool to allow the testers to check the results"
+    ],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 13,
+    "question": "<div class=\"qtext\">Which of the following answers would you expect to best describe the residual risks associated with the identified product risks, at the end of the first week of test execution?</div>",
+    "options": [
+      "a. Since R3 is the only risk for which all test cases have passed, the risk has been reduced by 20%",
+      "b. The test execution status table indicates that the risk has been reduced by 56%",
+      "c. The residual risk level can't be determined, because it requires that all the test cases have been executed",
+      "d. The test execution table doesn't give an indication of the risk level of the open defects and the test cases that failed or are not run yet"
+    ],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 14,
+    "question": "<div class=\"qtext\">What is the main purpose of the Three Amigos approach in Agile?</div>",
+    "options": [
+      "a. To improve release approval process",
+      "b. To create a shared understanding of requirements and acceptance criteria",
+      "c. To measurement test coverage of system",
+      "d. To replace the Sprint Review meeting"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.5 phần Collaborative writing user story, và đây là giải thích của từ Three amigo = collaborative: In Agile software development, the term \"Three Amigos\" refers to a collaborative practice, Three amigos include: Business, Development, Testing"
+  },
+  {
+    "id": 15,
+    "question": "<div class=\"qtext\">In Agile, which practice helps ensure a shared understanding of requirements?</div>",
+    "options": [
+      "a. Sprint planning",
+      "b. Three Amigos",
+      "c. Daily Scrum",
+      "d. Sprint Retrospective"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.5 phần Collaborative writing user story, và đây là giải thích của từ Three amigo = collaborative: In Agile software development, the term \"Three Amigos\" refers to a collaborative practice, Three amigos include: Business, Development, Testing"
+  },
+  {
+    "id": 16,
+    "question": "<div class=\"qtext\">Which TWO of the following statements provide the BEST rationale for using exploratory testing?</div>",
+    "options": [
+      "a. Testers have not been allocated enough time for test design and test execution",
+      "b. The existing test strategy requires that testers use formal, black-box test techniques",
+      "c. The specification is written in a formal language that can be processed by a tool",
+      "d. Testers are the members of an agile team and have good programming skills",
+      "e. Testers are experienced in the business domain and have good analytical skills"
+    ],
+    "correct": 4,
+    "explanation": "Refer 4.3.2 exploratory testing hữu ích trong các trường hợp Time pressure, experienced tester"
+  },
+  {
+    "id": 17,
+    "question": "<div class=\"qtext\">Which of the following BEST describes how using checklist-based testing can result in increased coverage?</div>",
+    "options": [
+      "a. Checklist items can be defined at a sufficiently low level of detail, so the tester can implement and execute detailed test cases based on these items",
+      "b. Checklists can be automated, so each time an automated test execution covers the checklist items, it results in additional coverage",
+      "c. Each checklist item should be tested separately and independently, so the elements cover different areas of the software",
+      "d. Two testers designing and executing tests based on the same high-level checklist items will typically perform the testing in slightly different ways"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.3.3 Checklist. Dựa vào từ \"high-level checklist items\" là đùng định nghĩa về checklist như trong sách nhất, còn A sai vì \"low level of detail\", B. sai vì \"Checklists can be automated\" câu hỏi trong checklist thường chung chung ko thể auto đc, Còn C thì \"separately and independently\" cái này đang nói về định nghĩa của Unit test"
+  },
+  {
+    "id": 18,
+    "question": "<div class=\"qtext\">Which of the following best describes the purpose of the 'Three Amigos' meeting in Agile?</div>",
+    "options": [
+      "a. To assign tasks to developers for the next sprint",
+      "b. To conduct a detailed code review before deployment",
+      "c. To ensure a shared understanding of a user story by discussing it from business, development, and testing perspectives",
+      "d. To review the sprint backlog and calculate team velocity"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.5 phần Collaborative writing user story, và đây là giải thích của từ Three amigo = collaborative: In Agile software development, the term \"Three Amigos\" refers to a collaborative practice, Three amigos include: Business, Development, Testing"
+  },
+  {
+    "id": 19,
+    "question": "<div class=\"qtext\">For a system with complex internal code paths and conditional logic, which two techniques would be best combined?</div>",
+    "options": [
+      "a. Equivalence Partitioning and Boundary Value Analysis",
+      "b. Statement Coverage and Path Coverage",
+      "c. Decision Table Testing and Statement Coverage",
+      "d. State Transition and Boundary Value Analysis"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.1 và 4.2. Kỹ thuật nào nên chọn cho dự án phức tạp cả về code paths và các điều kiện logic nên ta chọn cả white box test và black box test chọn C"
+  },
+  {
+    "id": 20,
+    "question": "<div class=\"qtext\">Which standard BEST describes the classification of software failure conditions into levels such as: Catastrophic – Failure may cause a loss of life. Error or loss of critical function required to safely fly and land aircraft. Hazardous – Failure has a large negative impact on safety or performance, or reduces the ability of the crew to operate the aircraft due to physical distress or a higher workload, or causes serious injuries among the passengers. Major – Failure is significant, but has a lesser impact than a hazardous failure or significantly increases crew workload (safety related) Minor – Failure is noticeable, but has a lesser impact than a major failure. No effect – Failure has no impact on safety, aircraft operation, or crew workload.</div>",
+    "options": [
+      "a. ISO/IEC 9126",
+      "b. IEEE 829",
+      "c. DO-178C",
+      "d. ISO/IEC 25010"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.3 White box test"
+  },
+  {
+    "id": 21,
+    "question": "<div class=\"qtext\">Which model emphasizes that each development phase has a corresponding testing phase, and testing is planned early in the life cycle?</div>",
+    "options": [
+      "a. Waterfall",
+      "b. V‑Model",
+      "c. Scrum",
+      "d. Regressive"
+    ],
+    "correct": 1,
+    "explanation": "Refer 2.1"
+  },
+  {
+    "id": 22,
+    "question": "<div class=\"qtext\">Which testing role is most suitable for supporting a post-release scenario where the organization aims to reduce release frequency, and gain insights from the production system?</div>",
+    "options": [
+      "a. Test Manager",
+      "b. Maintenance Tester",
+      "c. Automation Engineer",
+      "d. Performance Tester"
+    ],
+    "correct": 1,
+    "explanation": "Refer 2.4 Maintenance test, Vài trò của test nào phù hợp sau release? Sau release là giai đoạn maintenance cần test cho phần thay đổi và regression test nên chọn B"
+  },
+  {
+    "id": 23,
+    "question": "<div class=\"qtext\">Which of the following activities BEST reflects the contribution of a Tester in a post-release testing scenario?</div>",
+    "options": [
+      "a. Reducing Release Frequency",
+      "b. Providing Insight from Production",
+      "c. Blocking Exploratory Testing",
+      "d. Prioritizing UI enhancements"
+    ],
+    "correct": 1,
+    "explanation": "Refer 2.4 Maintenance test Chọn B vì phù hợp sau release là quá trình hỗ trợ cho production"
+  },
+  {
+    "id": 24,
+    "question": "<div class=\"qtext\">Which test technique involves learning the system, designing tests, and executing tests all at the same time?</div>",
+    "options": [
+      "a. Error guessing",
+      "b. Exploratory testing",
+      "c. Faul attack",
+      "d. Data flow based testing"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.3 Test khám phá là cùng lúc thực hiện learn, design, execute, log"
+  },
+  {
+    "id": 25,
+    "question": "<div class=\"qtext\">Which of the following best describes a characteristic of exploratory testing in CTFL 4.1?</div>",
+    "options": [
+      "a. Test cases are fully documented before test execution.",
+      "b. Tests are executed exactly as designed, with no deviation.",
+      "c. Learning, test design, and test execution occur at the same time.",
+      "d. It requires detailed specifications before starting testing."
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.3"
+  },
+  {
+    "id": 26,
+    "question": "<div class=\"qtext\">According to CTFL 4.1, how is test automation typically viewed within a DevOps pipeline?</div>",
+    "options": [
+      "a. As a blocker to testing activities",
+      "b. As a quality earlier and part of the continuous feedback loop",
+      "c. As a potential security risk that should be avoided",
+      "d. As a replacement for all manual testing"
+    ],
+    "correct": 1,
+    "explanation": "Refer 2.1 Câu hỏi Về quy trình DevOps nói chung là test sớm và phản hồi liên tục"
+  },
+  {
+    "id": 27,
+    "question": "<div class=\"qtext\">What is the primary purpose of MC/DC in software testing?</div>",
+    "options": [
+      "a. To ensure all statements are executed at least once",
+      "b. To ensure every decision in the program has been evaluated to both true and false",
+      "c. To ensure each condition within a decision independently affects the outcome of the decision",
+      "d. To ensure every possible combination of conditions in a decision is tested"
+    ],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 28,
+    "question": "<div class=\"qtext\">Which of the following best describes the criteria for MC/DC?</div>",
+    "options": [
+      "a. Each condition within a decision independently affects the decision’s outcome, requiring that all conditions be tested in combination with others.",
+      "b. Each condition within a decision takes on all possible values at least once, and each decision takes on all possible outcomes at least once.",
+      "c. All possible combinations of conditions within a decision must be tested.",
+      "d. Every statement in the code must be executed at least once."
+    ],
+    "correct": 0,
+    "explanation": ""
+  }
+];
+
+let userAnswers = {};
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  document.getElementById('total-count').textContent = quizData.length;
+
+  container.innerHTML = quizData.map((q, idx) => `
+    <div class="question-card" id="card-${q.id}">
+      <div class="question-title">Câu ${idx + 1}: ${q.question}</div>
+      <ul class="options-list">
+        ${q.options.map((opt, optIdx) => `
+          <li class="option-item" 
+              id="opt-${q.id}-${optIdx}" 
+              onclick="selectOption(${q.id}, ${optIdx})">
+            ${opt}
+          </li>
+        `).join('')}
+      </ul>
+      
+      <button class="btn-toggle-explain" onclick="toggleExplanation(${q.id})">
+        💡 Lời giải / Tham chiếu
+      </button>
+
+      <div class="explanation-box" id="explain-${q.id}">
+        <strong>💡 Giải thích chi tiết:</strong>
+        <div>${q.explanation}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectOption(qId, optionIdx) {
+  userAnswers[qId] = optionIdx;
+  
+  // Highlight selected option
+  const options = document.querySelectorAll(`#card-${qId} .option-item`);
+  options.forEach((opt, idx) => {
+    if (idx === optionIdx) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
+}
+
+function toggleExplanation(qId) {
+  const box = document.getElementById(`explain-${qId}`);
+  if (box.style.display === 'none' || box.style.display === '') {
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function submitQuiz() {
+  let score = 0;
+  
+  quizData.forEach(q => {
+    const userAns = userAnswers[q.id];
+    const card = document.getElementById(`card-${q.id}`);
+    
+    // Highlight correct & incorrect answers
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected');
+      
+      if (optIdx === q.correct) {
+        optElem.classList.add('correct');
+      }
+      if (userAns !== undefined && userAns === optIdx && userAns !== q.correct) {
+        optElem.classList.add('incorrect');
+      }
+    });
+
+    if (userAns === q.correct) {
+      score++;
+    }
+
+    // Tự động mở lời giải sau khi nộp bài
+    document.getElementById(`explain-${q.id}`).style.display = 'block';
+  });
+
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: ${score} / ${quizData.length} (${Math.round(score/quizData.length*100)}%)`;
+  scoreDisplay.style.fontWeight = 'bold';
+  
+  alert(`Bạn đã hoàn thành bài thi! Điểm số: ${score}/${quizData.length}`);
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  
+  quizData.forEach(q => {
+    // Xóa các class highlight
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected', 'correct', 'incorrect');
+    });
+    
+    // Ẩn giải thích
+    document.getElementById(`explain-${q.id}`).style.display = 'none';
+  });
+
+  // Reset điểm
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: -- / --`;
+  scoreDisplay.style.fontWeight = 'normal';
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Khởi chạy khi load trang
+window.onload = function() {
+    const titleMatch = window.location.pathname.match(/([^/\\]+)\.html$/);
+    if(titleMatch) {
+        document.getElementById('quiz-title').textContent = decodeURIComponent(titleMatch[1]);
+    }
+    renderQuiz();
+};
+</script>
+
+</body>
+</html>

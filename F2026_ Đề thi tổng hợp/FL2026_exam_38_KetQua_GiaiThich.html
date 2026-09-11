@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Trắc Nghiệm</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-light: #2b6cb0;
+            --secondary-color: #319795;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --incorrect-bg: #fed7d7;
+            --incorrect-border: #e53e3e;
+            --explain-bg: #ebf8ff;
+            --explain-border: #3182ce;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stats-item {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .score-display {
+            color: var(--primary-light);
+            font-size: 16px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .option-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 14.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-light);
+            background-color: #ebf8ff;
+            font-weight: 500;
+        }
+
+        .option-item.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #22543d;
+            font-weight: 600;
+        }
+
+        .option-item.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #742a2a;
+        }
+
+        .btn-toggle-explain {
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-toggle-explain:hover {
+            background-color: #e2e8f0;
+            border-color: #a0aec0;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--explain-bg);
+            border-left: 4px solid var(--explain-border);
+            border-radius: 6px;
+            font-size: 14px;
+            color: #2b6cb0;
+        }
+
+        .explanation-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c5282;
+        }
+
+        .action-bar {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn-submit {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(49, 151, 149, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c7a7b;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background-color: #718096;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(113, 128, 150, 0.3);
+            transition: all 0.2s;
+            margin-left: 15px;
+        }
+
+        .btn-reset:hover {
+            background-color: #4a5568;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 id="quiz-title">Bộ Đề Trắc Nghiệm</h1>
+        <p>Luyện Tập</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stats-item">Tổng số câu: <span id="total-count">0</span></div>
+        <div class="stats-item score-display" id="score-display">Điểm số: -- / --</div>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <div class="action-bar">
+        <button class="btn-submit" onclick="submitQuiz()">Nộp Bài & Kiểm Tra Đáp Án</button>
+        <button class="btn-reset" onclick="resetQuiz()">Làm Lại</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    "id": 1,
+    "question": "<div class=\"qtext\">How many test cases are needed minimum to achieve 100 % statement coverage? if ((temperature &lt; 0) or (temperature &gt; 100)) { alert (\"DANGER\"); if ((speed &gt; 100) and (load &lt;= 50)) { speed = 50; } } else { check = false; }</div>",
+    "options": [
+      "a. 1",
+      "b. 2",
+      "c. 3",
+      "d. 4"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.3 phần whitebox test và phải vẽ đc sơ đồ flow"
+  },
+  {
+    "id": 2,
+    "question": "<div class=\"qtext\">A daily radiation recorder for plants produces a sunshine score based on a combination of the number of hours a plant is exposed to the sun (below 2 hours, 2 to 4 hours, 4 to 6 hours, 6 to 8 hours, above 8 hours) and the average intensity of the sunshine (very low, low, medium, high). Given the following test cases ( image) What is the minimum number of additional test cases that are needed to ensure full coverage of ALL VALID INPUT equivalence partitions?</div>",
+    "options": [
+      "a. 1",
+      "b. 2",
+      "c. 3",
+      "d. 4"
+    ],
+    "correct": 2,
+    "explanation": "refer 4.2.1 phần EP, họ hỏi số TC cần thêm vào để bao phủ hết các EP, vẽ ra các EP rồi map với cái bảng TC họ đã cho xem EP nào đã đc test, tính các EP còn lại để ra đc TC"
+  },
+  {
+    "id": 3,
+    "question": "<div class=\"qtext\">Which work product can be used by an agile team to show the amount of work that has been completed and the amount of total work remaining for a given iteration?</div>",
+    "options": [
+      "a. Acceptance criteria",
+      "b. Defect report",
+      "c. Test completion report",
+      "d. Burndown chart"
+    ],
+    "correct": 3,
+    "explanation": "Refer 1.4 cái này là kiến thức của AGile, cái để theo dõi tiến độ của task công việc, bao nhiêu đã complete và bao nhiêu remaining là cái burndown chart. lưu ý burn down chart có thể ko nằm trong test report vì đây là biểu đồ dùng quản lý cả dự án Agile"
+  },
+  {
+    "id": 4,
+    "question": "<div class=\"qtext\">Which TWO of the review types below are the BEST fitted (most adequate) options to choose for reviewing safety critical components in a software project?</div>",
+    "options": [
+      "a. Informal review.",
+      "b. Management review.",
+      "c. Inspection",
+      "d. Walkthrough.",
+      "e. Technical Review."
+    ],
+    "correct": 4,
+    "explanation": "Refer 3.2 Review types, vì đây là dự án safety critical nên nó cần có hình thức review cao nhất formal nhất để thực hiện"
+  },
+  {
+    "id": 5,
+    "question": "<div class=\"qtext\">Which of following statement does NOT correctly describe a valid approach to Component testing?</div>",
+    "options": [
+      "a. Functional testing of the component in isolation.",
+      "b. Structure-based testing of the code without recording incidents.",
+      "c. Functional testing of the interfaces between modules.",
+      "d. Automated tests that are run until the component passes."
+    ],
+    "correct": 2,
+    "explanation": "Refer 2.2 Test levels. Các bạn loại đi đáp án C ko phải của component test vì interfaces between modules là của integration test"
+  },
+  {
+    "id": 6,
+    "question": "<div class=\"qtext\">Which of the following is an advantage of the whole team approach?</div>",
+    "options": [
+      "a. Any person in the team with the right skills can perform any task",
+      "b. Tasks are assigned to specific team members who will own that task until completion",
+      "c. Testers have clear ownership of quality and this eliminates confusion and overlap",
+      "d. Business representatives are not included in the team so they can supply independent assessment during UAT"
+    ],
+    "correct": 0,
+    "explanation": "Refer 1.5 phần Whole team approach, nhớ là mọi member đều có khả năng thực hiện any task, mọi người đều có trách nhiệm như nhau, câu D nó nói BA ko phải là thành viên của team là sai nhé,"
+  },
+  {
+    "id": 7,
+    "question": "<div class=\"qtext\">A top-down development strategy affects which level of testing most?</div>",
+    "options": [
+      "a. Component testing",
+      "b. Integration testing",
+      "c. System testing",
+      "d. User acceptance testing"
+    ],
+    "correct": 1,
+    "explanation": "refer 2.2 test level, bạn nhớ xem top-down là chiến lược tích hợp của integration level"
+  },
+  {
+    "id": 8,
+    "question": "<div class=\"qtext\">To test a function, the programmer has to write a.................. which calls the function to be tested and passes it test data:</div>",
+    "options": [
+      "a. Stub",
+      "b. Driver",
+      "c. Proxy",
+      "d. None of the above"
+    ],
+    "correct": 1,
+    "explanation": "refer 2.2 test level phần component test, bạn vẽ ra cái sơ đồ driver --&gt; module A--&gt; stubs sau đó nhớ lại là cái gì pass test data cho module A chính là driver, còn stub chỉ ghi kết quả ra thôi"
+  },
+  {
+    "id": 9,
+    "question": "<div class=\"qtext\">Which tool would typically be used by developers?</div>",
+    "options": [
+      "a. Comparator tool",
+      "b. Modelling tool",
+      "c. Test execution tool",
+      "d. Tool support for review"
+    ],
+    "correct": 1,
+    "explanation": "Refer 6.1 phần phân loại về tool, các tool đánh dấu chữ D ở cuối là dành cho developer"
+  },
+  {
+    "id": 10,
+    "question": "<div class=\"qtext\">According to the ISTQB syllabus, which of the following is a key benefit of early feedback in Agile project?</div>",
+    "options": [
+      "a. Increasing the total number of test cases required for the system.",
+      "b. Reducing the overall cost of quality by finding defects when they are easier and cheaper to fix.",
+      "c. Moving the responsibility of quality from the testers to the Product Owner.",
+      "d. Providing a formal sign-off for each individual developer's code."
+    ],
+    "correct": 1,
+    "explanation": "Refer 3.2.1 Early feedback. Lợi ích của feedback sớm bạn nhớ lại câu thần chú phần tips ở đầu chương 1, feedback sớm cũng giống review sớm: giảm cost"
+  },
+  {
+    "id": 11,
+    "question": "<div class=\"qtext\">In Agile software development, what is the primary purpose of establishing short feedback loops?</div>",
+    "options": [
+      "a. To ensure that the project manager can micro-manage the daily tasks of the developers and testers.",
+      "b. To minimize the time between the introduction of a defect and its discovery, thereby reducing technical debt.",
+      "c. To replace the need for comprehensive documentation with frequent verbal updates.",
+      "d. To provide a justification for increasing the number of automated test scripts in every iteration."
+    ],
+    "correct": 1,
+    "explanation": "Refer 3.2.1, cái short feedback loops là các vòng lặp của phản hồi ngắn hay cũng chính là phản hồi sớm, nên nó có benefit là giống review sớm: Giảm thời gian"
+  },
+  {
+    "id": 12,
+    "question": "<div class=\"qtext\">Incident reports (or Defect reports) are test artifacts primarily associated with which part of the software development/testing life cycle?</div>",
+    "options": [
+      "a. Requirement Specification",
+      "b. Test Design and Test Implementation",
+      "c. Test Design and Test Execution",
+      "d. Maintenance and Retirement"
+    ],
+    "correct": 2,
+    "explanation": "Refer 1.4 sản phầm Defect Report là của test activities nào ta chọn đc Execution"
+  },
+  {
+    "id": 13,
+    "question": "<div class=\"qtext\">How does Continuous Integration (CI) primarily contribute to software quality in an Agile project?</div>",
+    "options": [
+      "a. By ensuring that the system is 100% free of defects before any manual testing begins.",
+      "b. By providing early detection of integration errors and regressions through automated builds and tests.",
+      "c. By shifting the entire responsibility of quality from the testers to the build automation tools.",
+      "d. By eliminating the need for developers to perform any form of unit testing before committing code."
+    ],
+    "correct": 1,
+    "explanation": "Refer 2.1.4 phần Devops đó, đọc kỹ các key word để chọn vì CI/CD là 1 phần của Devops mà, nên chọn B vì early detection lỗi tích hợp và automated cho regression test là 2 ý của Devops"
+  },
+  {
+    "id": 14,
+    "question": "<div class=\"qtext\">A tester participates in a technical discussion about the system's architecture and structure-based design. During an early prototype review, the tester performs a quick check on a search field and notices that the search results are significantly delayed, causing the screen to hang. By identifying this performance-related issue before the full implementation, the tester is fulfilling which role/activity in the Software Development Life Cycle (SDLC)?</div>",
+    "options": [
+      "a. Impact Analysis",
+      "b. Static Testing",
+      "c. Dynamic Testing",
+      "d. Test Management"
+    ],
+    "correct": 2,
+    "explanation": "Refer 3.1.3. Kịch bản rất dài và dễ đánh lừa vì họ nói là tham gia vào review Architecture nhưng tester phải chạy prototype thì phát hiện ra perfomance issues, mà lỗi này phải do dynamic tìm ra, xem kỹ bảng so sánh lỗi của static và dynamic"
+  },
+  {
+    "id": 15,
+    "question": "<div class=\"qtext\">A smart thermostat system is designed to trigger different modes based on the ambient temperature: Cooling Mode: below 10°C. Eco Mode: from 10°C to 20°C (inclusive). Heating Mode: above 20°C. Using 2-point Boundary Value Analysis, which of the following sets of temperatures represents the minimum number of test cases to check the boundaries between the modes?</div>",
+    "options": [
+      "a. 9, 10, 20, 21",
+      "b. 5, 10, 20, 22",
+      "c. 10, 11, 19, 20",
+      "d. 5, 15, 25"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.2.1 EP"
+  },
+  {
+    "id": 16,
+    "question": "<div class=\"qtext\">In Exploratory Testing (ET), what is the primary benefit of using a Test Charter?</div>",
+    "options": [
+      "a. It provides a detailed, step-by-step script that the tester must follow to ensure 100% test coverage.",
+      "b. It acts as a formal contract that prevents the Product Owner from changing the requirements during the testing session.",
+      "c. It provides a clear focus and scope for the testing session without restricting the tester's ability to explore the system.",
+      "d. It eliminates the need for any final test summary report by documenting all defects in real-time."
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.4.2 ET. Test Charter là các guideline hướng dẫn cho việc test, nó ko có tt chi tiết của A (loại A), nó ko triệt tiêu nhu cầu về test summary report nên loại D,"
+  },
+  {
+    "id": 17,
+    "question": "<div class=\"qtext\">Programmers often write and execute unit tests against code which they have written. During this self-testing activity, which of the following is a tester mindset that programmers should adopt to perform this unit testing effectively?</div>",
+    "options": [
+      "a. Good communication skills",
+      "b. Code coverage",
+      "c. Evaluating code defects",
+      "d. Attention to detail"
+    ],
+    "correct": 3,
+    "explanation": "refer 1.5.4 bảng mindset của tester và dev. Ở đây họ bảo Dev tự làm unit test ( self-test) nên Dev ko cần kỹ năng communication, vậy Dev cần có Attention to detail là mind set của tester để làm tốt công việc của mình"
+  },
+  {
+    "id": 18,
+    "question": "<div class=\"qtext\">A tester is tasked with verifying the functional correctness of a new insurance calculation module. The tester designs test cases based on the requirement specifications to ensure the output matches the expected mathematical results. Which category of test techniques is being applied?</div>",
+    "options": [
+      "a. Structure-based (White-box) techniques",
+      "b. Specification-based (Black-box) techniques",
+      "c. Experience-based techniques",
+      "d. Defect-based techniques"
+    ],
+    "correct": 1,
+    "explanation": "Refer 2.2 test type, chú ý vào từ test functional correctness thì cần dùng kỹ thuật gì, là Black box test rồi"
+  },
+  {
+    "id": 19,
+    "question": "<div class=\"qtext\">Maintenance testing is triggered by changes to an operational system. Which of the following is NOT a typical reason for performing maintenance testing?</div>",
+    "options": [
+      "a. Testing the system after migration to a new hardware platform or operating system.",
+      "b. Testing the archiving of data when a product reaches its end-of-life (Retirement).",
+      "c. Testing a brand-new software application that has never been released to the production environment.",
+      "d. Testing a hotfix implemented to correct a critical defect in the production environment."
+    ],
+    "correct": 3,
+    "explanation": "refer 2.3 trigger cho maintainance test thì A là migration có, B archiving of data ( chuyển đổi data khi hệ thống cho nghỉ end of life) có, D có hotfix nên chỉ có C là ko phải trigger vì phần mềm này never release."
+  },
+  {
+    "id": 20,
+    "question": "<div class=\"qtext\">A greenhouse control system regulates the heater based on the following temperature requirements: Invalid (Too Low): Below 0.0°C Valid (Normal range): 0.0°C to 30.0°C (inclusive) Invalid (Too High): Above 30.0°C Which of the following sets of temperature inputs provides the highest Equivalence Partitioning coverage with the minimum number of test cases?</div>",
+    "options": [
+      "a. -5.0°C, 15.0°C, 35.0°C",
+      "b. 0.0°C, 10.0°C, 20.0°C, 30.0°C",
+      "c. 5.0°C, 25.0°C",
+      "d. -10.0°C, 0.0°C, 30.0°C, 40.0°C"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.2 BVA"
+  },
+  {
+    "id": 21,
+    "question": "<div class=\"qtext\">Which TWO of the following statements CORRECTLY describes a role of impact analysis in Maintenance Testing?</div>",
+    "options": [
+      "a. Impact analysis is used when deciding if a fix to a maintained system is worthwhile.",
+      "b. Impact analysis is used to identify how data should be migrated into the maintained system.",
+      "c. Impact analysis is used to decide which hot fixes are of most value to the user.",
+      "d. Impact analysis is used to determine the effectiveness of new maintenance test cases."
+    ],
+    "correct": 1,
+    "explanation": "Refer 2.3 Maintainance test. Impact analysis giúp để ra quyết định xem hệ thống có nên sửa ko if a fix to a maintained system is worthwhile. Câu này chỉ có A đúng, nhưng đề thi thật yêu cầu chọn 2 đáp án thì có thể chọn tạm B vì nó còn tốt hơn C và D. C thì cái most values to user thì impact analysis ko đánh giá đc, D thì new maintainance test case ko thuộc phạm vi của impact analysis. B chọn thêm mặc dù hơi kiên cưỡng vì how data should be migrated là công việc của đội kỹ thuật, có lẽ họ hỏi impact analysis là hỏi cả test và đội kỹ thuật"
+  },
+  {
+    "id": 22,
+    "question": "<div class=\"qtext\">Which of the following BEST defines risk level?</div>",
+    "options": [
+      "a. Risk level is calculated by adding together the probabilities of all problem situations and the financial harm that results from them.",
+      "b. Risk level is estimated by multiplying the likelihood of a threat to the system by the chance that the threat will occur and will result in financial damage",
+      "c. Risk level is determined by a combination of the probability of an undesirable event and the expected impact of that event.",
+      "d. Risk level is the sum of all potential hazards to a system multiplied by the sum of all potential losses from that system."
+    ],
+    "correct": 2,
+    "explanation": "Refer 5.3 phần risk management và risk level = impact x likelihood"
+  },
+  {
+    "id": 23,
+    "question": "<div class=\"qtext\">An organization is planning an AI transfer initiative to upgrade their testing tool suite by integrating Machine Learning (ML) and Deep Learning models. They categorize the target AI-driven features into distinct engineering capabilities: Test Automation, Testing Techniques, Quality Characteristics, and Code Quality. Which of the following groups correctly aligns an AI-driven test capability with its corresponding practical application?</div>",
+    "options": [
+      "a. Auto GUI (Testing Technique), Black box (Test Automation), Security (Quality Characteristic), Code format (Code Quality)",
+      "b. Auto GUI (Test Automation), Black box (Testing Technique), Security (Quality Characteristic), Performance (Quality Characteristic), Code format (Code Quality)",
+      "c. Auto GUI (Code Quality), Black box (Testing Technique), Performance (Quality Characteristic), Code format (Test Automation)",
+      "d. Auto GUI (Test Automation), Black box (Code Quality), Security (Testing Technique), Performance (Quality Characteristic)"
+    ],
+    "correct": 1,
+    "explanation": "Cái này của AI nhưng ta có thể dùng foundation để phân tích nó theo nhóm, black box là test techniques, security và performance là quality characteristic của chương 2, code format là Code quality"
+  },
+  {
+    "id": 24,
+    "question": "<div class=\"qtext\">Testing effort can depend on a number of factors, which one of the following is MOST likely to impact the amount of effort required?</div>",
+    "options": [
+      "a. The predicted number of defects and the amount of rework required.",
+      "b. The ratio of developers to testers in the project team.",
+      "c. The planned use of a project management tool to schedule tasks.",
+      "d. The responsibilities for testers and developers being clearly defined."
+    ],
+    "correct": 0,
+    "explanation": "refer 5.1.4 phía dưới của các kỹ thuật estimation chúng tôi có thêm vào nội dung các factors ảnh hưởng đến việc estimate thì A là đáp án đúng."
+  },
+  {
+    "id": 25,
+    "question": "<div class=\"qtext\">Which of the following test artifacts specifies the sequence of actions for the execution of a test?</div>",
+    "options": [
+      "a. Test script",
+      "b. Test procedure",
+      "c. Test condition",
+      "d. Test charter"
+    ],
+    "correct": 0,
+    "explanation": "tra glossary khái niệm về test script là ra, và các đáp án khác cũng tra glossary"
+  },
+  {
+    "id": 26,
+    "question": "<div class=\"qtext\">In the context of testing AI-based systems or using AI for testing, which of the following represents a specialized non-functional test type unique to evaluating Machine Learning models?</div>",
+    "options": [
+      "a. Automation GUI testing",
+      "b. Bias and fairness testing",
+      "c. Component integration testing",
+      "d. Performance efficiency testing"
+    ],
+    "correct": 1,
+    "explanation": "Tra cứu trên mạng thì Bias và fairness là 1 kỹ thuật test cho AI tool"
+  },
+  {
+    "id": 27,
+    "question": "<div class=\"qtext\">Which of the following best describes a primary benefit of having a certain degree of independence in testing within an organization?</div>",
+    "options": [
+      "a. Independent testers can ensure that developers strictly adhere to coding standards during implementation",
+      "b. Independent testers can identify different types of defects and cognitive biases that developers might overlook",
+      "c. Independent testers eliminate the need for developers to perform component and integration testing",
+      "d. Independent testers are responsible for managing the project budget and allocating testing tools."
+    ],
+    "correct": 1,
+    "explanation": "refer 1.5 phần về independence testing, lợi ích là có 2 cái tìm ra difference và assumption thì trong này chỉ có B có ý là giúp tìm ra lỗi khác có thể bị developer bỏ qua"
+  },
+  {
+    "id": 28,
+    "question": "<div class=\"qtext\">In a software development project utilizing a DevOps approach with a Continuous Integration / Continuous Deployment (CI/CD) pipeline, which of the following represents a primary responsibility of a tester to ensure continuous testing?</div>",
+    "options": [
+      "a. Write or update automated scripts for stakeholders to provide rapid quality feedback on every code commit",
+      "b. Manually execute all component (unit) tests before code is integrated into the mainline branch",
+      "c. Design complex infrastructure as code (IaC) architectures to replace traditional deployment environments",
+      "d. Define the project scope and change management policies independent of product owners."
+    ],
+    "correct": 0,
+    "explanation": "refer 2.1.4 phần DevOps có nhắc đến CI/CD, automation test thì vai trò của tester là tham gia vào automation test và update test scripts"
+  },
+  {
+    "id": 29,
+    "question": "<div class=\"qtext\">Which statement best describes the key difference between a mindset for test activities and a mindset for development activities?</div>",
+    "options": [
+      "a. A tester is interested in building solutions while a developer is concerned with verifying the product b)",
+      "b. A tester is concerned with verifying the product while a developer possesses professional pessimism",
+      "c. A tester is concerned with finding defects while a developer is interested in designing solutions",
+      "d. A tester possesses professional pessimism while a developer is concerned with validating the product"
+    ],
+    "correct": 2,
+    "explanation": "refer 1.5.4 bảng chia mindset của tester và developer cần nhớ rõ bảng này"
+  },
+  {
+    "id": 30,
+    "question": "<div class=\"qtext\">Which of the following statements regarding test techniques is CORRECT?</div>",
+    "options": [
+      "a. Exploratory testing can be used to replace formal black-box testing techniques when there is very little time available for testing",
+      "b. Equivalence partitioning can only be applied during component testing and cannot be used at higher test levels.",
+      "c. Decision table testing is an experience-based technique used primarily when system requirements are completely unwritten.",
+      "d. Checklist-based testing is a structural test technique that requires full access to the source code repository"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.1.1 và 4.4 phần exploratory testing"
+  }
+];
+
+let userAnswers = {};
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  document.getElementById('total-count').textContent = quizData.length;
+
+  container.innerHTML = quizData.map((q, idx) => `
+    <div class="question-card" id="card-${q.id}">
+      <div class="question-title">Câu ${idx + 1}: ${q.question}</div>
+      <ul class="options-list">
+        ${q.options.map((opt, optIdx) => `
+          <li class="option-item" 
+              id="opt-${q.id}-${optIdx}" 
+              onclick="selectOption(${q.id}, ${optIdx})">
+            ${opt}
+          </li>
+        `).join('')}
+      </ul>
+      
+      <button class="btn-toggle-explain" onclick="toggleExplanation(${q.id})">
+        💡 Lời giải / Tham chiếu
+      </button>
+
+      <div class="explanation-box" id="explain-${q.id}">
+        <strong>💡 Giải thích chi tiết:</strong>
+        <div>${q.explanation}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectOption(qId, optionIdx) {
+  userAnswers[qId] = optionIdx;
+  
+  // Highlight selected option
+  const options = document.querySelectorAll(`#card-${qId} .option-item`);
+  options.forEach((opt, idx) => {
+    if (idx === optionIdx) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
+}
+
+function toggleExplanation(qId) {
+  const box = document.getElementById(`explain-${qId}`);
+  if (box.style.display === 'none' || box.style.display === '') {
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function submitQuiz() {
+  let score = 0;
+  
+  quizData.forEach(q => {
+    const userAns = userAnswers[q.id];
+    const card = document.getElementById(`card-${q.id}`);
+    
+    // Highlight correct & incorrect answers
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected');
+      
+      if (optIdx === q.correct) {
+        optElem.classList.add('correct');
+      }
+      if (userAns !== undefined && userAns === optIdx && userAns !== q.correct) {
+        optElem.classList.add('incorrect');
+      }
+    });
+
+    if (userAns === q.correct) {
+      score++;
+    }
+
+    // Tự động mở lời giải sau khi nộp bài
+    document.getElementById(`explain-${q.id}`).style.display = 'block';
+  });
+
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: ${score} / ${quizData.length} (${Math.round(score/quizData.length*100)}%)`;
+  scoreDisplay.style.fontWeight = 'bold';
+  
+  alert(`Bạn đã hoàn thành bài thi! Điểm số: ${score}/${quizData.length}`);
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  
+  quizData.forEach(q => {
+    // Xóa các class highlight
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected', 'correct', 'incorrect');
+    });
+    
+    // Ẩn giải thích
+    document.getElementById(`explain-${q.id}`).style.display = 'none';
+  });
+
+  // Reset điểm
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: -- / --`;
+  scoreDisplay.style.fontWeight = 'normal';
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Khởi chạy khi load trang
+window.onload = function() {
+    const titleMatch = window.location.pathname.match(/([^/\\]+)\.html$/);
+    if(titleMatch) {
+        document.getElementById('quiz-title').textContent = decodeURIComponent(titleMatch[1]);
+    }
+    renderQuiz();
+};
+</script>
+
+</body>
+</html>

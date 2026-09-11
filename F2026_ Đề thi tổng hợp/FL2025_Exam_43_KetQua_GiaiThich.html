@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Trắc Nghiệm</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-light: #2b6cb0;
+            --secondary-color: #319795;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --incorrect-bg: #fed7d7;
+            --incorrect-border: #e53e3e;
+            --explain-bg: #ebf8ff;
+            --explain-border: #3182ce;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stats-item {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .score-display {
+            color: var(--primary-light);
+            font-size: 16px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .option-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 14.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-light);
+            background-color: #ebf8ff;
+            font-weight: 500;
+        }
+
+        .option-item.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #22543d;
+            font-weight: 600;
+        }
+
+        .option-item.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #742a2a;
+        }
+
+        .btn-toggle-explain {
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-toggle-explain:hover {
+            background-color: #e2e8f0;
+            border-color: #a0aec0;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--explain-bg);
+            border-left: 4px solid var(--explain-border);
+            border-radius: 6px;
+            font-size: 14px;
+            color: #2b6cb0;
+        }
+
+        .explanation-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c5282;
+        }
+
+        .action-bar {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn-submit {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(49, 151, 149, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c7a7b;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background-color: #718096;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(113, 128, 150, 0.3);
+            transition: all 0.2s;
+            margin-left: 15px;
+        }
+
+        .btn-reset:hover {
+            background-color: #4a5568;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 id="quiz-title">Bộ Đề Trắc Nghiệm</h1>
+        <p>Luyện Tập</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stats-item">Tổng số câu: <span id="total-count">0</span></div>
+        <div class="stats-item score-display" id="score-display">Điểm số: -- / --</div>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <div class="action-bar">
+        <button class="btn-submit" onclick="submitQuiz()">Nộp Bài & Kiểm Tra Đáp Án</button>
+        <button class="btn-reset" onclick="resetQuiz()">Làm Lại</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    "id": 1,
+    "question": "<div class=\"qtext\">Which of the following statements on the use of checklists in a formal review is CORRECT?</div>",
+    "options": [
+      "a. As part of the review planning, the reviewers create the checklists needed for the review",
+      "b. As part of the issue communication, the reviewers fill in the checklists provided for the review",
+      "c. As part of the review meeting, the reviewers create defect reports based on the checklists provided for the review",
+      "d. As part of the review initiation, the reviewers receive the checklists needed for the review"
+    ],
+    "correct": 3,
+    "explanation": "Refer 3.2 Review process, Cái nào đúng về việc sử dụng checklist cho review? planning- checklist đc chuẩn bị, initial meeting- checklist đc gửi cho reviewer, individual preparation- checklist đc sử dụng để kiểm tra và tìm lỗi, review meeting- kết quả trong checklist đc mang ra phân tích, Follow up- checklist đc sử dụng để tổng hợp báo cáo. Dựa vào đó để loại đáp án sai"
+  },
+  {
+    "id": 2,
+    "question": "<div class=\"qtext\">Which of the following options BEST describes the responsibilities arising from the agile Whole Team approach?</div>",
+    "options": [
+      "a. Testers are responsible for developing unit tests and pass them on to developers for execution.",
+      "b. Business representatives are tasked with selecting the tools that the development team should use.",
+      "c. Testers are expected to create test cases collaboratively with business representatives and the development team.",
+      "d. Developers are expected to test non-functional requirements (performance, usability, security, etc.)"
+    ],
+    "correct": 2,
+    "explanation": "Refer 1.5.2, refer 4.4 về User story. Whole team approach, cái nào mô tả đúng về trách nhiệm đc raise lên từ team Agile whole team? điểm chính của Whole team approach là ai cũng có đủ kỹ năng để làm mọi task nên tính collaborative trong team là quan trọng"
+  },
+  {
+    "id": 3,
+    "question": "<div class=\"qtext\">How is the whole team approach present in the interactions between testers and business representatives?</div>",
+    "options": [
+      "a. Business representatives decide on test automation approaches",
+      "b. Testers help business representatives to define test strategy",
+      "c. Business representatives are not part of the whole team approach",
+      "d. Testers help business representatives to create suitable acceptance tests"
+    ],
+    "correct": 3,
+    "explanation": "Refer 1.5.2, refer 4.4 về User story. Whole team approach, cái nào mô tả đúng về trách nhiệm đc raise lên từ team Agile whole team? điểm chính của Whole team approach là ai cũng có đủ kỹ năng để làm mọi task nên tính collaborative trong team là quan trọng. Chọn đáp án có sự hợp tác của các thành viên trong dự án là phù hợp với Whole team approach"
+  },
+  {
+    "id": 4,
+    "question": "<div class=\"qtext\">Which of the following statements BEST describes the Shift-Left approach in software development life cycle (SDLC) testing?</div>",
+    "options": [
+      "a. Test activities start as early as possible in the SDLC and are conducted in parallel with development activities.",
+      "b. Test activities start as late as possible in the SDLC and are conducted after the development activities.",
+      "c. Test activities start in the middle of the SDLC and are conducted in parallel with development activities.",
+      "d. Test activities are distributed across multiple phases of the SDLC and conducted in each phase according to the maturity level of the product."
+    ],
+    "correct": 0,
+    "explanation": "Refer 2.1.5. Mô tả nào về shift left là đúng nhất. Thì các hoạt động test đc thực hiện càng sớm càng tốt nên chọn A là đúng. B sai vì \"as late as\", C sai vì \"start in the middle\", D sai vì \"across multiple phases\""
+  },
+  {
+    "id": 5,
+    "question": "<div class=\"qtext\">Which of the following is NOT an example of the shift left approach?</div>",
+    "options": [
+      "a. Reviewing the user requirements before they are formally accepted by the stakeholders",
+      "b. Writing a component test before the corresponding code is written",
+      "c. Executing a performance efficiency test for a component during component testing",
+      "d. Writing a test script before setting up the configuration management process"
+    ],
+    "correct": 3,
+    "explanation": "Refer 2.1.5 Ví dụ nào về shift left là ko đúng? Shift left là các hoạt động test đc thực hiện càng sớm càng tốt: A. Reivew sớm, B là test đc viêt trước khi code, C là performance đc test sớm, còn D là viết test script trước khi set up CM là sai ( hoạt động quản lý cấu hình phải làm trước tiên, nếu ko sẽ ko quản lý đc các test script)"
+  },
+  {
+    "id": 6,
+    "question": "<div class=\"qtext\">Which of the following is a characteristic of good testing in any life cycle model?</div>",
+    "options": [
+      "a. All document reviews involve the development team.",
+      "b. Some, but not all, development activities have corresponding test activities.",
+      "c. Each test level has test objectives specific to that level.",
+      "d. Analysis and design of tests begins as soon as development is complete."
+    ],
+    "correct": 2,
+    "explanation": "Refer 2.1 good testing, đọc thật kỹ sách thì C đúng với sách. A sai vì từ all, B sai vì \"Some, but not all, development activities\", D sai vì \"as soon as development is complete.\""
+  },
+  {
+    "id": 7,
+    "question": "<div class=\"qtext\">What is the role of testing in CI/CD?</div>",
+    "options": [
+      "a. To give information for a risk based decision about release",
+      "b. To ensure that changes are verified before being deployed to production, lowering the risk of bugs and other problems",
+      "c. To show that system will work after release",
+      "d. To decide when the software is of sufficient quality to release"
+    ],
+    "correct": 1,
+    "explanation": "Refer 2.1.4. vai trò của test trong CI/CD? tìm cách loại câu sai. D sai vì theo 1.1 thì test chỉ cung cấp thông tin cho các bên ra quyết định chứ test ko thể quyết định cho Release đc, Loại C vì theo 1.3 test ko thể \"show that system will work\", loại A vì cái CI/ CD ko liên quan đến phương pháp Risk based"
+  },
+  {
+    "id": 8,
+    "question": "<div class=\"qtext\">Which of the following BEST distinguishes the terms \"validation\" and \"verification\"?</div>",
+    "options": [
+      "a. Validation is confirmation through the provision of objective evidence that the specified requirements have been met while verification through the provision of objective evidence that requirements for a specific intended use have been met",
+      "b. Verification is confirmation through the provision of subjective evidence that the specified requirements have been met while validation through the provision of subjective evidence that the designs for a specific intended use have been met",
+      "c. Validation is confirmation through the provision of subjective evidence that the specified requirements have been met while verification through the provision of subjective evidence that the designs for a specific intended use have been met",
+      "d. Verification is confirmation through the provision of objective evidence that the specified requirements have been met while validation through the provision of objective evidence that requirements for a specific intended use have been met"
+    ],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 9,
+    "question": "<div class=\"qtext\">Which ONE of the following options BEST describes Behavior-Driven Development (BDD)?</div>",
+    "options": [
+      "a. Expresses the desired behavior of an application with test cases written in a simple form of natural language that is easy to understand by stakeholders—usually using the Given/When/Then format. Test cases are then automatically translated into executable tests.",
+      "b. Defines test cases at a low level, close to the implementation, using unit test frameworks",
+      "c. Is primarily focused on non-functional testing techniques to ensure system reliability and performance.",
+      "d. Requires testing to be performed after development is completed to validate software functionality."
+    ],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 10,
+    "question": "<div class=\"qtext\">What is a Definition of Done?</div>",
+    "options": [
+      "a. Criteria that a software product must satisfy are met and ready to be accepted by stakeholders",
+      "b. Criteria that system is available for testing",
+      "c. Criteria that system is available for releasing",
+      "d. Criteria that software testing is stop"
+    ],
+    "correct": 0,
+    "explanation": "Refer 5.1.3, Definition of Done là tiêu chí mà 1 deliverable item phải thỏa mãn và chấp nhận bởi stakeholder"
+  },
+  {
+    "id": 11,
+    "question": "<div class=\"qtext\">You are running a security test with the objective of finding possible network bottlenecks in interfaces between components of a system. Which of the following statements describes this test?</div>",
+    "options": [
+      "a. A functional test during the integration test level",
+      "b. A non-functional test during the integration test level",
+      "c. A functional test during the component test level",
+      "d. A non-functional test during the component test level"
+    ],
+    "correct": 1,
+    "explanation": "refer 2.2 chú ý vào 2 keywords: security test, interfaces between components nên chọn B"
+  },
+  {
+    "id": 12,
+    "question": "<div class=\"qtext\">Match the correct description from A to D: A. A set of test cases or test scripts to be executed in a particular test cycle. B. A sequence of instructions for the execution of a test. C. Contains the expected results. D. The documentation of a goal and the agenda of a test session. to its corresponding test resource (test work results) 1 to 4: 1. test suite. 2. test case. 3. test script. 4. test charter.</div>",
+    "options": [
+      "a. 1A, 2C, 3B, 4D",
+      "b. 1D, 2B, 3A, 4C",
+      "c. 1A, 2C, 3D, 4B",
+      "d. 1D, 2C, 3B, 4A"
+    ],
+    "correct": 0,
+    "explanation": "Tra glossary các khái niệm và map đúng, nhớ ghi lại định nghĩa và học thuộc định nghĩa này"
+  },
+  {
+    "id": 13,
+    "question": "<div class=\"qtext\">Which of the following BEST distinguishes the terms \"validation\" and \"verification\"?</div>",
+    "options": [
+      "a. Validation is confirmation through the provision of objective evidence that the specified requirements have been met while verification through the provision of objective evidence that requirements for a specific intended use have been met",
+      "b. Verification is confirmation through the provision of subjective evidence that the specified requirements have been met while validation through the provision of subjective evidence that the designs for a specific intended use have been met",
+      "c. Validation is confirmation through the provision of subjective evidence that the specified requirements have been met while verification through the provision of subjective evidence that the designs for a specific intended use have been met",
+      "d. Verification is confirmation through the provision of objective evidence that the specified requirements have been met while validation through the provision of objective evidence that requirements for a specific intended use have been met"
+    ],
+    "correct": 3,
+    "explanation": "Refer 1.1.1 hoặc tra glossary. Verification là kiểm tra xem đúng với tài liệu, validation là kiểm tra xem đúng với nhu cầu sử dụng. Ngoài ra các bạn cần loại cái cụm từ subjective evidence ( bằng chứng chủ quan là ko đúng) Test là bằng chứng khách quan."
+  },
+  {
+    "id": 14,
+    "question": "<div class=\"qtext\">Which of the following statements about performing exploratory testing with test charters is correct?</div>",
+    "options": [
+      "a. In contrast to black-box testing, the expected result is documented after a defect is found and not as part of test design",
+      "b. Test charters are a useful tool to be used for testing when a detailed specification for the system under test is available",
+      "c. The result of performing exploratory testing by using test charters is finding defects and specification defects",
+      "d. Exploratory testing and black-box testing use the same metrics for measuring test coverage"
+    ],
+    "correct": 2,
+    "explanation": "refer 4.3 Exploratory test, tìm cách loại các đáp án sai đi. A sai vì the expected result is documented là TC của black box, B sai ở Test charters are a useful tool, C sai ở use the same metrics (2 kỹ thuật khác hoàn toàn nhau)"
+  },
+  {
+    "id": 15,
+    "question": "<div class=\"qtext\">What is the BEST techniques to validate the correctness of function ?</div>",
+    "options": [
+      "a. Error guessing",
+      "b. Checklist based",
+      "c. Equivalence partitioning and Boundary Value analysis",
+      "d. Decision testing"
+    ],
+    "correct": 2,
+    "explanation": "Refer 2.2 kỹ thuật nào để kiểm tra correctness of function, đây là đặc tính con của Functional là tính chính xác, đúng đắn, sử dụng các kỹ thuật black box test để kiểm tra"
+  },
+  {
+    "id": 16,
+    "question": "<div class=\"qtext\">In exploratory testing, a test charter is typically used to:</div>",
+    "options": [
+      "a. Create detailed, scripted test cases to follow throughout the testing process.",
+      "b. Define the scope, objectives, and approach for the test session, allowing the tester to explore freely and unscripted testing sessions.",
+      "c. Ensure that all hidden logic and internal workings of the system are fully understood and documented.",
+      "d. Restrict the tester to follow a fixed, predefined set of test steps to ensure coverage of all possible test scenarios."
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.3 test charter là 1 phần của phương pháp session based"
+  },
+  {
+    "id": 17,
+    "question": "<div class=\"qtext\">Which of the following is a primary benefit of using Behavior-Driven Development (BDD) in terms of stakeholder collaboration?</div>",
+    "options": [
+      "a. Improved software performance",
+      "b. Reduced number of tests",
+      "c. Promotes shared understanding between stakeholders",
+      "d. Increased test execution speed"
+    ],
+    "correct": 2,
+    "explanation": "Refer 2.1.3 chú ý vào stakeholder collaboration ( hợp tác giữa các stakeholder) là để chia sẻ sự hiểu biết giữa các stakeholder"
+  },
+  {
+    "id": 18,
+    "question": "<div class=\"qtext\">Which of the following best describes the impact of poor defect management on software quality?</div>",
+    "options": [
+      "a. It ensures all defects are immediately fixed, improving software quality.",
+      "b. Defects may go unaddressed or remain unresolved for longer periods, leading to delay to release.",
+      "c. It reduces the number of defects found in the software.",
+      "d. It results in quicker releases with fewer defects."
+    ],
+    "correct": 1,
+    "explanation": "Câu hỏi: Ảnh hưởng của việc quản lý lỗi kém là gì? chỉ liên quan đến quản lý lỗi thôi nên loại A thì lại là quản lý lỗi tốt, loại C vì reduces the number of defects found ko liên quan đến quản lý lỗi, loại D vì mô tả đó là đang quản lý tốt. Chọn B thôi vì quản lý lỗi tồi thì lỗi ko đc sửa trong thời gian dài dẫn đến delay release"
+  },
+  {
+    "id": 19,
+    "question": "<div class=\"qtext\">You are performing test coverage analysis on a software component, and the results show that 90% statement coverage has been achieved. Which of the following is the most accurate conclusion?</div>",
+    "options": [
+      "a. 90% statement coverage guarantees that all logical paths in the program have been executed.",
+      "b. 90% statement coverage ensures that every line of code has been tested.",
+      "c. 90% statement coverage indicates that 90% of the code has been executed, but it does not guarantee that all logical conditions have been tested.",
+      "d. 90% statement coverage guarantees that no errors will be found in the code."
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.3 định nghĩa của statement coverage"
+  },
+  {
+    "id": 20,
+    "question": "<div class=\"qtext\">What does it mean if a set of tests has achieved 90% statement coverage?</div>",
+    "options": [
+      "a. 9 out of 10 decision outcomes have been exercised by this set of tests.",
+      "b. 9 out of 10 statements have been exercised by this set of tests.",
+      "c. 9 out of 10 tests have been run on this set of software.",
+      "d. 9 out of 10 requirements statements about the software are correct."
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.2 định nghĩa của statement coverag"
+  },
+  {
+    "id": 21,
+    "question": "<div class=\"qtext\">In a typical Continuous Integration (CI) pipeline, which of the following testing stages is typically executed first to ensure that individual components work correctly in isolation?</div>",
+    "options": [
+      "a. Unit Test",
+      "b. Integration Test",
+      "c. System Test",
+      "d. Acceptance Test"
+    ],
+    "correct": 0,
+    "explanation": "Refer 2.2 chú ý vào individual components work correctly in isolation"
+  },
+  {
+    "id": 22,
+    "question": "<div class=\"qtext\">In a CI pipeline, which testing phase usually follows unit testing and ensures that different modules or components of the application work together as expected?</div>",
+    "options": [
+      "a. Unit Test",
+      "b. Integration Test",
+      "c. System Test",
+      "d. Acceptance Test"
+    ],
+    "correct": 1,
+    "explanation": "Refer 2.2. câu hỏi nói là cái level nào sau khi thực hiện UT và đảm bảo các components khác nhau làm việc cùng nhau như mong đợi"
+  },
+  {
+    "id": 23,
+    "question": "<div class=\"qtext\">What is the primary purpose of exploratory testing?</div>",
+    "options": [
+      "a. To execute pre-defined test cases without considering previous test results",
+      "b. To perform testing based on a test charter, learning about the system and identifying defects during test execution",
+      "c. To focus primarily on regression testing after a re-release of the software",
+      "d. To automate test cases to ensure that each feature is covered in every release"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.3. áp dụng chiến thuật loại trừ.A sai ở execute pre-defined test cases, C sai ở focus primarily on regression testing, D sai ở To automate test cases"
+  },
+  {
+    "id": 24,
+    "question": "<div class=\"qtext\">What new concepts in CTFL v4.01 help tester evolve to the model that emphasizes flexibility, automation, and continuous feedback?</div>",
+    "options": [
+      "a. A tester creates traditional test cases with rigid planning, ensuring that all test activities are carried out as planned in a waterfall-like process. They then use a control chart to track the defect detection rate over time.",
+      "b. A tester adapts the test strategy dynamically by using adaptive testing methods, allowing adjustments based on feedback from early development cycles and continuously improving the test coverage. They use a control chart to monitor test progress and adjust their approach based on trends in the defect detection rate.",
+      "c. A tester follows a rigid planning approach, ensuring that all test cases are executed in sequence without considering evolving requirements, using control charts to identify potential defects without changing the strategy.",
+      "d. A tester sticks to the traditional approach of creating fixed test cases with minimal changes, relying heavily on rigid planning and rarely adapting the test approach, even in an Agile environment."
+    ],
+    "correct": 1,
+    "explanation": "Câu này loại đáp án sai thôi, A, C, D sai ở rigid planning (kế hoạch cứng nhắc) ko phù hợp với từ flexibility,"
+  },
+  {
+    "id": 25,
+    "question": "<div class=\"qtext\">Which of the following aligns best with the new concept of “shift-left” in testing?</div>",
+    "options": [
+      "a. Test execution is scheduled strictly after all development is completed.",
+      "b. Test activities (including static techniques) are moved earlier in the SDLC to catch defects early.",
+      "c. Tests are entirely automated using old waterfall-based test suites.",
+      "d. Testing is outsourced to third parties after system release."
+    ],
+    "correct": 1,
+    "explanation": "refer 2.1.5 định nghĩa của shift-left là các hoạt động test đc thực hiện sớm"
+  }
+];
+
+let userAnswers = {};
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  document.getElementById('total-count').textContent = quizData.length;
+
+  container.innerHTML = quizData.map((q, idx) => `
+    <div class="question-card" id="card-${q.id}">
+      <div class="question-title">Câu ${idx + 1}: ${q.question}</div>
+      <ul class="options-list">
+        ${q.options.map((opt, optIdx) => `
+          <li class="option-item" 
+              id="opt-${q.id}-${optIdx}" 
+              onclick="selectOption(${q.id}, ${optIdx})">
+            ${opt}
+          </li>
+        `).join('')}
+      </ul>
+      
+      <button class="btn-toggle-explain" onclick="toggleExplanation(${q.id})">
+        💡 Lời giải / Tham chiếu
+      </button>
+
+      <div class="explanation-box" id="explain-${q.id}">
+        <strong>💡 Giải thích chi tiết:</strong>
+        <div>${q.explanation}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectOption(qId, optionIdx) {
+  userAnswers[qId] = optionIdx;
+  
+  // Highlight selected option
+  const options = document.querySelectorAll(`#card-${qId} .option-item`);
+  options.forEach((opt, idx) => {
+    if (idx === optionIdx) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
+}
+
+function toggleExplanation(qId) {
+  const box = document.getElementById(`explain-${qId}`);
+  if (box.style.display === 'none' || box.style.display === '') {
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function submitQuiz() {
+  let score = 0;
+  
+  quizData.forEach(q => {
+    const userAns = userAnswers[q.id];
+    const card = document.getElementById(`card-${q.id}`);
+    
+    // Highlight correct & incorrect answers
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected');
+      
+      if (optIdx === q.correct) {
+        optElem.classList.add('correct');
+      }
+      if (userAns !== undefined && userAns === optIdx && userAns !== q.correct) {
+        optElem.classList.add('incorrect');
+      }
+    });
+
+    if (userAns === q.correct) {
+      score++;
+    }
+
+    // Tự động mở lời giải sau khi nộp bài
+    document.getElementById(`explain-${q.id}`).style.display = 'block';
+  });
+
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: ${score} / ${quizData.length} (${Math.round(score/quizData.length*100)}%)`;
+  scoreDisplay.style.fontWeight = 'bold';
+  
+  alert(`Bạn đã hoàn thành bài thi! Điểm số: ${score}/${quizData.length}`);
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  
+  quizData.forEach(q => {
+    // Xóa các class highlight
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected', 'correct', 'incorrect');
+    });
+    
+    // Ẩn giải thích
+    document.getElementById(`explain-${q.id}`).style.display = 'none';
+  });
+
+  // Reset điểm
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: -- / --`;
+  scoreDisplay.style.fontWeight = 'normal';
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Khởi chạy khi load trang
+window.onload = function() {
+    const titleMatch = window.location.pathname.match(/([^/\\]+)\.html$/);
+    if(titleMatch) {
+        document.getElementById('quiz-title').textContent = decodeURIComponent(titleMatch[1]);
+    }
+    renderQuiz();
+};
+</script>
+
+</body>
+</html>

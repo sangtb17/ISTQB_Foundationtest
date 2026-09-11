@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Trắc Nghiệm</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-light: #2b6cb0;
+            --secondary-color: #319795;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --incorrect-bg: #fed7d7;
+            --incorrect-border: #e53e3e;
+            --explain-bg: #ebf8ff;
+            --explain-border: #3182ce;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stats-item {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .score-display {
+            color: var(--primary-light);
+            font-size: 16px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .option-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 14.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-light);
+            background-color: #ebf8ff;
+            font-weight: 500;
+        }
+
+        .option-item.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #22543d;
+            font-weight: 600;
+        }
+
+        .option-item.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #742a2a;
+        }
+
+        .btn-toggle-explain {
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-toggle-explain:hover {
+            background-color: #e2e8f0;
+            border-color: #a0aec0;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--explain-bg);
+            border-left: 4px solid var(--explain-border);
+            border-radius: 6px;
+            font-size: 14px;
+            color: #2b6cb0;
+        }
+
+        .explanation-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c5282;
+        }
+
+        .action-bar {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn-submit {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(49, 151, 149, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c7a7b;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background-color: #718096;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(113, 128, 150, 0.3);
+            transition: all 0.2s;
+            margin-left: 15px;
+        }
+
+        .btn-reset:hover {
+            background-color: #4a5568;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 id="quiz-title">Bộ Đề Trắc Nghiệm</h1>
+        <p>Luyện Tập</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stats-item">Tổng số câu: <span id="total-count">0</span></div>
+        <div class="stats-item score-display" id="score-display">Điểm số: -- / --</div>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <div class="action-bar">
+        <button class="btn-submit" onclick="submitQuiz()">Nộp Bài & Kiểm Tra Đáp Án</button>
+        <button class="btn-reset" onclick="resetQuiz()">Làm Lại</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    "id": 1,
+    "question": "<div class=\"qtext\">Which black-box technique should be used to verify different responses of the system, depending on its current conditions or previous history?</div>",
+    "options": [
+      "a. Use case testing",
+      "b. Decision table testing",
+      "c. State transition testing",
+      "d. Equivalence partitioning"
+    ],
+    "correct": 2,
+    "explanation": "refer 4.2 State transition testing, câu hỏi là kỹ thuật nào kiểm tra phản hồi khác nhau của hệ thống dựa vào điều kiện hoặc lịch sử phía trước ( trạng thái trước đó) chỉ có mỗi kỹ thuật là state transition thôi"
+  },
+  {
+    "id": 2,
+    "question": "<div class=\"qtext\">In addition to thorough testing of the requirements specification, a development team aims to involve users as early as possible in the development process, using practices such as prototyping, to ensure that the software systems being developed will meet the users’ expectations. This approach is especially useful at mitigating the risks associated with one of the seven testing principles, which one?</div>",
+    "options": [
+      "a. Tests wear out.",
+      "b. Absence-of-errors fallacy.",
+      "c. Working software over comprehensive documentation.",
+      "d. Defects cluster together."
+    ],
+    "correct": 1,
+    "explanation": "Refer 1.3. 7 nguyên lý test. Câu hỏi là đội phát triển đã mời user vào giai đoạn sớm của quy trình phát triển, để đảm bảo là phần mềm đc xây đúng với mong muốn của user. Cách này giúp giảm thiểu rủi ro theo nguyên lý test nào?"
+  },
+  {
+    "id": 3,
+    "question": "<div class=\"qtext\">Determining the schedule for each testing activity and test milestones for a test project, using activity estimates, available resources, and other constraints is a typical task performed during:</div>",
+    "options": [
+      "a. Test execution.",
+      "b. Test design.",
+      "c. Test analysis.",
+      "d. Test planning."
+    ],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 4,
+    "question": "<div class=\"qtext\">Which of the following is a typical potential risk of using test automation tools?</div>",
+    "options": [
+      "a. Reduced feedback times regarding software quality compared to manual testing.",
+      "b. Reduced test execution times compared to manual testing.",
+      "c. Reduced repeatability and consistency of tests compared to manual testing.",
+      "d. Underestimation of effort required to maintain test scripts."
+    ],
+    "correct": 3,
+    "explanation": "refer 6.2. Câu hỏi là cái nào là rủi ro tiềm ẩn của automation test tool? cái này tra sách. Cái A,B,C hiểu là benefit vì nó giúp giảm thời gian, giảm lặp lại. Còn D từ Underestimation là thiếu effort để maintain test scripts nên D là risk"
+  },
+  {
+    "id": 5,
+    "question": "<div class=\"qtext\">The following decision table is used to assist a doctor in determining the drug therapy to prescribe for a patient (aged 6 to 65 years) diagnosed with acute sinusitis. The table consists of three Boolean conditions and six actions (image) Based only on the given information, which of the following statements is TRUE?</div>",
+    "options": [
+      "a. Column 7 represents an impossible situation and thus can be deleted.",
+      "b. Columns 1 and 3 can be merged into a single column.",
+      "c. Columns 2, 4, 6 and 8 can be merged into a single column.",
+      "d. Columns 5 and 7 can be merged into a single column."
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2 Bảng decision table. Chúng ta gộp các cột mà kết quả nó giống nhau, sau đó nhìn lên input xem có 1 cái nào nó quyết định kết quả này còn các input khác T hay F ko quan trọng là ta gộp đc"
+  },
+  {
+    "id": 6,
+    "question": "<div class=\"qtext\">Which of the following is a factor that contributes to a successful review?</div>",
+    "options": [
+      "a. All participants in the review are aware they will be evaluated based on the defects they will find.",
+      "b. The author of the work product to be reviewed leads the review meeting.",
+      "c. All participants in the review are trained to deal with the review type and its objectives.",
+      "d. Review metrics must be collected to improve the review process."
+    ],
+    "correct": 2,
+    "explanation": "Refer 3.4 Success factors. Đọc lại sách nhớ lại mấy keyword chính như objective, time, notification, training, management support. Nhờ thế ta chọn đc C là Những người tham gia review đc đào tạo để làm việc với các review type khác nhau"
+  },
+  {
+    "id": 7,
+    "question": "<div class=\"qtext\">Which of the following correctly represents a test first approach?</div>",
+    "options": [
+      "a. Tests are derived from acceptance criteria and run to check that the code passes these tests",
+      "b. Application behaviour is written in Given/When/Then format and tests are then written and run",
+      "c. Code is refactored first then tests are written and run",
+      "d. First the tests fail then the code is written to pass the tests and this is iterated"
+    ],
+    "correct": 3,
+    "explanation": "Refer 2.1 Test first. Cái nào sau đây đúng? Các bạn đọc định nghĩa test first là viết TC trước khi viết code nên ta chọn đc D. Test viết trước, chạy test fail, rồi code đc viết để pass test. Còn các đáp án khác chỉ là 1 loại của test first thôi như A là ATDD, B là nói format viết test case của BDD và ATDD, C là của TDD"
+  },
+  {
+    "id": 8,
+    "question": "<div class=\"qtext\">Which of the following is an example of a shift left?</div>",
+    "options": [
+      "a. Performing non-functional testing using functional test cases",
+      "b. Monitoring system performance after the release",
+      "c. Using Acceptance Test-Driven Development",
+      "d. Participating in retrospectives"
+    ],
+    "correct": 2,
+    "explanation": "Refer 2.1 Shift left. Cái nào là ví dụ của shift left. ta nhẩm lại lý thuyết nhé: early test, test first, CI/CD, automation test, static analysis tool... trong các đáp án trên chỉ có C là đang nói về test first và automation. còn D là retrospective ko phải, B after release là quá muộn, A ko thể test non-functional mà lại dùng test case của functional đc"
+  },
+  {
+    "id": 9,
+    "question": "<div class=\"qtext\">Which of the following is NOT an example of a test-first approach to development?</div>",
+    "options": [
+      "a. Acceptance Test-Driven Development",
+      "b. Test Coverage-Driven Development",
+      "c. Behavior-Driven Development",
+      "d. Test-Driven Development"
+    ],
+    "correct": 1,
+    "explanation": "Refer 2.1 dễ quá"
+  },
+  {
+    "id": 10,
+    "question": "<div class=\"qtext\">Which of the following statements BEST describes the difference between testing and debugging?</div>",
+    "options": [
+      "a. Testing causes failures while debugging fixes failures",
+      "b. Testing is a negative activity while debugging is a positive activity",
+      "c. Testing determines that defects exist while debugging removes defects",
+      "d. Testing finds the cause of defects while debugging fixes the cause of defects"
+    ],
+    "correct": 2,
+    "explanation": "Refer 1.2 khác biệt giữa debug và test là gì? Test tìm lỗi, debug loại trừ lỗi"
+  },
+  {
+    "id": 11,
+    "question": "<div class=\"qtext\">(image) This user story and its associated acceptance criteria contain which of the following typical defects identified by static testing in this type of work product?</div>",
+    "options": [
+      "a. Deviation from standards",
+      "b. Contradiction",
+      "c. Security vulnerability",
+      "d. Coverage gaps"
+    ],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 12,
+    "question": "<div class=\"qtext\">Which of the following is a technique used in machine learning?</div>",
+    "options": [
+      "a. State transition testing ( Decision tree)",
+      "b. Equivalence partitioning",
+      "c. Boundary value analysis",
+      "d. Decision tables"
+    ],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 13,
+    "question": "<div class=\"qtext\">Which of the following is a true statement about test automation scripts that are captured using a capture/replay tool?</div>",
+    "options": [
+      "a. The scripts are easy to maintain",
+      "b. The scripts are data-driven",
+      "c. The scripts may be unstable",
+      "d. The scripts are created by experienced automators"
+    ],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 14,
+    "question": "<div class=\"qtext\">Given the following program fragment: if day = Monday then statement a else statement b end if if day = Tuesday then statement c end if What is the minimum number of test cases needed to achieve 100% statement coverage?</div>",
+    "options": [
+      "a. 1",
+      "b. 2",
+      "c. 3",
+      "d. 4"
+    ],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 15,
+    "question": "<div class=\"qtext\">You are defining the process for carrying out product risk analysis as part of each iteration on an Agile project. Which of the following is the proper place to document this process in a test plan?</div>",
+    "options": [
+      "a. Scope of testing",
+      "b. Approach of testing",
+      "c. Metrics of testing",
+      "d. Configuration management of the test object"
+    ],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 16,
+    "question": "<div class=\"qtext\">You are reading a user story in the product backlog to prepare for a meeting with the product owner and a developer, noting potential defects as you go. Which of the following statements is true about this activity? (Select Two)</div>",
+    "options": [
+      "a. It is not a static test, because static testing involves execution of the test object",
+      "b. It is not a static test, because static testing is always performed using a tool",
+      "c. It is a static test, because any defects you find could be found cheaper during dynamic testing",
+      "d. It is a static test, because static testing does not involve execution of the test object"
+    ],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 17,
+    "question": "<div class=\"qtext\">Which of the following is MOST likely to be an example of a PRODUCT risk?</div>",
+    "options": [
+      "a. The expected security features may not be supported by the system architecture.",
+      "b. The developers may not have time to fix all the defects found by the test team",
+      "c. The test cases may not provide full coverage of the specified requirements.",
+      "d. The performance test environment may not be ready before the system is due for delivery"
+    ],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 18,
+    "question": "<div class=\"qtext\">Which of the following tasks is MOST LIKELY to be performed by the test manager?</div>",
+    "options": [
+      "a. Write test summary reports based on the information gathered during testing",
+      "b. Review tests developed by other",
+      "c. Create the detailed test execution schedule",
+      "d. Analyze, review, and assess requirements, specifications and models for testability"
+    ],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 19,
+    "question": "<div class=\"qtext\">Which of the following statements CORRECTLY describes a role for impact analysis in maintenance? ( Select two)</div>",
+    "options": [
+      "a. Impact analysis is used when deciding if a fix to a maintained system is worthwhile",
+      "b. Impact analysis is used to identify how data should be migrated into the maintained system",
+      "c. Impact analysis is used to decide which hot fixes are of most value to the user",
+      "d. Impact analysis is used to optimize the scope of regression test"
+    ],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 20,
+    "question": "<div class=\"qtext\">As a result of risk analysis, more testing is being directed to those areas of the system under test where initial testing found more defects than average. Which of the following testing principles is being applied?</div>",
+    "options": [
+      "a. Beware of the pesticide paradox",
+      "b. Testing is context dependent",
+      "c. Absence-of-errors is a fallacy",
+      "d. Defects cluster together"
+    ],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 21,
+    "question": "<div class=\"qtext\">Which one of the following is the BEST definition of a waterfall model?</div>",
+    "options": [
+      "a. Defining requirements, designing software and testing are done in phases where in each phase a piece of the system is added",
+      "b. Testing is viewed as a separate phase which takes place after development has been completed",
+      "c. A phase in the development process should begin when the previous phase is complete",
+      "d. A phase in the testing process should begin when the previous phase is complete"
+    ],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 22,
+    "question": "<div class=\"qtext\">Which of the following describes the difference between test reporting and test control in the context of the ISTQB Foundation syllabus?</div>",
+    "options": [
+      "a. Test reporting invokes corrective actions; test control only gathers metrics.",
+      "b. Test reporting collects information and gives feedback; test control is about guiding or corrective actions based on that information.",
+      "c. Test reporting happens only after execution; test control only before execution.",
+      "d. Test reporting ensures the tests are designed correctly; test control ensures the tests are executed correctly."
+    ],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 23,
+    "question": "<div class=\"qtext\">Which of the following statement is correct?</div>",
+    "options": [
+      "a. Test report: changing the test schedule due to availability of the test environment",
+      "b. Test report: providing a summary information of what has been tested",
+      "c. Test control: summarising the number of test cases executed during the test period.",
+      "d. Test control: collects information and gives feedback"
+    ],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 24,
+    "question": "<div class=\"qtext\">Which TWO of the following activities should be completed before the test execution?</div>",
+    "options": [
+      "a. Preparing the test environment",
+      "b. Writing and reviewing test cases",
+      "c. Logging test incidents",
+      "d. Analyzing test results",
+      "e. Re-testing fixed defects"
+    ],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 25,
+    "question": "<div class=\"qtext\">Which one of the following is a key benefit of using a test charter in an exploratory testing session?</div>",
+    "options": [
+      "a. It replaces all scripted test cases.",
+      "b. It provides guidance, objectives and scope while preserving tester freedom.",
+      "c. It documents expected results for every possible input.",
+      "d. It ensures that no defects will be found."
+    ],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 26,
+    "question": "<div class=\"qtext\">Which Software Development Lifecycle in CTFL v4.0 is more flexible over than the V-model?</div>",
+    "options": [
+      "a. Model-based development lifecycle",
+      "b. Waterfall lifecycle",
+      "c. Incremental lifecycle",
+      "d. Sequential lifecycle"
+    ],
+    "correct": 2,
+    "explanation": ""
+  }
+];
+
+let userAnswers = {};
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  document.getElementById('total-count').textContent = quizData.length;
+
+  container.innerHTML = quizData.map((q, idx) => `
+    <div class="question-card" id="card-${q.id}">
+      <div class="question-title">Câu ${idx + 1}: ${q.question}</div>
+      <ul class="options-list">
+        ${q.options.map((opt, optIdx) => `
+          <li class="option-item" 
+              id="opt-${q.id}-${optIdx}" 
+              onclick="selectOption(${q.id}, ${optIdx})">
+            ${opt}
+          </li>
+        `).join('')}
+      </ul>
+      
+      <button class="btn-toggle-explain" onclick="toggleExplanation(${q.id})">
+        💡 Lời giải / Tham chiếu
+      </button>
+
+      <div class="explanation-box" id="explain-${q.id}">
+        <strong>💡 Giải thích chi tiết:</strong>
+        <div>${q.explanation}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectOption(qId, optionIdx) {
+  userAnswers[qId] = optionIdx;
+  
+  // Highlight selected option
+  const options = document.querySelectorAll(`#card-${qId} .option-item`);
+  options.forEach((opt, idx) => {
+    if (idx === optionIdx) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
+}
+
+function toggleExplanation(qId) {
+  const box = document.getElementById(`explain-${qId}`);
+  if (box.style.display === 'none' || box.style.display === '') {
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function submitQuiz() {
+  let score = 0;
+  
+  quizData.forEach(q => {
+    const userAns = userAnswers[q.id];
+    const card = document.getElementById(`card-${q.id}`);
+    
+    // Highlight correct & incorrect answers
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected');
+      
+      if (optIdx === q.correct) {
+        optElem.classList.add('correct');
+      }
+      if (userAns !== undefined && userAns === optIdx && userAns !== q.correct) {
+        optElem.classList.add('incorrect');
+      }
+    });
+
+    if (userAns === q.correct) {
+      score++;
+    }
+
+    // Tự động mở lời giải sau khi nộp bài
+    document.getElementById(`explain-${q.id}`).style.display = 'block';
+  });
+
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: ${score} / ${quizData.length} (${Math.round(score/quizData.length*100)}%)`;
+  scoreDisplay.style.fontWeight = 'bold';
+  
+  alert(`Bạn đã hoàn thành bài thi! Điểm số: ${score}/${quizData.length}`);
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  
+  quizData.forEach(q => {
+    // Xóa các class highlight
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected', 'correct', 'incorrect');
+    });
+    
+    // Ẩn giải thích
+    document.getElementById(`explain-${q.id}`).style.display = 'none';
+  });
+
+  // Reset điểm
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: -- / --`;
+  scoreDisplay.style.fontWeight = 'normal';
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Khởi chạy khi load trang
+window.onload = function() {
+    const titleMatch = window.location.pathname.match(/([^/\\]+)\.html$/);
+    if(titleMatch) {
+        document.getElementById('quiz-title').textContent = decodeURIComponent(titleMatch[1]);
+    }
+    renderQuiz();
+};
+</script>
+
+</body>
+</html>

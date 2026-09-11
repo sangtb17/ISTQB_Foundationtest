@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Trắc Nghiệm</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-light: #2b6cb0;
+            --secondary-color: #319795;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --incorrect-bg: #fed7d7;
+            --incorrect-border: #e53e3e;
+            --explain-bg: #ebf8ff;
+            --explain-border: #3182ce;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stats-item {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .score-display {
+            color: var(--primary-light);
+            font-size: 16px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .option-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 14.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-light);
+            background-color: #ebf8ff;
+            font-weight: 500;
+        }
+
+        .option-item.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #22543d;
+            font-weight: 600;
+        }
+
+        .option-item.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #742a2a;
+        }
+
+        .btn-toggle-explain {
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-toggle-explain:hover {
+            background-color: #e2e8f0;
+            border-color: #a0aec0;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--explain-bg);
+            border-left: 4px solid var(--explain-border);
+            border-radius: 6px;
+            font-size: 14px;
+            color: #2b6cb0;
+        }
+
+        .explanation-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c5282;
+        }
+
+        .action-bar {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn-submit {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(49, 151, 149, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c7a7b;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background-color: #718096;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(113, 128, 150, 0.3);
+            transition: all 0.2s;
+            margin-left: 15px;
+        }
+
+        .btn-reset:hover {
+            background-color: #4a5568;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 id="quiz-title">Bộ Đề Trắc Nghiệm</h1>
+        <p>Luyện Tập</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stats-item">Tổng số câu: <span id="total-count">0</span></div>
+        <div class="stats-item score-display" id="score-display">Điểm số: -- / --</div>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <div class="action-bar">
+        <button class="btn-submit" onclick="submitQuiz()">Nộp Bài & Kiểm Tra Đáp Án</button>
+        <button class="btn-reset" onclick="resetQuiz()">Làm Lại</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    "id": 1,
+    "question": "<div class=\"qtext\">Which of following is a task of \"Test Design\" activity in \"Fundamental Test Process\"?</div>",
+    "options": [
+      "a. Creating test suites from the test procedures for efficient test execution",
+      "b. Building or verify the test environment",
+      "c. Identifying testable features based on analyses of test item, the specification, behavior and structure of the software",
+      "d. Creating bi-directional traceability between test basis and test cases"
+    ],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 2,
+    "question": "<div class=\"qtext\">You are a tester in a important security software development project. During execution of a test, you find out that one of your expected results was not achieved. You write an incident report about it. What do you consider to be the most important information to include according to the IEEE Std. 829?</div>",
+    "options": [
+      "a. Security impact,expected result, description",
+      "b. Unique id for the report, special requirements needed.",
+      "c. Transmitted items, your name and you�re feeling about the defect source.",
+      "d. Incident description, environment, expected results."
+    ],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 3,
+    "question": "<div class=\"qtext\">Which of the following provides the BEST description of a test condition?</div>",
+    "options": [
+      "a. A document specifying a sequence of actions for the execution of a test. Also known as test script or manual test script.",
+      "b. A set of input values and expected results, with execution preconditions and execution post conditions, developed for a particular test condition.",
+      "c. An attribute of a system specified by requirements documentation (for example reliabilitv, usability or design constraints) that is executed in a test.",
+      "d. An item or event of a system that could be verified by one or more test cases, e.g., a function, transaction, feature, quality attribute, or structural element."
+    ],
+    "correct": 3,
+    "explanation": "Test Conditions is an item or event of a system that could be verified by one or more test cases. Eg; transaction, function, structural element etc."
+  },
+  {
+    "id": 4,
+    "question": "<div class=\"qtext\">What is the correct order of path testing? 1. Pick the first path as the simplest, functionally sensible path from entry to exit. 2. Pick each additional path as a small variation on the previous path. 3. Pick paths that don't make functional sense only when required for coverage. 4. Use intuition when choosing paths (i.e., which paths are most likely to be executed).</div>",
+    "options": [
+      "a. 3-2-1-4",
+      "b. 1-2-3-4",
+      "c. 4-3-2-1",
+      "d. 2-3-4-1"
+    ],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 5,
+    "question": "<div class=\"qtext\">Which of the following BEST describes exploratory testing?</div>",
+    "options": [
+      "a. Exploratory testing is a suitable test techniques which may replace both black-box and white-box test techniques",
+      "b. Exploratory testing requires both solid specifications and much project time available for test execution",
+      "c. Exploratory testing is a valid and useful black-box test technique since it focuses on test cases related to the architecture and design of a system",
+      "d. Exploratory testing may be used within defined time periods during which the tester may follow a test charter as a guide"
+    ],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 6,
+    "question": "<div class=\"qtext\">Which of the following principles should be followed when introducing a test tool into an organization? (i) Assessing organizational maturity to establish whether a tool will provide expected benefits. (ii) Requiring a quick payback on the initial investment. (iii) Including a requirement for the tool to be easy to use without having to train unskilled testers. (iv) Identifying and agreeing requirements before evaluating test tools.</div>",
+    "options": [
+      "a. (i) and (ii)",
+      "b. (i) and (iv)",
+      "c. (ii) and (iii)",
+      "d. (iii) and (iv)"
+    ],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 7,
+    "question": "<div class=\"qtext\">Which of the following is NOT a deciding factor determining the extent of testing required?</div>",
+    "options": [
+      "a. Level of risk of the product or features",
+      "b. Budget to do testing",
+      "c. A particular tester involved in testing",
+      "d. Time available to do testing"
+    ],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 8,
+    "question": "<div class=\"qtext\">Which of the following is a common test metric often used to monitor BOTH test preparation and test execution?</div>",
+    "options": [
+      "a. Test case status",
+      "b. Defect find/fix rates",
+      "c. Test environment preparation",
+      "d. Estimated cost to find the next defect"
+    ],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 9,
+    "question": "<div class=\"qtext\">The list below (a to e) describes one major task for each of the five main activities of the fundamental test process. Which option (A to D) places the tasks in the correct order, by time? a) Create bi-directional traceability between test basis and test cases. b) Check test logs against exit criteria. c) Define the objectives of testing. d) Check planned deliverables have been delivered. e) Comparing actual results with expected results.</div>",
+    "options": [
+      "a. a, c, b, e, d",
+      "b. c, a, d, e, b",
+      "c. c, a, e, b, d",
+      "d. d, a, c, b, e"
+    ],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 10,
+    "question": "<div class=\"qtext\">Which of the following statements is the MOST valid goal for a test team?</div>",
+    "options": [
+      "a. Determine whether enough component testing was executed.",
+      "b. Cause as many failures as possible so that faults can be identified and corrected.",
+      "c. Prove that all faults are identified.",
+      "d. Prove that any remaining faults will not cause any failures"
+    ],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 11,
+    "question": "<div class=\"qtext\">Which of the following statements about Use Case Testing is FALSE</div>",
+    "options": [
+      "a. Use case generally has a mainstream scenario and may have many alternate or exceptional scenarios.",
+      "b. A use case can be defined at the abstract level (high level TC), detached from the implementation, or at the system level, describing a set of executed functions",
+      "c. Use case testing does not find defects caused by interaction of different components",
+      "d. Each use case has preconditions which need to be met for the use case to work successfully"
+    ],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 12,
+    "question": "<div class=\"qtext\">Which of following is not a metric to test implementation and test execution?</div>",
+    "options": [
+      "a. Number of TC pass/ fail",
+      "b. Number/ Percentage of designed TC",
+      "c. Number of Test plan review comments",
+      "d. Percentage of tasks completed on test environment preparation"
+    ],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 13,
+    "question": "<div class=\"qtext\">How many test case are needed at least to cover decision coverage testing?</div>",
+    "options": [
+      "a. 1",
+      "b. 2",
+      "c. 3",
+      "d. 4"
+    ],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 14,
+    "question": "<div class=\"qtext\">Which of the following statements for the given state table designed with state transition test technique is NOT correct?</div>",
+    "options": [
+      "a. A - S1",
+      "b. B - RC On",
+      "c. C - S2",
+      "d. D- S1"
+    ],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 15,
+    "question": "<div class=\"qtext\">You have been asked to improve the way test automation tools are being used in your company. Which one of the following is the BEST approach?</div>",
+    "options": [
+      "a. Selecting and automating scripts that test new functionality to find the most defects.",
+      "b. Using a keyword-driven testing approach to separate the actions and data from the tool's script.",
+      "c. Ensuring that all data, inputs and actions are stored in the tool's script for ease of maintenance.",
+      "d. Keeping expected results separate from the automation tool to allow the testers to check the results."
+    ],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 16,
+    "question": "<div class=\"qtext\">You have been given the following story: “As a plant lover who travels frequently, I want to have an automated watering system, so that my plants won’t die.” You have also been given the following acceptance criteria: 1. The water should turn on when the temperature is &gt; 85 degrees and the moisture content of the soil changes from “normal” to “dry”. 2. The water should be dispersed for 5 minutes at the rate of 0.5 ounces per minute. Which one of the following provides the proper values to use to achieve 100% two-value boundary value analysis coverage with the minimum number of test cases?</div>",
+    "options": [
+      "a. Temperature at 85 and 86, moisture at “dry” and “normal”",
+      "b. Temperature at 85 and 86, moisture at “dry” and “normal”, water disbursement for 5 minutes and 5 minutes 1 second, rate at 0.5 and 0.4",
+      "c. Temperature at 85 and 86, moisture at “dry” and “normal”, water disbursement for 5 minutes and 4 minutes 59 seconds, rate at 0.5 and 0.6",
+      "d. Temperature at 85 and 84, moisture at “dry” and “normal”"
+    ],
+    "correct": 0,
+    "explanation": "Chú ý cái ý \"2. The water should be dispersed for 5 minutes at the rate of 0.5 ounces per minute.\" là kết quả mong đợi nên nhiều bạn cứ nhầm. Câu số 2 này dịch là nước đc chảy ra khoảng 5 phút với tốc độ 0.5 onces/ 1 phút, mình ko bóc tách BVA cái dòng số 2 này nhé"
+  },
+  {
+    "id": 17,
+    "question": "<div class=\"qtext\">Which statement correctly describes the public and profession aspects of the code of ethics?</div>",
+    "options": [
+      "a. Public: Certified software testers shall act in the best interests of their client and employer (being consistent with the wider public interest). Profession: Certified software testers shall advance the integrity and reputation of their industry consistent with the public interest.",
+      "b. Public: Certified software testers shall advance the integrity and reputation of the profession consistent with the public interest. Profession: Certified software testers shall consider the wider public interest in their actions.",
+      "c. Public: Certified software testers shall consider the wider public interest in their actions. Profession: Certified software testers shall participate in lifelong learning regarding the practice of their profession and shall promote an ethical approach to the practice of their profession.",
+      "d. Public: Certified software testers shall consider the wider public interest in their actions. Profession: Certified software testers shall advance the integrity and reputation of their industry consistent with the public interest."
+    ],
+    "correct": 3,
+    "explanation": "Refer: https://www.computer.org/education/code-of-ethics"
+  },
+  {
+    "id": 18,
+    "question": "<div class=\"qtext\">This testing is conducted within a defined time-box, and the tester uses a test charter containing test objectives to guide the testing. What is this testing?</div>",
+    "options": [
+      "a. Checklist based",
+      "b. Error guessing",
+      "c. Exploratory testing",
+      "d. Session-based"
+    ],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 19,
+    "question": "<div class=\"qtext\">which tool would typically be used by developers?</div>",
+    "options": [
+      "a. Comparator tool",
+      "b. Modelling tool",
+      "c. Test execution tool",
+      "d. Tool support for review"
+    ],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 20,
+    "question": "<div class=\"qtext\">Planning is influenced by the test policy of the organization, the scope of testing, objectives, risks, constraints, criticality, testability and availability of resources. As the project and test planning progress, more information becomes available and more detail can be included in the plan. What is the purpose of test exit criteria in a test plan:</div>",
+    "options": [
+      "a. To set the criteria used in generating test inputs",
+      "b. To plan when to stop testing",
+      "c. To know when a specific test has finished its execution",
+      "d. To ensure that the test case specification is complete"
+    ],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 21,
+    "question": "<div class=\"qtext\">Consider the following high level program design and assume you can provide the values for today, A, B and C: Start; Do until B = C If today = Monday set A = 1 elseif today = Wednesday Set A = 2 Set B = C Endif; If B &lt; C B = B + 1 Endif; Endloop; End; Which of the following sets of values will achieve 100% decision coverage with the least number of test cases (the order of the values is today, A, B, C)?</div>",
+    "options": [
+      "a. Monday, 1, 3, 3; Monday 3, 2, 4; Wednesday, 1, 2, 3; Tuesday, 5, 4, 3",
+      "b. Monday, 1, 2, 4; Wednesday 1, 2, 4",
+      "c. Monday, 5, 1, 1; Tuesday, 5, 1, 2; Wednesday, 5, 1, 2",
+      "d. Monday, 5, 3, 2; Monday, 5, 1, 1; Monday 5, 2, 3; Tuesday, 4, 4, 3; Wednesday, 1, 2, 3"
+    ],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 22,
+    "question": "<div class=\"qtext\">The following chart plots the cumulative number of defects opened against the cumulative number of defects closed during system testing of a software product. Which of the following statements is true?</div>",
+    "options": [
+      "a. The chart indicates that you have plenty of problems left to find",
+      "b. The chart can be used to reveal test progress problems",
+      "c. The chart seems to indicate that the defect management process is not working well",
+      "d. The chart seems to indicate that the defect management process is working well"
+    ],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 23,
+    "question": "<div class=\"qtext\">Maintenance testing is not:</div>",
+    "options": [
+      "a. Updating Tests when the software has changed",
+      "b. Testing a released system that has been changed",
+      "c. Testing to ensure that the system was not regressed",
+      "d. Testing to maintain business advantage"
+    ],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 24,
+    "question": "<div class=\"qtext\">A phone ringing momentarily distracts a programmer, causing the programmer to improperly program the logic that checks the upper boundary of an input variable. Later, during system testing, a tester notices that this input field accepts invalid input values. The system accept invalid input values without error message is called?</div>",
+    "options": [
+      "a. The root cause",
+      "b. The failure",
+      "c. The error",
+      "d. The defect"
+    ],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 25,
+    "question": "<div class=\"qtext\">Given the following decision table: Which of the following test cases and expected results is INVALID?</div>",
+    "options": [
+      "a. 23 year old in insurance class A Premium is 90 and excess is 2,500.",
+      "b. 51 year old in insurance class B Premium is 70 and excess is 1000",
+      "c. 31 year old in insurance class B Premium is 70 and excess is 500",
+      "d. 43 year old in insurance class C Premium is 70 and excess is 500."
+    ],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 26,
+    "question": "<div class=\"qtext\">The system shall allow the customer three attempts to enter a valid user ID and password at the welcome screen. If three invalid use ID/password combinations have been entered, the system shall temporarily lock the user’s account. You have written a test design specification that includes, among others, the following two test conditions: 1) Test successful user ID/password login with: zero failed attempts before success; one failed attempt before success; and , two failed attempts before success 2) Test unsuccessful user ID/password login Which of the following is a set of test cases that has clear traceability to, and complete coverage of, exactly one of the test conditions listed? Assume the inputs are the first two items in each triple, and the expected result the third. [K3]</div>",
+    "options": [
+      "a. (Test 0, valid0, success)",
+      "b. (Test 1, invalid 1, fail), (Test 1, invalid 1, fail)",
+      "c. (Test 0, valid 0, success), (Test 1, invalid 1, fail), (Test 1, valid1, success), (Test 2, invalid 2, fail), (Test 2, invalid 2, fail), (Test 2, valid 2, success)",
+      "d. (Test 1, invalid 1, fail), (Test1, valid 1, success)"
+    ],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 27,
+    "question": "<div class=\"qtext\">If you are flying with an economy ticket, there is a possibility that you may get upgraded to business class, especially if you hold a gold card in the airline’s frequent flier program. If you don’t hold a gold card, there is a possibility that you will get ‘bumped’ off the flight if it is full and you check in late. This is shown in following Figure. Note that each box (i.e. statement) has been numbered. Three tests have been run: Test 1: Gold card holder who gets upgraded to business class Test 2: Non-gold card holder who stays in economy Test 3: A person who is bumped from the flight What is the statement coverage and decision coverage of these three tests?</div>",
+    "options": [
+      "a. 70% and 6/8",
+      "b. 70% and 7/8",
+      "c. 80% and 6/8",
+      "d. 80% and 7/8"
+    ],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 28,
+    "question": "<div class=\"qtext\">Which of the following is a goal for a proof-of-concept or pilot phase for tool evaluation?</div>",
+    "options": [
+      "a. Decide which tool to acquire.",
+      "b. Decide on the main objectives and requirements for this type of tool.",
+      "c. Evaluate the tool vendor including training, support and commercial aspects.",
+      "d. Decide on standard ways of using, managing, storing and maintaining the tool and the test assets"
+    ],
+    "correct": 3,
+    "explanation": ""
+  },
+  {
+    "id": 29,
+    "question": "<div class=\"qtext\">The standard that gives definitions of Failure, Error, Defect is:</div>",
+    "options": [
+      "a. ISO/IEC 12207",
+      "b. BS7925-1",
+      "c. ISO/IEEE 29119 ( old standard IEEE 829)",
+      "d. ISO/IEEE 729"
+    ],
+    "correct": 2,
+    "explanation": ""
+  },
+  {
+    "id": 30,
+    "question": "<div class=\"qtext\">Which test level is that the test pyramid emphasizes having a larger number of tests?</div>",
+    "options": [
+      "a. Unit test",
+      "b. Integration test",
+      "c. System test",
+      "d. Acceptance test"
+    ],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 31,
+    "question": "<div class=\"qtext\">Which of the following statements CORRECTLY describes a role of impact analysis in Maintenance Testing?</div>",
+    "options": [
+      "a. Impact analysis is used when deciding if a fix to a maintained system is worthwhile.",
+      "b. Impact analysis is used to identify how data should be migrated into the maintained system.",
+      "c. Impact analysis is used to decide which hot fixes are of most value to the user.",
+      "d. Impact analysis is used to determine the effectiveness of new maintenance test cases"
+    ],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 32,
+    "question": "<div class=\"qtext\">Which one of the following describes best the difference between testing and debugging?</div>",
+    "options": [
+      "a. Testing shows failures that are caused by defects. Debugging finds, analyzes, and removes the causes of failures in the software.",
+      "b. Dynamic testing pinpoints the defects. Debugging analyzes the faults and proposes preventing activities.",
+      "c. Testing removes faults. Debugging identifies the causes of failures.",
+      "d. Dynamic testing prevents causes of failures. Debugging removes the failures."
+    ],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 33,
+    "question": "<div class=\"qtext\">Which of the following is not a type of a review?</div>",
+    "options": [
+      "a. Management review",
+      "b. Inspection",
+      "c. Informal Review",
+      "d. Walkthrough"
+    ],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 34,
+    "question": "<div class=\"qtext\">Which of the following BEST explains a benefit of independent testing?</div>",
+    "options": [
+      "a. The use of an independent test team allows project management to assign responsibility for the quality of the final deliverable to the test team, so ensuring everyone is aware that quality is the test team’s overall responsibility.",
+      "b. When specifications contain ambiguities and inconsistencies, assumptions are made on their interpretation, and an independent tester can be useful in questioning those assumptions and the interpretation made by the developer.",
+      "c. If a test team external to the organization can be afforded, then there are distinct benefits in terms of this external team not being so easily swayed by the delivery concerns of project management and the need to meet strict delivery deadlines.",
+      "d. An independent test team can work totally separately from the developers, need not be distracted with changing project requirements, and can restrict communication with the developers to defect reporting through the defect management system."
+    ],
+    "correct": 1,
+    "explanation": ""
+  },
+  {
+    "id": 35,
+    "question": "<div class=\"qtext\">Which of the following is MOST likely to be used as a reason for using a pilot project to introduce a tool into an organization?</div>",
+    "options": [
+      "a. The need to evaluate how the tool fits with existing processes and practices and determining what would need to change.",
+      "b. The need to evaluate the test automation skills and training, mentoring and coaching needs of the testers who will use the tool.",
+      "c. The need to evaluate whether the tool provides the required functionality and does not duplicate existing test tools.",
+      "d. The need to evaluate the tool vendor in terms of the training and other support they provide."
+    ],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 36,
+    "question": "<div class=\"qtext\">Which test techniques might be most appropriate to be performed as the product is evolving or as a final check before the software is released?</div>",
+    "options": [
+      "a. Exploratory Testing",
+      "b. Boundary Value Analysis",
+      "c. Error Guessing",
+      "d. Decision Table Testing"
+    ],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 37,
+    "question": "<div class=\"qtext\">You have identified a usability risk with the mobile application you are currently testing. When the application loses connectivity with the web server, the user is not informed of the problem and all information entered after that point is lost. What is a reasonable assessment of this risk?</div>",
+    "options": [
+      "a. The impact is high because the user will lose their data. The likelihood depends on how often connectivity will be lost.",
+      "b. The impact is low because the user can retype their information. The likelihood is high because the original data is lost.",
+      "c. The impact is medium because the user should expect this type of behavior. The likelihood is medium because the problem will be intermittent.",
+      "d. The impact is high because the user will not understand what is happening and will likely call the helpdesk. The likelihood is low because the network connectivity is reliable and unlikely to have any issues."
+    ],
+    "correct": 0,
+    "explanation": ""
+  },
+  {
+    "id": 38,
+    "question": "<div class=\"qtext\">There are 3 fields, each field has 3 inputs apply Equivalence Partition techniques. How many test cases are minimum to cover this situation?</div>",
+    "options": [
+      "a. 3",
+      "b. 6",
+      "c. 9",
+      "d. 12"
+    ],
+    "correct": 0,
+    "explanation": ""
+  }
+];
+
+let userAnswers = {};
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  document.getElementById('total-count').textContent = quizData.length;
+
+  container.innerHTML = quizData.map((q, idx) => `
+    <div class="question-card" id="card-${q.id}">
+      <div class="question-title">Câu ${idx + 1}: ${q.question}</div>
+      <ul class="options-list">
+        ${q.options.map((opt, optIdx) => `
+          <li class="option-item" 
+              id="opt-${q.id}-${optIdx}" 
+              onclick="selectOption(${q.id}, ${optIdx})">
+            ${opt}
+          </li>
+        `).join('')}
+      </ul>
+      
+      <button class="btn-toggle-explain" onclick="toggleExplanation(${q.id})">
+        💡 Lời giải / Tham chiếu
+      </button>
+
+      <div class="explanation-box" id="explain-${q.id}">
+        <strong>💡 Giải thích chi tiết:</strong>
+        <div>${q.explanation}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectOption(qId, optionIdx) {
+  userAnswers[qId] = optionIdx;
+  
+  // Highlight selected option
+  const options = document.querySelectorAll(`#card-${qId} .option-item`);
+  options.forEach((opt, idx) => {
+    if (idx === optionIdx) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
+}
+
+function toggleExplanation(qId) {
+  const box = document.getElementById(`explain-${qId}`);
+  if (box.style.display === 'none' || box.style.display === '') {
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function submitQuiz() {
+  let score = 0;
+  
+  quizData.forEach(q => {
+    const userAns = userAnswers[q.id];
+    const card = document.getElementById(`card-${q.id}`);
+    
+    // Highlight correct & incorrect answers
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected');
+      
+      if (optIdx === q.correct) {
+        optElem.classList.add('correct');
+      }
+      if (userAns !== undefined && userAns === optIdx && userAns !== q.correct) {
+        optElem.classList.add('incorrect');
+      }
+    });
+
+    if (userAns === q.correct) {
+      score++;
+    }
+
+    // Tự động mở lời giải sau khi nộp bài
+    document.getElementById(`explain-${q.id}`).style.display = 'block';
+  });
+
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: ${score} / ${quizData.length} (${Math.round(score/quizData.length*100)}%)`;
+  scoreDisplay.style.fontWeight = 'bold';
+  
+  alert(`Bạn đã hoàn thành bài thi! Điểm số: ${score}/${quizData.length}`);
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  
+  quizData.forEach(q => {
+    // Xóa các class highlight
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected', 'correct', 'incorrect');
+    });
+    
+    // Ẩn giải thích
+    document.getElementById(`explain-${q.id}`).style.display = 'none';
+  });
+
+  // Reset điểm
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: -- / --`;
+  scoreDisplay.style.fontWeight = 'normal';
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Khởi chạy khi load trang
+window.onload = function() {
+    const titleMatch = window.location.pathname.match(/([^/\\]+)\.html$/);
+    if(titleMatch) {
+        document.getElementById('quiz-title').textContent = decodeURIComponent(titleMatch[1]);
+    }
+    renderQuiz();
+};
+</script>
+
+</body>
+</html>
