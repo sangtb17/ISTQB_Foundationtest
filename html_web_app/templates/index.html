@@ -74,7 +74,7 @@
                         <div class="folder-view">
                             <a href="{{ url_for('index', req_path=(current_path + '/' + folder).strip('/')) }}" class="folder-link">
                                 <span class="folder-icon">📁</span>
-                                <span class="folder-name">{{ folder }}</span>
+                                <span class="folder-name" title="{{ folder }}">{{ folder }}</span>
                             </a>
                             <div class="folder-view-actions">
                                 <button type="button" class="btn-icon btn-rename" title="Đổi tên thư mục" onclick="startRename(this)">✏️</button>

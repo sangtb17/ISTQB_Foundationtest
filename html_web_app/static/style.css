@@ -253,7 +253,7 @@ body {
 
 .folder-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 1rem;
 }
 
@@ -270,7 +270,7 @@ body {
 
 .folder-view {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 0.5rem;
 }
@@ -334,13 +334,13 @@ body {
 
 .folder-link {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.6rem;
     text-decoration: none;
     color: var(--text-main);
     font-weight: 500;
     flex: 1;
-    overflow: hidden;
+    min-width: 0;
 }
 
 .folder-icon {
@@ -349,9 +349,13 @@ body {
 }
 
 .folder-name {
-    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
+    overflow-wrap: anywhere;
+    white-space: normal;
+    line-height: 1.35;
 }
 
 /* ===== Files Section ===== */
