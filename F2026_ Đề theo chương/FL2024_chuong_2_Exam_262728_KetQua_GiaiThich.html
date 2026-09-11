@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Trắc Nghiệm</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-light: #2b6cb0;
+            --secondary-color: #319795;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --incorrect-bg: #fed7d7;
+            --incorrect-border: #e53e3e;
+            --explain-bg: #ebf8ff;
+            --explain-border: #3182ce;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stats-item {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .score-display {
+            color: var(--primary-light);
+            font-size: 16px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .option-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 14.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-light);
+            background-color: #ebf8ff;
+            font-weight: 500;
+        }
+
+        .option-item.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #22543d;
+            font-weight: 600;
+        }
+
+        .option-item.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #742a2a;
+        }
+
+        .btn-toggle-explain {
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-toggle-explain:hover {
+            background-color: #e2e8f0;
+            border-color: #a0aec0;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--explain-bg);
+            border-left: 4px solid var(--explain-border);
+            border-radius: 6px;
+            font-size: 14px;
+            color: #2b6cb0;
+        }
+
+        .explanation-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c5282;
+        }
+
+        .action-bar {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn-submit {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(49, 151, 149, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c7a7b;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background-color: #718096;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(113, 128, 150, 0.3);
+            transition: all 0.2s;
+            margin-left: 15px;
+        }
+
+        .btn-reset:hover {
+            background-color: #4a5568;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 id="quiz-title">Bộ Đề Trắc Nghiệm</h1>
+        <p>Luyện Tập</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stats-item">Tổng số câu: <span id="total-count">0</span></div>
+        <div class="stats-item score-display" id="score-display">Điểm số: -- / --</div>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <div class="action-bar">
+        <button class="btn-submit" onclick="submitQuiz()">Nộp Bài & Kiểm Tra Đáp Án</button>
+        <button class="btn-reset" onclick="resetQuiz()">Làm Lại</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    "id": 1,
+    "question": "<div>Which of the following apply to System Testing? a) May satisfy legal requirements. b) Can use system specifications as a test basis. c) Often the responsibility of business users. d) Main goal is to establish confidence. e) Should focus on the communication between systems.</div>",
+    "options": [
+      "a.\na and c.",
+      "b.\nb and d.",
+      "c.\na and b.",
+      "d.\nc and e."
+    ],
+    "correct": 1,
+    "explanation": "refer 2.2. e là của integration test, a, c là rõ ràng nhất của Acceptance test, b là system test, còn d khá khiên cưỡng cho vào đây vì lẽ ra là của acceptance test, nhưng system test để test the whole system nên có thể chấp nhận đc mục tiêu về establish confidence"
+  },
+  {
+    "id": 2,
+    "question": "<div>Which of the following is a characteristic of good testing in any life cycle model?</div>",
+    "options": [
+      "a.\nAnalysis and design of tests begins as soon as development is completed.",
+      "b.\nSome, but not all, development activities have corresponding test activities",
+      "c.\nEach test level has test objectives specific to that level",
+      "d.\nAll document reviews involve the development team."
+    ],
+    "correct": 2,
+    "explanation": "refer 2.1.2 theo như sách nên chọn C"
+  },
+  {
+    "id": 3,
+    "question": "<div>System requirement states that up to 100 users should be able to carry out a transaction, with responses returned within 5 seconds. What type of non-functional testing would you carry out to verify these requirements?</div>",
+    "options": [
+      "a.\nStress testing",
+      "b.\nMaintenance testing",
+      "c.\nLoad testing",
+      "d.\nUsability testing"
+    ],
+    "correct": 2,
+    "explanation": "refer 2.3. Bạn sẽ thực hiện loại thử nghiệm phi chức năng nào để xác minh các yêu cầu này? chọn đáp án là C. Cái này chưa đến mức stress test vì mới chỉ có 100 users thôi"
+  },
+  {
+    "id": 4,
+    "question": "<div>The difference between re-testing and regression testing is:</div>",
+    "options": [
+      "a.\nRe-testing is running a test again; regression testing looks for unexpected side effects",
+      "b.\nRe-testing looks for unexpected side effects; regression testing is repeating those tests",
+      "c.\nRe-testing is done after faults are fixed; regression testing is done earlier",
+      "d.\nRe-testing uses different environments, regression testing uses the same environment\ne.\nRe-testing is done by developers, regression testing is done by independent testers"
+    ],
+    "correct": 0,
+    "explanation": "refer 2.2.3"
+  },
+  {
+    "id": 5,
+    "question": "<div>According to the ISTQB Glossary, regression testing is required for what purpose?</div>",
+    "options": [
+      "a.\nTo verify the success of corrective actions.",
+      "b.\nTo prevent a task from being incorrectly considered completed",
+      "c.\nTo ensure that defects have not been introduced by a modification",
+      "d.\nTo motivate better unit testing by the programmers."
+    ],
+    "correct": 2,
+    "explanation": "refer 2.2.3 mục đích của regression test? Chọn C vì có \"introduced\""
+  },
+  {
+    "id": 6,
+    "question": "<div>Maintenance testing is:</div>",
+    "options": [
+      "a.\nupdating tests when the software has changed",
+      "b.\ntesting a released system that has been changed",
+      "c.\ntesting by users to ensure that the system meets a business need",
+      "d.\ntesting to maintain business advantage"
+    ],
+    "correct": 1,
+    "explanation": "refer 2.3 chọn D nó đang hỏi định nghĩa của Maintenance test là .... nên chỉ chọn B"
+  },
+  {
+    "id": 7,
+    "question": "<div>For which of the following would maintenance testing be used?</div>",
+    "options": [
+      "a.\nCorrection of defects during the development phase",
+      "b.\nPlanned enhancements to an existing operational system.",
+      "c.\nComplaints about system quality during user acceptance testing.",
+      "d.\nIntegrating functions during the development of a new system."
+    ],
+    "correct": 1,
+    "explanation": "refer 2.3 Thử nghiệm bảo trì sẽ được sử dụng cho mục đích nào sau đây? chọn B vì \"enhancements\" là đúng, loại A vì sửa lỗi trong giai đoạn phát triển \"development phase\" ko phải của maintenance test, loại C vì \"Complaints\" phàn nàn của KH, D loại vì \"development of a new system\" là phát triển hệ thống mới"
+  },
+  {
+    "id": 8,
+    "question": "<div>Which of the following is not true of regression testing?</div>",
+    "options": [
+      "a.\nIt can be carried out at each stage of the life cycle.",
+      "b.\nIt serves to demonstrate that the changed software works as intended.",
+      "c.\nIt serves to demonstrate that software has not been unintentionally changed.",
+      "d.\nIt is often automated."
+    ],
+    "correct": 1,
+    "explanation": "refer 2.2.3. chon B là đáp án vì \"the changed software works as intended\" là new test kiểm tra thay đổi đã làm việc như mong đợi chưa"
+  },
+  {
+    "id": 9,
+    "question": "<div>Which pair of definitions is correct?</div>",
+    "options": [
+      "a.\nRegression testing is checking that the reported defect has been fixed; retesting is testing that there are no additional problems in previously tested software",
+      "b.\nRegression testing is checking there are no additional problems in previously tested software; retesting enables developers to isolate the problem.",
+      "c.\nRegression testing involves running all tests that have been run before; retesting runs new tests",
+      "d.\nRegression testing is checking that there are no additional problems in previously tested software, retesting is demonstrating that the reported defect has been fixed."
+    ],
+    "correct": 3,
+    "explanation": "refer 2.2.3 chọn D đúng, A sai vì đang mô tả ngược của nhau, B sai về thứ 2 \"retesting enables developers to isolate the problem\" C sai vế đầu \"Regression testing involves running all tests\""
+  },
+  {
+    "id": 10,
+    "question": "<div>Which of the following is true about the V-model?</div>",
+    "options": [
+      "a.\nIt has the same steps as the waterfall model for software development",
+      "b.\nIt is referred to as a cyclical model for software development.",
+      "c.\nIt enables the production of a working version of the system as early as possible",
+      "d.\nIt enables test planning to start as early as possible."
+    ],
+    "correct": 3,
+    "explanation": "refer 2.1.1 chọn đc D là đúng hoạt động lập kế hoạch test bắt đầu sớm, A sai vì waterfall và V model là khác nhau chúng chỉ thuộc cùng 1 nhóm các mô hình tuần tự, B và C là đặc điểm của mô hình theo giai đoạn và gia tăng ko phải của V-model"
+  },
+  {
+    "id": 11,
+    "question": "<div>Which of the following is true of iterative development?</div>",
+    "options": [
+      "a.\nIt uses fully defined specifications from the start.",
+      "b.\nIt involves the users in the testing throughout",
+      "c.\nChanges to the system do not need to be formally recorded.",
+      "d.\nIt is not suitable for developing websites."
+    ],
+    "correct": 1,
+    "explanation": "refer 2.1. A sai vì fully, C sai vì change nào cũng cần recorded bất cứ model nào, D càng sai vì ko phù hợp cho website. Chọn B vì nó mô hình này cần sự tham gia nhiều của end user"
+  },
+  {
+    "id": 12,
+    "question": "<div>A top-down development strategy affects which level of testing most?</div>",
+    "options": [
+      "a.\nComponent testing",
+      "b.\nIntegration testing",
+      "c.\nSystem testing",
+      "d.\nUser acceptance testing"
+    ],
+    "correct": 1,
+    "explanation": "refer 2.2 Chiến lược phát triển từ trên xuống ảnh hưởng đến cấp độ thử nghiệm nào nhiều nhất? nhìn sách bạn chọn đc B"
+  },
+  {
+    "id": 13,
+    "question": "<div>Which of the following statements are true? (i) For every development activity there is a corresponding testing activity. (ii) Each test level has the same test objectives. (iii) The analysis and design of tests for a given test level should begin after the corresponding development activity. (iv)Testers should be involved in reviewing documents as soon as drafts are available in the development life cycle.</div>",
+    "options": [
+      "a.\n(i) and (ii)",
+      "b.\n(iii) and (iv)",
+      "c.\n(ii) and (iii)",
+      "d.\n(i) and (iv)"
+    ],
+    "correct": 3,
+    "explanation": "Refer 2.1.2 theo đúng sách nên ta chọn i và iv"
+  },
+  {
+    "id": 14,
+    "question": "<div>To test a function, the programmer has to write a _________, which calls the function to be tested and passes it test data:</div>",
+    "options": [
+      "a.\nStub",
+      "b.\nDriver",
+      "c.\nProxy",
+      "d.\nNone of the above"
+    ],
+    "correct": 1,
+    "explanation": "Refer 2.2 Để kiểm tra một hàm, người lập trình phải viết một _________, hàm này gọi hàm cần kiểm tra và truyền dữ liệu kiểm tra cho nó, cái này bạn vẽ sơ đồ ra sẽ tìm ra đc Drivers"
+  },
+  {
+    "id": 15,
+    "question": "<div>What is regression test?</div>",
+    "options": [
+      "a.\nRunning the same test again in the same circumstances to reproduce the problem.",
+      "b.\nA cursory run through a test pack to see if any new errors have been introduced.",
+      "c.\nChecking that the predetermined exit criteria for the test phase have been met",
+      "d.\nRunning a previously failed test against new software/data/documents to see if the problem is solved"
+    ],
+    "correct": 1,
+    "explanation": "Refer 2.2.3 Kiểm tra hồi quy là gì?chọn C đúng vì \"see if any new errors have been introduced- xem có bất kỳ lỗi nào phát sinh ko\", A sai vì \"reproduce the problem- tài hiện lỗi là của LTV\", C sai vì \"the predetermined exit criteria\" Kiểm tra tiêu chí kết thúc là của Evaluate exit criteria, D sai vì \"a previously failed test\" này là của re-test"
+  },
+  {
+    "id": 16,
+    "question": "<div>You are testing a user story with three acceptance criteria: AC1, AC2 and AC3. AC1 is covered by test case TC1, AC2 by TC2, and AC3 by TC3. The test execution history had three test runs on three consecutive versions of the software as image: Tests are repeated once you are informed that all defects found in the test run are corrected and a new version of the software is available. Which of the above tests are executed as regression tests?</div>",
+    "options": [
+      "a.\nOnly 4, 7, 8, 9",
+      "b.\nOnly 5, 7",
+      "c.\nOnly 4, 6, 8, 9",
+      "d.\nOnly 5, 6"
+    ],
+    "correct": 1,
+    "explanation": "Refer 2.2.3. Thử nghiệm nào ở trên được thực hiện dưới dạng thử nghiệm hồi quy? bạn nhớ là nếu kết quả lần trước Fail thì lần sau chạy lại gọi là Re-test, nếu kết quả lần trước Pass thì lần sau chạy lại gọi là Regression test,"
+  },
+  {
+    "id": 17,
+    "question": "<div>There are several characteristics of good testing in any life cycle model. Which statement is true about the characteristics of good testing? [K1]</div>",
+    "options": [
+      "a.\nEach test level has general test objectives",
+      "b.\nThe planning of tests for a given test level should begin during the corresponding",
+      "c.\nTesters should be involved in reviewing documents as soon as drafts are available in the development life cycle",
+      "d.\nFor every testing activity there is a corresponding development activity."
+    ],
+    "correct": 2,
+    "explanation": "Refer 2.1 nhìn kỹ nhé, chọn C đúng, D là nó viết ngược so với sách, A sai vì general, B sai vì planning of test"
+  },
+  {
+    "id": 18,
+    "question": "<div>You work as a tester in a project on a mobile application for food ordering for one of your clients. The client sent you a list of requirements. One of them, with high priority, says \"The order must be processed in less than 10 seconds in 95% of the cases\". You created a set of test cases in which a number of random orders were made, the processing time measured, and the test results were checked against the requirements. What test type did you perform?</div>",
+    "options": [
+      "a.\nFunctional, because the test cases cover the user's business requirement for the system",
+      "b.\nNon-functional, because the measure the system's performance",
+      "c.\nFunctional, because the test cases interact with the user interface",
+      "d.\nStructural, because we need to know the internal structure of the program to measure the order processing time"
+    ],
+    "correct": 1,
+    "explanation": "Refer 2.3 test types. chú ý vào cái yêu cầu này \"less than 10 seconds\""
+  },
+  {
+    "id": 19,
+    "question": "<div>Your organization's test strategy suggests that once a system is going to be retired, data migration shall be tested. As part of what test type is this testing MOST likely to be performed?</div>",
+    "options": [
+      "a.\nMaintenance testing",
+      "b.\nRegression testing",
+      "c.\nComponent testing",
+      "d.\nIntegration testing"
+    ],
+    "correct": 0,
+    "explanation": "refer 2.3 chú ý vào \"data migration\""
+  }
+];
+
+let userAnswers = {};
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  document.getElementById('total-count').textContent = quizData.length;
+
+  container.innerHTML = quizData.map((q, idx) => `
+    <div class="question-card" id="card-${q.id}">
+      <div class="question-title">Câu ${idx + 1}: ${q.question}</div>
+      <ul class="options-list">
+        ${q.options.map((opt, optIdx) => `
+          <li class="option-item" 
+              id="opt-${q.id}-${optIdx}" 
+              onclick="selectOption(${q.id}, ${optIdx})">
+            ${opt}
+          </li>
+        `).join('')}
+      </ul>
+      
+      <button class="btn-toggle-explain" onclick="toggleExplanation(${q.id})">
+        💡 Lời giải / Tham chiếu
+      </button>
+
+      <div class="explanation-box" id="explain-${q.id}">
+        <strong>💡 Giải thích chi tiết:</strong>
+        <div>${q.explanation}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectOption(qId, optionIdx) {
+  userAnswers[qId] = optionIdx;
+  
+  // Highlight selected option
+  const options = document.querySelectorAll(`#card-${qId} .option-item`);
+  options.forEach((opt, idx) => {
+    if (idx === optionIdx) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
+}
+
+function toggleExplanation(qId) {
+  const box = document.getElementById(`explain-${qId}`);
+  if (box.style.display === 'none' || box.style.display === '') {
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function submitQuiz() {
+  let score = 0;
+  
+  quizData.forEach(q => {
+    const userAns = userAnswers[q.id];
+    const card = document.getElementById(`card-${q.id}`);
+    
+    // Highlight correct & incorrect answers
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected');
+      
+      if (optIdx === q.correct) {
+        optElem.classList.add('correct');
+      }
+      if (userAns !== undefined && userAns === optIdx && userAns !== q.correct) {
+        optElem.classList.add('incorrect');
+      }
+    });
+
+    if (userAns === q.correct) {
+      score++;
+    }
+
+    // Tự động mở lời giải sau khi nộp bài
+    document.getElementById(`explain-${q.id}`).style.display = 'block';
+  });
+
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: ${score} / ${quizData.length} (${Math.round(score/quizData.length*100)}%)`;
+  scoreDisplay.style.fontWeight = 'bold';
+  
+  alert(`Bạn đã hoàn thành bài thi! Điểm số: ${score}/${quizData.length}`);
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  
+  quizData.forEach(q => {
+    // Xóa các class highlight
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected', 'correct', 'incorrect');
+    });
+    
+    // Ẩn giải thích
+    document.getElementById(`explain-${q.id}`).style.display = 'none';
+  });
+
+  // Reset điểm
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: -- / --`;
+  scoreDisplay.style.fontWeight = 'normal';
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Khởi chạy khi load trang
+window.onload = function() {
+    const titleMatch = window.location.pathname.match(/([^/\\]+)\.html$/);
+    if(titleMatch) {
+        document.getElementById('quiz-title').textContent = decodeURIComponent(titleMatch[1]);
+    }
+    renderQuiz();
+};
+</script>
+
+</body>
+</html>

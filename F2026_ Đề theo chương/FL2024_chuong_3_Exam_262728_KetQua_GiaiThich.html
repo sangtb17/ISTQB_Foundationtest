@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Trắc Nghiệm</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-light: #2b6cb0;
+            --secondary-color: #319795;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --incorrect-bg: #fed7d7;
+            --incorrect-border: #e53e3e;
+            --explain-bg: #ebf8ff;
+            --explain-border: #3182ce;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stats-item {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .score-display {
+            color: var(--primary-light);
+            font-size: 16px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .option-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 14.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-light);
+            background-color: #ebf8ff;
+            font-weight: 500;
+        }
+
+        .option-item.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #22543d;
+            font-weight: 600;
+        }
+
+        .option-item.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #742a2a;
+        }
+
+        .btn-toggle-explain {
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-toggle-explain:hover {
+            background-color: #e2e8f0;
+            border-color: #a0aec0;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--explain-bg);
+            border-left: 4px solid var(--explain-border);
+            border-radius: 6px;
+            font-size: 14px;
+            color: #2b6cb0;
+        }
+
+        .explanation-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c5282;
+        }
+
+        .action-bar {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn-submit {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(49, 151, 149, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c7a7b;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background-color: #718096;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(113, 128, 150, 0.3);
+            transition: all 0.2s;
+            margin-left: 15px;
+        }
+
+        .btn-reset:hover {
+            background-color: #4a5568;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 id="quiz-title">Bộ Đề Trắc Nghiệm</h1>
+        <p>Luyện Tập</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stats-item">Tổng số câu: <span id="total-count">0</span></div>
+        <div class="stats-item score-display" id="score-display">Điểm số: -- / --</div>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <div class="action-bar">
+        <button class="btn-submit" onclick="submitQuiz()">Nộp Bài & Kiểm Tra Đáp Án</button>
+        <button class="btn-reset" onclick="resetQuiz()">Làm Lại</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    "id": 1,
+    "question": "<div>When comparing Static and Dynamic test techniques, which of the following statements is TRUE?</div>",
+    "options": [
+      "a.\nStatic Testing finds failures, whilst Dynamic Testing only finds the cause of failures.",
+      "b.\nStatic Testing techniques, such as reviews, can be undertaken before Dynamic Testing, making defects cheaper to remove.",
+      "c.\nStatic Testing is based on the execution of code, whist Dynamic Testing relies on examination and analysis.",
+      "d.\nOnly Static Testing has the objective of identifying defects."
+    ],
+    "correct": 1,
+    "explanation": "refer 3.1.2 Khi so sánh các kỹ thuật kiểm tra tĩnh và động, câu nào sau đây là ĐÚNG? Chọn B vì đúng như sách, loại A vì \"Static Testing finds failures\" failure là phải dynamic test mới tìm ra, loại C vì \"Static Testing is based on the execution of code\" loại D vì từ \"Only\""
+  },
+  {
+    "id": 2,
+    "question": "<div>One of the roles in a review is that of moderator, which of the following best describes this role?</div>",
+    "options": [
+      "a.\nPlans the review, runs the review meeting and ensures that follow-up activities are completed.",
+      "b.\nAllocates time in the plan, decides which reviews will take place and that the benefits are delivered.",
+      "c.\nWrites the document to be reviewed, agrees that the document can be reviewed, and updates the document with any changes.",
+      "d.\nDocuments all issues raised in the review meeting, records problems and open points."
+    ],
+    "correct": 0,
+    "explanation": "refer 3.2.2. B là của manager, C là của Author, D là recoder nên chọn A là task của moderator"
+  },
+  {
+    "id": 3,
+    "question": "<div>Which of the following statements are correct for walkthroughs? (i) Often led by the author. (ii) Documented and defined results. (iii) All participants have defined roles. (iv) Used to aid learning. (v) Main purpose is to find defects.</div>",
+    "options": [
+      "a.\n(i) and (v) are correct",
+      "b.\n(ii) and (iii) are correct.",
+      "c.\n(i) and (iv) are correct.",
+      "d.\n(iii) and (iv) are correct."
+    ],
+    "correct": 2,
+    "explanation": "refer 3.2.4 Câu nào sau đây đúng về walkthrough? thì i đúng và iv đúng ( iv ý nghĩa là để training, education và learning)"
+  },
+  {
+    "id": 4,
+    "question": "<div>What benefits do static analysis tools have over test execution tools?</div>",
+    "options": [
+      "a.\nStatic analysis tools find defects earlier in the life cycle",
+      "b.\nStatic analysis tools can be used before code is written.",
+      "c.\nStatic analysis tools test that the delivered code meets business requirements.",
+      "d.\nStatic analysis tools are particularly effective for regression testing."
+    ],
+    "correct": 0,
+    "explanation": "Refer 3.1.2 Các công cụ phân tích tĩnh có lợi ích gì so với các công cụ thực hiện kiểm thử? Chọn A vì tìm đc lỗi sớm là đúng, loại B vì \"used before code is written\" static analysis tool chỉ phân tích trên các sản phẩm có cấu trúc như code, mà nếu chưa có code thì làm sao bật tool để phân tích, C sai vì \"meets business requirements\" cái này phải của review tìm ra, loại D vì \"regression testing\" là của dynamic test"
+  },
+  {
+    "id": 5,
+    "question": "<div>You are reading a user story in the product backlog to prepare for a meeting with the product owner and a developer, noting potential defects as you go. Which TWO of the following statements is true about this activity?</div>",
+    "options": [
+      "a.\nIt is not a static test, because static testing involves execution of the test object",
+      "b.\nIt is not a static test, because static testing is always performed using a tool",
+      "c.\nIt is a static test, because any defects you find could be found cheaper during dynamic testing",
+      "d.\nIt is a static test, because static testing does not involve execution of the test object"
+    ],
+    "correct": 3,
+    "explanation": "Refer 3.1.3. Hai cái nào đúng về việc mà bạn \"reading a user story\"? đây là 1 hoạt động review nên nó là static test là chắc chắn, đúng nhất theo định nghĩa là D review thì \"not involve execution of the test object\", đúng thứ nhì là C nó giúp tìm ra lỗi rẻ hơn dynamic testing"
+  },
+  {
+    "id": 6,
+    "question": "<div>Which TWO of the following statements on the use of checklists in a formal review is CORRECT?</div>",
+    "options": [
+      "a.\nAs part of the review planning, the reviewers create the checklists needed for the review",
+      "b.\nAs part of the individual review, the reviewers fill in the checklists provided for the review",
+      "c.\nAs part of the review meeting, the reviewers create defect reports based on the checklists provided for the review",
+      "d.\nAs part of the review initiation, the reviewers receive the checklists needed for the review"
+    ],
+    "correct": 3,
+    "explanation": "Refer 3.2.1 Review process. Đáp án D đùng vì nhiệm vụ của Initiate reivew ( kick-off) thì phân phát các tài liệu và material cho reviewers, thì trong đó reviewer cũng nhận đc checklist để review. Và đáp án B mình sửa là trong giai đoạn individual review ( cá nhân tự chuẩn bị cho review) thì họ sẽ fill kết quả vào checklist những comments hoặc defects mà họ tìm đc là đúng. (nếu đề thi để là trong Review Meeting mới fill thông tin vào checklist thì cũng tạm chấp nhận đc.) Còn A sai vì planning ko có nhiệm vụ của reviewer ( đây là nhiệm vụ của moderator). C sai vì tạo defect report là nhiệm vụ của Fixing and Reporting"
+  },
+  {
+    "id": 7,
+    "question": "<div>Decide which of the following statements (i-v) are true for static testing. i. Abnormal external behaviors are easier to identify with this testing ii. Discrepancies from a coding standard are easier to find with this testing iii. It identifies failures caused by defects when the software is run iv. Its test objective is to identify defects as early as possible v. Missing coverage for critical security requirements is easier to find and fix</div>",
+    "options": [
+      "a.\ni, iv, v are true for static testing",
+      "b.\ni, iii, iv are true for static testing",
+      "c.\nii, iii are true for static testing",
+      "d.\nii, iv, v are true for static testing"
+    ],
+    "correct": 3,
+    "explanation": "Refer 3.1.3. Chú ý vào ii đúng vì \"Discrepancies from a coding standard\", v đúng vì \"security requirements\", iv đúng vì \" identify defects as early as\" còn lại các cái khác sai vì i sai vì \"behaviors\" của dynamic, iii sai vì \" identifies failures\" của dynamic"
+  },
+  {
+    "id": 8,
+    "question": "<div>What task may management take on during a formal review?</div>",
+    "options": [
+      "a.\nTaking overall responsibility for the review",
+      "b.\nDeciding what is to be reviewed",
+      "c.\nEnsuring the effective running of review meetings, and mediating, if necessary",
+      "d.\nRecording review information such as review decisions"
+    ],
+    "correct": 1,
+    "explanation": "Refer 3.2.2 roles and responsibility. B là của management, còn lại A, C,D là của moderator,"
+  },
+  {
+    "id": 9,
+    "question": "<div>Which of following review types has its purpose of discussing, making decisions, evaluation alternatives, solving technical problems and checking conformance to specifications, plans, regulations and standards? [K2]</div>",
+    "options": [
+      "a.\nInformal",
+      "b.\nWalkthrough",
+      "c.\nTechnical Review",
+      "d.\nInspection"
+    ],
+    "correct": 2,
+    "explanation": "Refer 3.2.3 Bạn chú ý vào đoạn \"solving technical problems and checking conformance to specifications\" kỹ thuật mà xử lý các vấn đề về kỹ thuật, kiểm tra xem có thỏa mãn với tài liệu đặc tả hay ko thì là Technical Review rồi"
+  }
+];
+
+let userAnswers = {};
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  document.getElementById('total-count').textContent = quizData.length;
+
+  container.innerHTML = quizData.map((q, idx) => `
+    <div class="question-card" id="card-${q.id}">
+      <div class="question-title">Câu ${idx + 1}: ${q.question}</div>
+      <ul class="options-list">
+        ${q.options.map((opt, optIdx) => `
+          <li class="option-item" 
+              id="opt-${q.id}-${optIdx}" 
+              onclick="selectOption(${q.id}, ${optIdx})">
+            ${opt}
+          </li>
+        `).join('')}
+      </ul>
+      
+      <button class="btn-toggle-explain" onclick="toggleExplanation(${q.id})">
+        💡 Lời giải / Tham chiếu
+      </button>
+
+      <div class="explanation-box" id="explain-${q.id}">
+        <strong>💡 Giải thích chi tiết:</strong>
+        <div>${q.explanation}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectOption(qId, optionIdx) {
+  userAnswers[qId] = optionIdx;
+  
+  // Highlight selected option
+  const options = document.querySelectorAll(`#card-${qId} .option-item`);
+  options.forEach((opt, idx) => {
+    if (idx === optionIdx) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
+}
+
+function toggleExplanation(qId) {
+  const box = document.getElementById(`explain-${qId}`);
+  if (box.style.display === 'none' || box.style.display === '') {
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function submitQuiz() {
+  let score = 0;
+  
+  quizData.forEach(q => {
+    const userAns = userAnswers[q.id];
+    const card = document.getElementById(`card-${q.id}`);
+    
+    // Highlight correct & incorrect answers
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected');
+      
+      if (optIdx === q.correct) {
+        optElem.classList.add('correct');
+      }
+      if (userAns !== undefined && userAns === optIdx && userAns !== q.correct) {
+        optElem.classList.add('incorrect');
+      }
+    });
+
+    if (userAns === q.correct) {
+      score++;
+    }
+
+    // Tự động mở lời giải sau khi nộp bài
+    document.getElementById(`explain-${q.id}`).style.display = 'block';
+  });
+
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: ${score} / ${quizData.length} (${Math.round(score/quizData.length*100)}%)`;
+  scoreDisplay.style.fontWeight = 'bold';
+  
+  alert(`Bạn đã hoàn thành bài thi! Điểm số: ${score}/${quizData.length}`);
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  
+  quizData.forEach(q => {
+    // Xóa các class highlight
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected', 'correct', 'incorrect');
+    });
+    
+    // Ẩn giải thích
+    document.getElementById(`explain-${q.id}`).style.display = 'none';
+  });
+
+  // Reset điểm
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: -- / --`;
+  scoreDisplay.style.fontWeight = 'normal';
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Khởi chạy khi load trang
+window.onload = function() {
+    const titleMatch = window.location.pathname.match(/([^/\\]+)\.html$/);
+    if(titleMatch) {
+        document.getElementById('quiz-title').textContent = decodeURIComponent(titleMatch[1]);
+    }
+    renderQuiz();
+};
+</script>
+
+</body>
+</html>

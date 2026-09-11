@@ -47,27 +47,59 @@ try:
 except OSError:
     pass
 
+def _seed_folder_if_missing(folder_name):
+    """Chép 1 thư mục con từ repo vào DATA_DIR nếu chưa tồn tại (idempotent)."""
+    dest = os.path.join(UPLOAD_FOLDER, folder_name)
+    if os.path.isdir(dest):
+        return False
+    for _cand in (os.path.join(PARENT_DIR, 'seed_data', folder_name),
+                  os.path.join(PARENT_DIR, folder_name),
+                  os.path.join(os.getcwd(), 'seed_data', folder_name),
+                  os.path.join(os.getcwd(), folder_name)):
+        if os.path.isdir(_cand):
+            try:
+                shutil.copytree(_cand, dest)
+                print(f"[seed] da tao folder: {folder_name}")
+            except OSError as e:
+                print(f"[seed] khong tao duoc {folder_name}: {e}")
+            return True
+    return False
+
+
 def _seed_folders_if_missing(*folder_names):
     """Chép các thư mục con (vd: F2026_ Đề thi tổng hợp) từ repo vào DATA_DIR
     nếu chưa tồn tại. Chạy lại mỗi lần deploy nên idempotent — thư mục đã có
     trên Disk /data sẽ được giữ nguyên và không bị ghi đè."""
     for folder_name in folder_names:
-        dest = os.path.join(UPLOAD_FOLDER, folder_name)
-        if os.path.isdir(dest):
-            continue
-        for _cand in (os.path.join(PARENT_DIR, 'seed_data', folder_name),
-                      os.path.join(PARENT_DIR, folder_name),
-                      os.path.join(os.getcwd(), 'seed_data', folder_name),
-                      os.path.join(os.getcwd(), folder_name)):
-            if os.path.isdir(_cand):
-                try:
-                    shutil.copytree(_cand, dest)
-                    print(f"[seed] da tao folder: {folder_name}")
-                except OSError as e:
-                    print(f"[seed] khong tao duoc {folder_name}: {e}")
-                break
+        _seed_folder_if_missing(folder_name)
 
-_seed_folders_if_missing('F2026_ Đề thi tổng hợp')
+
+def _consolidate_home_into(folder_name):
+    """Di chuyển mọi file .html đang nằm thẳng ở Trang chủ (DATA_DIR) vào trong
+    thư mục folder_name, để Trang chủ chỉ còn các thư mục. Idempotent: lần sau
+    sẽ không còn file .html nào ở root để di chuyển."""
+    dest = os.path.join(UPLOAD_FOLDER, folder_name)
+    if not os.path.isdir(dest):
+        return
+    try:
+        for item in os.listdir(UPLOAD_FOLDER):
+            src = os.path.join(UPLOAD_FOLDER, item)
+            if item.lower().endswith('.html') and os.path.isfile(src):
+                target = os.path.join(dest, item)
+                try:
+                    if os.path.exists(target):
+                        os.remove(src)  # trùng file đã có trong folder
+                    else:
+                        shutil.move(src, target)
+                    print(f"[seed] da chuyen Trang chu/{item} -> {folder_name}/")
+                except OSError as e:
+                    print(f"[seed] loi chuyen {item}: {e}")
+    except OSError as e:
+        print(f"[seed] loi quet Trang chu: {e}")
+
+
+_seed_folders_if_missing('F2026_ Đề thi tổng hợp', 'F2026_ Đề theo chương')
+_consolidate_home_into('F2026_ Đề theo chương')
 try:
     MAX_MB = int(os.getenv('MAX_CONTENT_MB', '200'))
 except ValueError:

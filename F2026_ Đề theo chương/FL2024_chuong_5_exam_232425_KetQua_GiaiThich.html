@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Trắc Nghiệm</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-light: #2b6cb0;
+            --secondary-color: #319795;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --incorrect-bg: #fed7d7;
+            --incorrect-border: #e53e3e;
+            --explain-bg: #ebf8ff;
+            --explain-border: #3182ce;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stats-item {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .score-display {
+            color: var(--primary-light);
+            font-size: 16px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .option-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 14.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-light);
+            background-color: #ebf8ff;
+            font-weight: 500;
+        }
+
+        .option-item.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #22543d;
+            font-weight: 600;
+        }
+
+        .option-item.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #742a2a;
+        }
+
+        .btn-toggle-explain {
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-toggle-explain:hover {
+            background-color: #e2e8f0;
+            border-color: #a0aec0;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--explain-bg);
+            border-left: 4px solid var(--explain-border);
+            border-radius: 6px;
+            font-size: 14px;
+            color: #2b6cb0;
+        }
+
+        .explanation-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c5282;
+        }
+
+        .action-bar {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn-submit {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(49, 151, 149, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c7a7b;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background-color: #718096;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(113, 128, 150, 0.3);
+            transition: all 0.2s;
+            margin-left: 15px;
+        }
+
+        .btn-reset:hover {
+            background-color: #4a5568;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 id="quiz-title">Bộ Đề Trắc Nghiệm</h1>
+        <p>Luyện Tập</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stats-item">Tổng số câu: <span id="total-count">0</span></div>
+        <div class="stats-item score-display" id="score-display">Điểm số: -- / --</div>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <div class="action-bar">
+        <button class="btn-submit" onclick="submitQuiz()">Nộp Bài & Kiểm Tra Đáp Án</button>
+        <button class="btn-reset" onclick="resetQuiz()">Làm Lại</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    "id": 1,
+    "question": "<div>Which of the following would NOT typically be covered in a test summary report?</div>",
+    "options": [
+      "a.\nA. Any features of the system that were not tested along with reasons.",
+      "b.\nB. Whether there is any economic benefit in continuing testing beyond the planned date.",
+      "c.\nC. The risks associated with unresolved defects found during testing.",
+      "d.\nD. An analysis of lessons learned to determine changes for future projects."
+    ],
+    "correct": 1,
+    "explanation": "refer 5.3.2 Contents for Test Reports, B sai vì any economic benefit không có trong nội dung test report, A được hiểu là nằm ở mục summary of test, C là mục risk, D là lession learn"
+  },
+  {
+    "id": 2,
+    "question": "<div>Which of the following are product risks? a) Failure prone software delivered. b) Software does not perform its intended functions. c) Insufficient staff available for testing. d) Test environment not ready on time. e) Poor data integrity and quality.</div>",
+    "options": [
+      "a.\nA. b, c and d.",
+      "b.\nB. b, d and e.",
+      "c.\nC. a, b and e.",
+      "d.\nD. b, c and e."
+    ],
+    "correct": 2,
+    "explanation": "refer 5.2.2"
+  },
+  {
+    "id": 3,
+    "question": "<div>Tests have been specified for the latest software release and users have prioritised these. However, there are some dependencies between tests as shown in the table below (e.g. Test ID. '123' cannot be run until Test ID. '456' has been successfully completed). Which test execution schedule best meets the prioritisation and dependency conditions?</div>",
+    "options": [
+      "a.\n3, 5, 7, 10, 2, 4, 6, 8, 9, 1",
+      "b.\n5, 7, 4, 3, 9, 10, 1, 6, 8, 2",
+      "c.\n6, 1, 2, 9, 4, 3, 5, 7, 8, 10.",
+      "d.\n1, 4, 3, 5, 2, 7, 9, 10, 6, 8"
+    ],
+    "correct": 3,
+    "explanation": "Refer 5.1.5"
+  },
+  {
+    "id": 4,
+    "question": "<div>Which one of the following statements about techniques for estimating test effort is correct?</div>",
+    "options": [
+      "a.\nThe metrics-based technique finds the most similar former project and uses its original estimate for the current project",
+      "b.\nThe expert-based approach is based on the experience of the owners of the testing tasks or by subject matter experts.",
+      "c.\nThe metrics-based technique uses metrics supplied by the current test team based on their subjective feel for effort required",
+      "d.\nIn an expert-based approach, the test lead with the most years in the role is chosen to produce the estimate"
+    ],
+    "correct": 1,
+    "explanation": "Refer 5.1.4 thì ra đáp án B đúng, A sai vì \"uses its original estimate for the current project\" metrics based là dựa trên data thực tế của dự án đã đóng trong quá khứ không phải dựa vào estimate của dự án cũ, B sai vì \"based on their subjective feel\" dự trên cảm giác chủ quan của owners, D sai vì \"the test lead with the most years\" là không đủ, ko chính xác, còn nhiều người có thể estimate được"
+  },
+  {
+    "id": 5,
+    "question": "<div>You are testing a mobile app that allows users to find a nearby restaurant, based on the type of food they want to eat. Consider the following list of test cases, priorities (smaller number is high priority), and dependencies, in the following format:(refer picture) Which of the following is a possible test execution schedule that considers both priorities and dependencies?</div>",
+    "options": [
+      "a.\n01.001, 01.002, 01.003, 01.005, 01.004",
+      "b.\n01.001, 01.002, 01.004, 01.003, 01.005",
+      "c.\n01.003, 01.004, 01 .002, 01.001, 01.002",
+      "d.\n01.001, 01.002, 01.004, 01.005, 01.003"
+    ],
+    "correct": 1,
+    "explanation": "Refer 5.1.5 Xem xét các case có dependency là None để chạy đầu tiên ta có case 001, tiếp theo chỉ có 002 chạy đc tiếp, tiếp theo có 3 case 003,004,005 có thể chạy đc ta chọn case có priority cao nhất để chạy. nhớ rằng smaller number is high priority tức là 1 là cao nhất"
+  },
+  {
+    "id": 6,
+    "question": "<div>Which of the TOW following statements about test estimation approaches are CORRECT?</div>",
+    "options": [
+      "a.\nWith the expert-based approach, a group of expert users identified by the client recommends the necessary testing budget.",
+      "b.\nWith the expert-based approach, the test managers responsible for the different testing activities predict the expected testing effort.",
+      "c.\nWith the metrics-based approach, an average of the testing effort recorded from several past projects is used",
+      "d.\nWith the metrics-based approach, the estimate is based on test measures from the project and so this estimate is only available after the testing starts."
+    ],
+    "correct": 2,
+    "explanation": "Refer 5.1.4 kỹ thuật estimation là có expert based dựa trên owner hoặc expert (TM hoặc PM) và metric based dựa trên dự án cũ past project. Nên chọn đc B, C. A sai vì \"expert users\" và D sai vì \" only available after the testing starts\" estimation phải có đầu tiên chứ ko phải sau khi test bắt đầu"
+  },
+  {
+    "id": 7,
+    "question": "<div>Which of the following is a product risk?</div>",
+    "options": [
+      "a.\nPoor system reliability",
+      "b.\nPoor communication between developers and testers",
+      "c.\nPoor quality of test data",
+      "d.\nLack of needed tester training"
+    ],
+    "correct": 0,
+    "explanation": "Refer 5.2.2 B cà D là project risk, còn C cũng là project risk vì test data là dữ liệu do dự án tạo ra để test"
+  },
+  {
+    "id": 8,
+    "question": "<div>During system testing phase of a word processor, a tester finds that on opening a file from a particular set of files ,which are part of a critical workflow, the word processor crashes .which of the following is the next step the tester should prior to recording the deviation?</div>",
+    "options": [
+      "a.\nSend an email to the developers and not report the bug",
+      "b.\nReport the bug as is without any further action",
+      "c.\nTry to identify the code fragment causing the problem",
+      "d.\nTry to recreate the incident before reporting"
+    ],
+    "correct": 3,
+    "explanation": "Refer 5.5 Tester tìm ra đc 1 dấu hiệu lỗi là incident, để có thông tin đầy đủ chính xác cho việc report incident, tester cần cố tạo lại nó. A B sai vì send email và report bug luôn là ko nên. C sai vì đó là của lập trình viên"
+  },
+  {
+    "id": 9,
+    "question": "<div>Which of the following is a project risk?</div>",
+    "options": [
+      "a.\nSystem too costly to operate",
+      "b.\nSkill and/or staff shortage",
+      "c.\nPoor system performance",
+      "d.\nVital function not implemented"
+    ],
+    "correct": 1,
+    "explanation": "Refer 5.2.2 , A,C,D là của product risk"
+  },
+  {
+    "id": 10,
+    "question": "<div>When is testing complete?</div>",
+    "options": [
+      "a.\nA. When time and budget are exhausted.",
+      "b.\nB. When there is enough information for sponsors to make an informed decision about release.",
+      "c.\nC. When there are no remaining high priority defects outstanding.",
+      "d.\nD. When every data combination has been exercised successfully."
+    ],
+    "correct": 2,
+    "explanation": "Refer 5.1.3 Exit criteria thì C phù hợp là tiêu chí quan trọng nhất đánh giá hoàn thành \"- (importance) Residual risks: issues/ open serious defect, untested\""
+  },
+  {
+    "id": 11,
+    "question": "<div>What can a risk-based approach to testing provide?</div>",
+    "options": [
+      "a.\nA. The types of test techniques to be employed.",
+      "b.\nB. The total tests needed to provide 100 per cent coverage.",
+      "c.\nC. An estimation of the total cost of development.",
+      "d.\nD. Only that test execution is effective at reducing risk."
+    ],
+    "correct": 0,
+    "explanation": "Refer 5.2.3 thì A đúng Risk based giúp xác định test techniques. B sai vì 100% coverage là ko có, C sai là vì cost of development, D sai vì only"
+  },
+  {
+    "id": 12,
+    "question": "<div>A new system is about to be developed. Which of the following functions has the highest level of risk?</div>",
+    "options": [
+      "a.\nA. Likelihood of failure = 20%; impact value = $100,000",
+      "b.\nB. Likelihood of failure = 10%; impact value = $150,000",
+      "c.\nC. Likelihood of failure = 1%; impact value = $500,000",
+      "d.\nD. Likelihood of failure = 2%; impact value = $200,000"
+    ],
+    "correct": 0,
+    "explanation": "Refer 5.2.1 cách tính Risk level = likelihood (probability) x Impact (harm) . Chỉ cần nhân đáp án vào là thấy A lớn nhất"
+  },
+  {
+    "id": 13,
+    "question": "<div>Which of the following is the most important difference between the metrics-based approach and the expert-based approach to test estimation?</div>",
+    "options": [
+      "a.\nThe metrics-based approach uses calculations from historical data while the expert based approach relies on team wisdom.",
+      "b.\nThe metrics-based approach can be used to verify an estimate created using the expert-based approach, but not vice versa",
+      "c.\nThe expert-based approach takes longer than the metrics-based approach.",
+      "d.\nThe metrics-based approach is more accurate than the expert-based approach."
+    ],
+    "correct": 0,
+    "explanation": "Refer 5.1.4 Điều nào sau đây là sự khác biệt quan trọng nhất giữa metrics-based và expert-based ? theo sách chọn A, còn các B C D đang so sánh 2 kỹ thuật này ko có căn cứ"
+  },
+  {
+    "id": 14,
+    "question": "<div>How would you estimate the amount of re-testing likely to be required?</div>",
+    "options": [
+      "a.\nMetrics from previous similar projects",
+      "b.\nDiscussions with the development team",
+      "c.\nTime allocated for regression testing",
+      "d.\na & b"
+    ],
+    "correct": 3,
+    "explanation": "Refer 5.1.4. Bạn ước tính effort cho re-test như thế nào? cần có a là metric based và b là expert based nên chọn D"
+  }
+];
+
+let userAnswers = {};
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  document.getElementById('total-count').textContent = quizData.length;
+
+  container.innerHTML = quizData.map((q, idx) => `
+    <div class="question-card" id="card-${q.id}">
+      <div class="question-title">Câu ${idx + 1}: ${q.question}</div>
+      <ul class="options-list">
+        ${q.options.map((opt, optIdx) => `
+          <li class="option-item" 
+              id="opt-${q.id}-${optIdx}" 
+              onclick="selectOption(${q.id}, ${optIdx})">
+            ${opt}
+          </li>
+        `).join('')}
+      </ul>
+      
+      <button class="btn-toggle-explain" onclick="toggleExplanation(${q.id})">
+        💡 Lời giải / Tham chiếu
+      </button>
+
+      <div class="explanation-box" id="explain-${q.id}">
+        <strong>💡 Giải thích chi tiết:</strong>
+        <div>${q.explanation}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectOption(qId, optionIdx) {
+  userAnswers[qId] = optionIdx;
+  
+  // Highlight selected option
+  const options = document.querySelectorAll(`#card-${qId} .option-item`);
+  options.forEach((opt, idx) => {
+    if (idx === optionIdx) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
+}
+
+function toggleExplanation(qId) {
+  const box = document.getElementById(`explain-${qId}`);
+  if (box.style.display === 'none' || box.style.display === '') {
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function submitQuiz() {
+  let score = 0;
+  
+  quizData.forEach(q => {
+    const userAns = userAnswers[q.id];
+    const card = document.getElementById(`card-${q.id}`);
+    
+    // Highlight correct & incorrect answers
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected');
+      
+      if (optIdx === q.correct) {
+        optElem.classList.add('correct');
+      }
+      if (userAns !== undefined && userAns === optIdx && userAns !== q.correct) {
+        optElem.classList.add('incorrect');
+      }
+    });
+
+    if (userAns === q.correct) {
+      score++;
+    }
+
+    // Tự động mở lời giải sau khi nộp bài
+    document.getElementById(`explain-${q.id}`).style.display = 'block';
+  });
+
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: ${score} / ${quizData.length} (${Math.round(score/quizData.length*100)}%)`;
+  scoreDisplay.style.fontWeight = 'bold';
+  
+  alert(`Bạn đã hoàn thành bài thi! Điểm số: ${score}/${quizData.length}`);
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  
+  quizData.forEach(q => {
+    // Xóa các class highlight
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected', 'correct', 'incorrect');
+    });
+    
+    // Ẩn giải thích
+    document.getElementById(`explain-${q.id}`).style.display = 'none';
+  });
+
+  // Reset điểm
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: -- / --`;
+  scoreDisplay.style.fontWeight = 'normal';
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Khởi chạy khi load trang
+window.onload = function() {
+    const titleMatch = window.location.pathname.match(/([^/\\]+)\.html$/);
+    if(titleMatch) {
+        document.getElementById('quiz-title').textContent = decodeURIComponent(titleMatch[1]);
+    }
+    renderQuiz();
+};
+</script>
+
+</body>
+</html>
