@@ -173,6 +173,48 @@ def upload_file():
     flash(f'Tải lên thành công: {filename}', 'success')
     return redirect(url_for('index', req_path=current_path))
 
+@app.route('/upload_folder', methods=['POST'])
+def upload_folder():
+    current_path = request.form.get('current_path', '')
+    base_dir = os.path.join(UPLOAD_FOLDER, current_path)
+
+    if not is_safe(base_dir) or not os.path.isdir(base_dir):
+        flash('Đường dẫn không hợp lệ.', 'error')
+        return redirect(url_for('index'))
+
+    files = request.files.getlist('files')
+    files = [f for f in files if f and f.filename]
+    if not files:
+        flash('Chưa chọn folder nào', 'error')
+        return redirect(url_for('index', req_path=current_path))
+    if len(files) > 50:
+        flash('Tối đa 50 files/lần.', 'error')
+        return redirect(url_for('index', req_path=current_path))
+
+    ok, skip = 0, 0
+    for f in files[:50]:
+        rel = (f.filename or '').replace('\\', '/').lstrip('/')
+        parts = [p for p in rel.split('/') if p not in ('', '.', '..')]
+        if not parts or any('..' in p for p in parts):
+            skip += 1
+            continue
+        safe_parts = [secure_filename(p) for p in parts]
+        if not safe_parts[-1] or os.path.splitext(safe_parts[-1])[1].lower() not in ALLOWED_EXT:
+            skip += 1
+            continue
+        dest = os.path.join(base_dir, *safe_parts)
+        if not is_safe(dest):
+            skip += 1
+            continue
+        os.makedirs(os.path.dirname(dest), exist_ok=True)
+        f.save(dest)
+        ok += 1
+
+    msg = f'Đã tải {ok} file' + (f', bỏ qua {skip} file không phải .html.' if skip else '.')
+    flash(msg, 'success' if ok else 'error')
+    return redirect(url_for('index', req_path=current_path))
+
+
 @app.route('/create_folder', methods=['POST'])
 def create_folder():
     current_path = request.form.get('current_path', '')

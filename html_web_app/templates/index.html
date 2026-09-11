@@ -62,6 +62,21 @@
                         <button type="submit" class="btn-primary">Tải Lên</button>
                     </form>
                 </section>
+
+                <!-- Upload Folder Section -->
+                <section class="action-section glass-panel">
+                    <h3>Tải lên Folder</h3>
+                    <form action="{{ url_for('upload_folder') }}" method="post" enctype="multipart/form-data" class="inline-form">
+                        <input type="hidden" name="current_path" value="{{ current_path }}">
+                        <div class="file-input-compact">
+                            <input type="file" name="files" id="folder" multiple webkitdirectory class="file-input">
+                            <label for="folder" class="file-label-compact">
+                                <span class="text">Chọn Folder</span>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn-primary">Tải Folder</button>
+                    </form>
+                </section>
             </div>
 
             <!-- Folders List -->
@@ -176,6 +191,16 @@
                 } else {
                     fileLabelText.textContent = 'Chọn File';
                 }
+            });
+        }
+
+        // Folder input label (multi-file count)
+        const folderInput = document.getElementById('folder');
+        const folderLabelText = folderInput ? document.querySelector('label[for="folder"] .text') : null;
+        if (folderInput && folderLabelText) {
+            folderInput.addEventListener('change', function(e) {
+                const n = e.target.files.length;
+                folderLabelText.textContent = n > 0 ? n + ' files đã chọn' : 'Chọn Folder';
             });
         }
 
