@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Trắc Nghiệm</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-light: #2b6cb0;
+            --secondary-color: #319795;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --incorrect-bg: #fed7d7;
+            --incorrect-border: #e53e3e;
+            --explain-bg: #ebf8ff;
+            --explain-border: #3182ce;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stats-item {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .score-display {
+            color: var(--primary-light);
+            font-size: 16px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .option-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 14.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-light);
+            background-color: #ebf8ff;
+            font-weight: 500;
+        }
+
+        .option-item.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #22543d;
+            font-weight: 600;
+        }
+
+        .option-item.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #742a2a;
+        }
+
+        .btn-toggle-explain {
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-toggle-explain:hover {
+            background-color: #e2e8f0;
+            border-color: #a0aec0;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--explain-bg);
+            border-left: 4px solid var(--explain-border);
+            border-radius: 6px;
+            font-size: 14px;
+            color: #2b6cb0;
+        }
+
+        .explanation-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c5282;
+        }
+
+        .action-bar {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn-submit {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(49, 151, 149, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c7a7b;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background-color: #718096;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(113, 128, 150, 0.3);
+            transition: all 0.2s;
+            margin-left: 15px;
+        }
+
+        .btn-reset:hover {
+            background-color: #4a5568;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 id="quiz-title">Bộ Đề Trắc Nghiệm</h1>
+        <p>Luyện Tập</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stats-item">Tổng số câu: <span id="total-count">0</span></div>
+        <div class="stats-item score-display" id="score-display">Điểm số: -- / --</div>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <div class="action-bar">
+        <button class="btn-submit" onclick="submitQuiz()">Nộp Bài & Kiểm Tra Đáp Án</button>
+        <button class="btn-reset" onclick="resetQuiz()">Làm Lại</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    "id": 1,
+    "question": "<div>Which of the following is an extension of equivalence partitioning?</div>",
+    "options": [
+      "a.\nDecision tables",
+      "b.\nDecision testing",
+      "c.\nBoundary value analysis",
+      "d.\nState transition testing"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2.1 và 4.2.2"
+  },
+  {
+    "id": 2,
+    "question": "<div>If test cases are derived from looking at the code, what type of test design technique is being used?</div>",
+    "options": [
+      "a.\nBlack-box",
+      "b.\nWhite-box",
+      "c.\nSpecification-based",
+      "d.\nBehavior-based"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.1.2 nhìn cái bảng so sánh đó và chú ý vào \"from looking at the code\""
+  },
+  {
+    "id": 3,
+    "question": "<div>Which of the following is a Black Box test design technique?</div>",
+    "options": [
+      "a.\nDecision Coverage",
+      "b.\nError Guessing",
+      "c.\nStatement Coverage",
+      "d.\nEquivalence Partitioning"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.1.2"
+  },
+  {
+    "id": 4,
+    "question": "<div>Which of the following would be a good test technique to use when under severe time pressure?</div>",
+    "options": [
+      "a.\nExploratory testing",
+      "b.\nStructure based testing",
+      "c.\nSpecification based testing",
+      "d.\nUse Case testing"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.4.2 và chú ý vào \"under severe time pressure- dưới áp lực về thời gian\" thì test nào nhanh và hiệu quả nhất sẽ áp dụng"
+  },
+  {
+    "id": 5,
+    "question": "<div>A thermometer measures temperature in whole degrees only. If the temperature falls below 18 degrees, the heating is switched off. It is switched on again when the temperature reaches 21 degrees. What are the best values in degrees to cover all equivalence partitions?</div>",
+    "options": [
+      "a.\n15, 19 and 25",
+      "b.\n17, 18, and 19",
+      "c.\n18, 20 and 22",
+      "d.\n16, 26, and 32"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.2.2. Tự vẽ ra sơ đồ nhé"
+  },
+  {
+    "id": 6,
+    "question": "<div>Which of the following are white-box test design techniques? a) Decision table testing. b) Decision coverage. c) Boundary value analysis. d) Error guessing. e) Statement testing.</div>",
+    "options": [
+      "a.\na and e",
+      "b.\nb and d",
+      "c.\nb and e",
+      "d.\ne and d"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.1.2"
+  },
+  {
+    "id": 7,
+    "question": "<div>A garden irrigation system allows the user to specify 2 inputs: 1. Frequency - The number of times the system should be automatically switched on per day; minimum once per day, maximum 5 times 2. Duration - The duration of operation, in whole minutes, each time it is switched on; ranging from 1 to 60 Applying 2-value boundary value analysis which of the following options has the correct test set of valid and invalid boundary values?</div>",
+    "options": [
+      "a.\nFrequency 1, 5; Duration 1, 60",
+      "b.\nFrequency 0, 1, 5, 6; Duration 59 seconds, 1 minute, 60 minutes, 60 minutes 1 second",
+      "c.\nFrequency 0, 1, 5, 6; Duration 0, 1, 30, 60, 61",
+      "d.\nFrequency 0, 1, 2, 5, 6; Duration 0, 1, 30, 60, 61"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.2.2 BVA, thực chất là xác định BVA của 2 cái input, trong đó duration tính theo minute nhưng dưới minute là second nữa"
+  },
+  {
+    "id": 8,
+    "question": "<div>Which of the following is an experience-based testing technique?</div>",
+    "options": [
+      "a.\nError guessing",
+      "b.\nIntuitive testing",
+      "c.\nOracle-based testing",
+      "d.\nExhaustive testing"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.1.2"
+  },
+  {
+    "id": 9,
+    "question": "<div>Which of the following test techniques uses the requirements specifications as a test basis?</div>",
+    "options": [
+      "a.\nStructure-based",
+      "b.\nBlack-box",
+      "c.\nWhite-box",
+      "d.\nExploratory"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.1.2 chú ý \"uses the requirements specifications\""
+  },
+  {
+    "id": 10,
+    "question": "<div>Which of the following is a good reason to use experience-based testing?</div>",
+    "options": [
+      "a.\nYou can find defects that might be missed by more formal techniques",
+      "b.\nYou can test for defects that only experienced users would encounter",
+      "c.\nYou can target the developer's efforts to the areas that users will be more likely to use",
+      "d.\nIt is supported by strong tools and can be automated"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.1.2 chọn A vì \"might be missed by more formal techniques\" có trong sách, kỹ thuật theo kinh nghiệm giúp tìm các lỗi bỏ sót bởi các kỹ thuật khác"
+  },
+  {
+    "id": 11,
+    "question": "<div>You have designed test cases to provide 100% statement and 100% decision coverage for the following fragment of code. if width &gt; length then biggest_dimension = width else biggest_dimension = length end_if The following has been added to the bottom of the code fragment above. print \"Biggest dimension is \" &amp; biggest_dimension print \"Width: \" &amp; width print \"Length: \" &amp; length How many more test cases are required?</div>",
+    "options": [
+      "a.\nOne more test case will be required for 100 % decision coverage.",
+      "b.\nTwo more test cases will be required for 100 % statement coverage, one of which will be used to provide 100% decision coverage.",
+      "c.\nNone, existing test cases can be used.",
+      "d.\nOne more test case will be required for 100% statement coverage."
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.3.1. Cái này vẽ sơ đồ ra, chú ý là họ đã có Test case và bao phủ \"100% statement and 100% decision coverage\", giờ họ viết thêm 2 dòng code vào phần cuối của chương trình thì nó vẫn là lệnh khẳng định nên các TC đã có vẫn đi qua hết các lệnh này nên ta ko cần thêm TC nữa"
+  },
+  {
+    "id": 12,
+    "question": "<div>Given the following fragment of code, how many tests are required for 100% decision coverage? if width &gt; length then biggest_dimension = width if height &gt; width then biggest_dimension = height end_if else biggest_dimension = length if height &gt; length then biggest_dimension = height end_if end_if</div>",
+    "options": [
+      "a.\n3",
+      "b.\n4",
+      "c.\n2",
+      "d.\n1"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.2.2 vẽ ra để xác định"
+  },
+  {
+    "id": 13,
+    "question": "<div>If you are using error guessing to target your testing, which type of testing are you doing?</div>",
+    "options": [
+      "a.\nSpecification-based",
+      "b.\nStructure-based",
+      "c.\nExperience-based",
+      "d.\nReference-based"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.1.2 và chú ý \"using error guessing\""
+  },
+  {
+    "id": 14,
+    "question": "<div>How is statement coverage determined?</div>",
+    "options": [
+      "a.\nNumber of test decision points divided by the number of test cases",
+      "b.\nNumber of decision outcomes tested divided by the total number of executable statements",
+      "c.\nNumber of possible test case outcomes divided by the total number of function points",
+      "d.\nNumber of executable statements tested divided by the total number of executable statements"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.3.1 định nghĩa công thức tính statement coverage"
+  },
+  {
+    "id": 15,
+    "question": "<div>What is error guessing?</div>",
+    "options": [
+      "a.\nA testing technique used to guess where a developer is likely to have made a mistake",
+      "b.\nA technique used for assessing defect metrics",
+      "c.\nA development technique to verify that all error paths have been coded",
+      "d.\nA planning technique used to anticipate likely schedule variances due to faults"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.4.1 và chọn A vì \"a mistake\" dựa vào sai sót chung của LTV. Loại D vì \"A planning technique\" là kỹ thuật lập kế hoạch ko phải của test, loại C vì \"A development technique\" là kỹ thuật của LTV ko phải test, Loại B vì cũng ko phải kỹ thuật test"
+  },
+  {
+    "id": 16,
+    "question": "<div>When exploratory testing is conducted using time-boxing and test charters, what is it called?</div>",
+    "options": [
+      "a.\nSchedule-based testing",
+      "b.\nSession-based testing",
+      "c.\nRisk-based testing",
+      "d.\nFormal chartering"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.4.2 và chú ý vào \"using time-boxing and test charters\" để tìm ra trong sách"
+  },
+  {
+    "id": 17,
+    "question": "<div>You are testing an e-commerce transaction that has the following states and transitions: 1. Login (invalid) &gt; Login 2. Login &gt; Search 3. Search &gt; Search 4. Search &gt; Shopping Cart 5. Shopping Cart &gt; Search 6. Shopping Cart &gt; Checkout 7. Checkout &gt; Search 8. Checkout &gt; Logout For a state transition diagram, how many transitions should be shown?</div>",
+    "options": [
+      "a.\n4",
+      "b.\n6",
+      "c.\n8",
+      "d.\n16"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2.4 state transition testing, nên vẽ sơ đồ ra rồi đếm số transition."
+  },
+  {
+    "id": 18,
+    "question": "<div>You are testing a banking application that allows a customer to withdraw 20, 100 or 500 dollars in a single transaction. The values are chosen from a drop-down list and no other values may be entered. How many equivalence partitions need to be tested to achieve 100% equivalence partition coverage?</div>",
+    "options": [
+      "a.\n1",
+      "b.\n2",
+      "c.\n3",
+      "d.\n4"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.2.1 EP, và \"a drop-down list and no other values\" nên ta có 3 value của drop down list và 1 giá trị là ko nhập gì mà ấn enter luôn là tổng 4 value"
+  },
+  {
+    "id": 19,
+    "question": "<div>An automated air-conditioner is programmed to turn its heating unit on when the temperature falls below 17 and to turn its refrigeration unit on when the temperature exceeds 26. The air- conditioner is designed to operate at temperatures between -10 and +40. Given the above specification, which of the following sets of values shows that the equivalence partition test design technique has been used correctly?</div>",
+    "options": [
+      "a.\n-11, -1, 18, 27, 51",
+      "b.\n-11, -1,12,18, 27, 51",
+      "c.\n-11, 18, 51",
+      "d.\n-1, 12, 18, 27"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.2.1 EP bạn phải vẽ đúng sơ đồ"
+  },
+  {
+    "id": 20,
+    "question": "<div>If you are testing a module of code, how do you determine the level of decision coverage you have achieved?</div>",
+    "options": [
+      "a.\nBy taking the number of decisions you have tested and dividing that by the total number of executable statements in the module",
+      "b.\nBy taking the number of decisions you have tested and dividing that by the total number of decisions in the module",
+      "c.\nBy taking the number of decisions you have tested and dividing that by the total lines of code in the module",
+      "d.\nBy taking the number of decision outcomes you have tested and dividing that by the total number of decision outcomes in the module"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.3.2 định nghĩa của decision coverage"
+  },
+  {
+    "id": 21,
+    "question": "<div>(V4.0 bỏ câu này) Which of the following best describes the behaviors defined in a use case that should be covered by tests?</div>",
+    "options": [
+      "a.\nPositive path and negative path",
+      "b.\nBasic, exception and error",
+      "c.\nNormal, error, data, and integration",
+      "d.\nControl flow, data flow and decision paths"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.2.5 xem định nghĩa của use case chọn B. Loại D vì của whitebox test, A là category của test case, test data, Loại C vì ko có cái nào liên quan đến use case"
+  },
+  {
+    "id": 22,
+    "question": "<div>You are testing a machine that scores exam papers and assigns grades. Based on the score achieved the grades are as follows: 1-49 = F, 50-59 = D-, 60-69 = D, 70-79 = C, 80-89 = B, 90-100=A If you apply equivalence partitioning, how many test cases will you need to achieve minimum test coverage?</div>",
+    "options": [
+      "a.\n6",
+      "b.\n8",
+      "c.\n10",
+      "d.\n12"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.2.1 EP, vẽ ra ta có 6 EP valid và thêm 2 EP invalid là nhỏ hơn 1 và lớn hơn 100 nữa"
+  },
+  {
+    "id": 23,
+    "question": "<div>You are testing a machine that scores exam papers and assigns grades. Based on the score achieved the grades are as follows: 1-49 = F, 50-59 = D-, 60-69 = D, 70-79 = C, 80-89 = B, 90-100=A If you apply two-value boundary value analysis, how many test cases will you need to achieve minimum test coverage?</div>",
+    "options": [
+      "a.\n8",
+      "b.\n10",
+      "c.\n12",
+      "d.\n14"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.2.2 BVA, vẽ ra và xác định BVA"
+  },
+  {
+    "id": 24,
+    "question": "<div>A program validates a numeric field as follows: values less than 10 are rejected, values between 10 and 21 are accepted, values greater than or equal to 22 are rejected. Which of the following input values cover Most of the difference equivalence partitions?</div>",
+    "options": [
+      "a.\n10,11,21",
+      "b.\n3,20,21",
+      "c.\n3,10,22",
+      "d.\n10,21,22"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2.1 vẽ ra"
+  },
+  {
+    "id": 25,
+    "question": "<div>You have been given the following requirement: A user must log in to the system with a valid username and password. If they fail to enter the correct combination three times, they will receive an error and will have to wait 10 minutes before trying again. The test terminates when the user successfully logs in. How many test cases are needed to provide 100% state transition coverage?</div>",
+    "options": [
+      "a.\n1",
+      "b.\n2",
+      "c.\n4",
+      "d.\n5"
+    ],
+    "correct": 0,
+    "explanation": "Câu này phải vẽ sơ đồ state transition ra nhé (nhìn vào hình mình vẽ cho rồi đó), nó là dạng login trên trình duyệt, nhiều bạn đọc đề cứ thế lấy hình của ATM là không đúng đâu. Trang astqb.org nó chọn 1 TC là đi đc hết các State. Đi từ login sau đó nhập sai 3 lần vào trạng thái chờ 10 phút rồi về login lại và thành công là đi hết các trạng thái"
+  },
+  {
+    "id": 26,
+    "question": "<div>You have been given the following conditions and results from those condition combinations. You can only have one form of payment. A PIN is only needed for a debit card. Given this information, using the decision table technique, what is the minimum number of test cases you would need to test these conditions?</div>",
+    "options": [
+      "a.\n7",
+      "b.\n13",
+      "c.\n15",
+      "d.\n18"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2.3 tự vẽ ra bảng thu gọn Decision table"
+  },
+  {
+    "id": 27,
+    "question": "<div>You are testing a thermostat for a heating/air conditioning system. You have been given the following requirements: • When the temperature is below 70 degrees, turn on the heating system • When the temperature is above 75 degrees, turn on the air conditioning system • When the temperature is between 70 and 75 degrees, inclusive, turn on fan only Which of the following is the minimum set of test temperature values to achieve 100% two-value boundary value analysis coverage?</div>",
+    "options": [
+      "a.\n70, 75",
+      "b.\n65, 72, 80",
+      "c.\n69, 70, 75, 76",
+      "d.\n70, 71, 74, 75, 76"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2.2 BVA"
+  },
+  {
+    "id": 28,
+    "question": "<div>Consider the following test cases that are used to test an accounting system: Given this information, what is the proper order in which to execute these test cases?</div>",
+    "options": [
+      "a.\n5, 1, 3, 2, 4",
+      "b.\n1, 2, 4, 5, 3",
+      "c.\n1, 3, 2, 4, 5",
+      "d.\n3, 4, 5, 1, 2"
+    ],
+    "correct": 1,
+    "explanation": "Câu này cả 2 đáp án B và C đều chạy phù hợp với Dependency, priority thì đều chưa đúng lắm, nhưng trên astqb.org exam 2 chọn đáp án B vì phù hợp hơn"
+  },
+  {
+    "id": 29,
+    "question": "<div>Which of the following represents an INVALID transition (N)?</div>",
+    "options": [
+      "a.\nOff from Display Channel 1",
+      "b.\nChannel 2 from Display Channel 1",
+      "c.\nStby from Live",
+      "d.\nChannel 2 from Live"
+    ],
+    "correct": 0,
+    "explanation": "Nhìn vào bảng đối chiếu xem vào ô nào (ô nào mà đánh dấu là N (Not) là invalid)"
+  },
+  {
+    "id": 30,
+    "question": "<div>Which of the following test cases and expected results is VALID?</div>",
+    "options": [
+      "a.\n23 year old in insurance class A Premium is 90 and excess is 2,500",
+      "b.\n51 year old in insurance class C Premium is 70 and excess is 500",
+      "c.\n31 year old in insurance class B Premium is 70 and excess is 1,500",
+      "d.\n43 year old in insurance class C Premium is 90 and excess is 1,000"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.2.3 nhìn vào bảng tím ra các input họ cho thì ứng với cột nào thì tìm đc output tương ứng"
+  },
+  {
+    "id": 31,
+    "question": "<div>The digital rainbow Thermometer uses 7 colours to show the ambient temperature. Each colour spans a range of just 5, with an operating minimum and maximum of minus 5 and 30. Which of the following values is LEAST likely to have been identified when applying the boundary value test design technique?</div>",
+    "options": [
+      "a.\n30",
+      "b.\n0",
+      "c.\n8",
+      "d.\n15"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2.2 BVA. Vẽ sơ đồ ra và câu hỏi nó hỏi \"values is LEAST likely- là ít đúng nhất\" thì ta vẽ sơ đồ từ -5 đến 30, mỗi vùng cách nhau 5 giá trị \"spans a range of just 5\""
+  },
+  {
+    "id": 32,
+    "question": "<div>You have been given the following set of test cases to run. You have been instructed to run them in order by risk and to accomplish the testing as quickly as possible to provide feedback to the developers as soon as possible. Given this information, what is the best order in which to run these tests?</div>",
+    "options": [
+      "a.\n2, 4, 5, 6, 1, 3",
+      "b.\n4, 3, 2, 5, 6, 1",
+      "c.\n2, 5, 6, 4, 1, 3",
+      "d.\n6, 1, 3, 2, 4, 5"
+    ],
+    "correct": 0,
+    "explanation": "Thứ tự chạy test case"
+  },
+  {
+    "id": 33,
+    "question": "<div>The decision table above reflects a golf club's pricing structure for green fees and buggy/cart hire. What is the expected result (actions) for each of the following two test cases (TC1 and TC2)? * TC 1 - Paul is not a full member, is a Loyalty Card holder and requests to play 18 holes with a buggy/cart * TC 2 - Cheryl is not at full member, doesn't have a Loyalty Card and requests to play 9 holes with a buggy/cart</div>",
+    "options": [
+      "a.\nTC1 - £23 total charges including buggy hire; TC2 - £21 total charge including buggy hire",
+      "b.\nTC1 - £18 total charges including buggy hire; TC2 - £16 total charge but no buggy allowed",
+      "c.\nTC1 - £23 total charges including buggy hire; TC2 - £16 total charge but no buggy allowed",
+      "d.\nTC1 - £17 total charges but no buggy allowed; TC2 - £21 total charge including buggy hire"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2.3 nhìn vào bảng và đối chiếu xem TC1 và TC2 tương ứng với cột nào thì đọc expected result ra"
+  },
+  {
+    "id": 34,
+    "question": "<div>You are testing a mobile app that allows users to find a nearby restaurant, based on the type of food they want to eat. Consider the following list of test cases, priorities (smaller number is high priority), and dependencies, in the following format:(refer picture) Which of the following is a possible test execution schedule that considers both priorities and dependencies?</div>",
+    "options": [
+      "a.\n01.001, 01.002, 01.003, 01.005, 01.004",
+      "b.\n01.001, 01.002, 01.004, 01.003, 01.005",
+      "c.\n01.003, 01.004, 01 .002, 01.001, 01.002",
+      "d.\n01.001, 01.002, 01.004, 01.005, 01.003"
+    ],
+    "correct": 1,
+    "explanation": "Thứ tự chạy test case"
+  }
+];
+
+let userAnswers = {};
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  document.getElementById('total-count').textContent = quizData.length;
+
+  container.innerHTML = quizData.map((q, idx) => `
+    <div class="question-card" id="card-${q.id}">
+      <div class="question-title">Câu ${idx + 1}: ${q.question}</div>
+      <ul class="options-list">
+        ${q.options.map((opt, optIdx) => `
+          <li class="option-item" 
+              id="opt-${q.id}-${optIdx}" 
+              onclick="selectOption(${q.id}, ${optIdx})">
+            ${opt}
+          </li>
+        `).join('')}
+      </ul>
+      
+      <button class="btn-toggle-explain" onclick="toggleExplanation(${q.id})">
+        💡 Lời giải / Tham chiếu
+      </button>
+
+      <div class="explanation-box" id="explain-${q.id}">
+        <strong>💡 Giải thích chi tiết:</strong>
+        <div>${q.explanation}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectOption(qId, optionIdx) {
+  userAnswers[qId] = optionIdx;
+  
+  // Highlight selected option
+  const options = document.querySelectorAll(`#card-${qId} .option-item`);
+  options.forEach((opt, idx) => {
+    if (idx === optionIdx) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
+}
+
+function toggleExplanation(qId) {
+  const box = document.getElementById(`explain-${qId}`);
+  if (box.style.display === 'none' || box.style.display === '') {
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function submitQuiz() {
+  let score = 0;
+  
+  quizData.forEach(q => {
+    const userAns = userAnswers[q.id];
+    const card = document.getElementById(`card-${q.id}`);
+    
+    // Highlight correct & incorrect answers
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected');
+      
+      if (optIdx === q.correct) {
+        optElem.classList.add('correct');
+      }
+      if (userAns !== undefined && userAns === optIdx && userAns !== q.correct) {
+        optElem.classList.add('incorrect');
+      }
+    });
+
+    if (userAns === q.correct) {
+      score++;
+    }
+
+    // Tự động mở lời giải sau khi nộp bài
+    document.getElementById(`explain-${q.id}`).style.display = 'block';
+  });
+
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: ${score} / ${quizData.length} (${Math.round(score/quizData.length*100)}%)`;
+  scoreDisplay.style.fontWeight = 'bold';
+  
+  alert(`Bạn đã hoàn thành bài thi! Điểm số: ${score}/${quizData.length}`);
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  
+  quizData.forEach(q => {
+    // Xóa các class highlight
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected', 'correct', 'incorrect');
+    });
+    
+    // Ẩn giải thích
+    document.getElementById(`explain-${q.id}`).style.display = 'none';
+  });
+
+  // Reset điểm
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: -- / --`;
+  scoreDisplay.style.fontWeight = 'normal';
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Khởi chạy khi load trang
+window.onload = function() {
+    const titleMatch = window.location.pathname.match(/([^/\\]+)\.html$/);
+    if(titleMatch) {
+        document.getElementById('quiz-title').textContent = decodeURIComponent(titleMatch[1]);
+    }
+    renderQuiz();
+};
+</script>
+
+</body>
+</html>

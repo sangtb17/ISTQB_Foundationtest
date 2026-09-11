@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Trắc Nghiệm</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-light: #2b6cb0;
+            --secondary-color: #319795;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --incorrect-bg: #fed7d7;
+            --incorrect-border: #e53e3e;
+            --explain-bg: #ebf8ff;
+            --explain-border: #3182ce;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stats-item {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .score-display {
+            color: var(--primary-light);
+            font-size: 16px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .option-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 14.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-light);
+            background-color: #ebf8ff;
+            font-weight: 500;
+        }
+
+        .option-item.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #22543d;
+            font-weight: 600;
+        }
+
+        .option-item.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #742a2a;
+        }
+
+        .btn-toggle-explain {
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-toggle-explain:hover {
+            background-color: #e2e8f0;
+            border-color: #a0aec0;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--explain-bg);
+            border-left: 4px solid var(--explain-border);
+            border-radius: 6px;
+            font-size: 14px;
+            color: #2b6cb0;
+        }
+
+        .explanation-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c5282;
+        }
+
+        .action-bar {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn-submit {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(49, 151, 149, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c7a7b;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background-color: #718096;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(113, 128, 150, 0.3);
+            transition: all 0.2s;
+            margin-left: 15px;
+        }
+
+        .btn-reset:hover {
+            background-color: #4a5568;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 id="quiz-title">Bộ Đề Trắc Nghiệm</h1>
+        <p>Luyện Tập</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stats-item">Tổng số câu: <span id="total-count">0</span></div>
+        <div class="stats-item score-display" id="score-display">Điểm số: -- / --</div>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <div class="action-bar">
+        <button class="btn-submit" onclick="submitQuiz()">Nộp Bài & Kiểm Tra Đáp Án</button>
+        <button class="btn-reset" onclick="resetQuiz()">Làm Lại</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    "id": 1,
+    "question": "<div>Which of the following is NOT a valid use of decision coverage?</div>",
+    "options": [
+      "a.\nChecking that all decisions have been exercised in a single program",
+      "b.\nChecking that all decisions have been exercised in a business process",
+      "c.\nChecking that all calls from one program module to another have been made correctly",
+      "d.\nChecking that at least 50% of decisions have been exercised by a test case suite"
+    ],
+    "correct": 3,
+    "explanation": "refer 4.3.2 chọn D vì \"least 50% of decisions\" ko có yêu cầu này at least 50% là sai vì ko phải phần mềm nào cũng yêu cầu cái này"
+  },
+  {
+    "id": 2,
+    "question": "<div>Which of the following BEST describes checklist-based testing?</div>",
+    "options": [
+      "a.\nAn approach to testing whereby the testers dynamically design and execute tests based on their knowledge, exploration of the test item and the results of previous tests.",
+      "b.\nAn experience-based test technique whereby the experienced tester uses a high-level list of items to be noted, checked or remembered, or a set of rules or criteria against which a product has to be verified.",
+      "c.\nA procedure to derive and/or select test cases based on an analysis of the specification, either functional or non-functional, of a component or system without reference to its internal structure.",
+      "d.\nA test design technique which ensures that test cases are checked for consistency and completeness against an organisation's list of formatting rules and best practices."
+    ],
+    "correct": 1,
+    "explanation": "refer 4.4.3 Điều nào sau đây TỐT NHẤT mô tả thử nghiệm dựa trên checklist? Chọn B đúng \"uses a high-level list of items to be noted, checked or remembered, or a set of rules or criteria- sử dụng danh sách ở mức cao các mục cần ghi chú, kiểm tra hoặc ghi nhớ hoặc một bộ quy tắc hoặc tiêu chí\" loại A vì \"dynamically\" là của exploratory testing, loại C vì \"analysis of the specification\" của black box, loại D vì \"ensures that test cases are checked for consistency and completeness against - cái này là kỹ thuật dùng checklist để review của chương 3 ko phải checklist để test"
+  },
+  {
+    "id": 3,
+    "question": "<div>Which of the following is a key difference between black box and white box test design techniques?</div>",
+    "options": [
+      "a.\nBlack box techniques use software code to derive test cases, white box techniques do not.",
+      "b.\nWhite box techniques use functional design specifications to derive test cases, black box techniques do not.",
+      "c.\nWhite box techniques can measure the extent of code coverage, black box techniques can not.",
+      "d.\nWhite box techniques derive test cases from models of the software, black box techniques do not."
+    ],
+    "correct": 2,
+    "explanation": "refer 4.1.1 Điều nào sau đây là điểm khác biệt chính giữa kỹ thuật thiết kế kiểm thử hộp đen và hộp trắng? theo sách"
+  },
+  {
+    "id": 4,
+    "question": "<div>A car insurance policy has 3 rates of insurance depending on the age of the driver. For drivers aged between 17 and 25 inclusive they are charged at rate A, drivers aged between 26 and 50 inclusive are charged at rate B and those drivers aged over 50 are charged at rate C. You are designing test cases, which of the following three ages would test all valid equivalence partitions and therefore test rate A, B and C?</div>",
+    "options": [
+      "a.\n26, 45, 50.",
+      "b.\n10, 21, 55.",
+      "c.\n20, 35, 65.",
+      "d.\n17, 25, 50."
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2.1, họ hỏi về EP thôi, các bạn vẽ ra 3 phân vùng 17-25 là rate A, 26-50 là rate B, trên 50 là Rate C. Ở đây bạn chú ý họ nói 3 độ tuổi nào để test đc tất cả các valid EP của 3 rate A, B,C nhé, đừng cho vùng invalid vào làm gì. Xem video chữa đề của Exam 26 câu 8"
+  },
+  {
+    "id": 5,
+    "question": "<div>A student needs to score at least 50 points to pass. If they score at least 100 points they will achieve a merit and if they score at least 150 points they will achieve a distinction. Which two values are in the same partition?</div>",
+    "options": [
+      "a.\n45 and 55.",
+      "b.\n55 and 120.",
+      "c.\n50 and 60.",
+      "d.\n45 and 170."
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2.1, 2 giá trị nào rơi vào cùng 1 phân vùng? xem video chữa Exam 26 câu 9"
+  },
+  {
+    "id": 6,
+    "question": "<div>Which of the following is an approach that can be used for exploratory testing?</div>",
+    "options": [
+      "a.\nTime-boxed test sessions are created, during which a tester uses a test charter containing test objectives to guide the testing.",
+      "b.\nA tester methodically executes tests from a list of possible failures, based on experience, defect and failure data.",
+      "c.\nA tester analyses, designs and implements tests based on external rules and standards",
+      "d.\nTests are designed based on the guidance of stakeholders and experts outside the test team."
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.4.2. Phương pháp nào sau đây có thể được sử dụng cho thử nghiệm thăm dò? Chọn A vì đúng với sách, loại B vì \"list of possible failures\" là của error guessing, loại C vì \"based on external rules and standards\" là của checklist, loại D vì \"based on the guidance of stakeholders\" test dựa vào hướng dẫn của các bên liên quan"
+  },
+  {
+    "id": 7,
+    "question": "<div>Given the following state transition diagram where SS is the start state: Which of the following answers describes a test case that only uses valid transitions to exercise all states, using the minimum number of transitions?</div>",
+    "options": [
+      "a.\nSS-S3-SS-S1-S3-S2",
+      "b.\nSS-S3-S2-S1.",
+      "c.\nSS-S1-S2-S3",
+      "d.\nSS-S1-S3-S2."
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.2.4 xem video chữa đề Exam 26 câu 17"
+  },
+  {
+    "id": 8,
+    "question": "<div>Which of the following is a key difference between black box and white box test design techniques?</div>",
+    "options": [
+      "a.\nBlack box techniques use software code to derive test cases, white box techniques do not.",
+      "b.\nWhite box techniques use functional design specifications to derive test cases, black box techniques do not.",
+      "c.\nWhite box techniques can measure the extent of code coverage, black box techniques can not.",
+      "d.\nWhite box techniques derive test cases from models of the software, black box techniques do not"
+    ],
+    "correct": 2,
+    "explanation": "refer 4.1.1 Điều nào sau đây là điểm khác biệt chính giữa black box and white box? chọn C như sách, A sai vì \"Black box techniques use software code\" B sai vì \"White box techniques use functional design specifications\" cái white box phải dùng detail technical design chứ ko phải tài liệu này, loại D vì \"White box techniques derive test cases from models - dựa vào model là sai\""
+  },
+  {
+    "id": 9,
+    "question": "<div>A booking system for a city bus service prices its fares according to the time of travel: Peak-time tariff starts at 06:00 and finishes at 10:00 am Off-peak tariff applied during all other times of services. The bus service does not operate between 23:00 and the start of the next day's peak service. Note that all times mentioned are inclusive. When applying the equivalence partitioning test design technique, which of the following options shows test case inputs that each fall into a same equivalence partition?</div>",
+    "options": [
+      "a.\n06:00, 10:00, 12:00",
+      "b.\n10:01, 13:00, 22:59",
+      "c.\n01:00, 08:00, 22:00",
+      "d.\n24:00, 10:00, 23:01"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.2.1. Xem video chữa đề Exam 26 câu 20"
+  },
+  {
+    "id": 10,
+    "question": "<div>In the above State Table, which of the following represents an invalid transition?</div>",
+    "options": [
+      "a.\nEvent C from S3",
+      "b.\nEvent E from S4",
+      "c.\nEvent B from S2",
+      "d.\nEvent D from S4"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.2.4. Xem video hướng dẫn chữa đề Exam 26 câu 21"
+  },
+  {
+    "id": 11,
+    "question": "<div>Which of the following would be a good test technique to use when you have only some days to test before release product?</div>",
+    "options": [
+      "a.\nExploratory testing",
+      "b.\nStructure based testing",
+      "c.\nSpecification based testing",
+      "d.\nUse Case testing"
+    ],
+    "correct": 0,
+    "explanation": "refer 4.4.2 Kỹ thuật thử nghiệm nào sau đây sẽ là kỹ thuật tốt để sử dụng khi bạn chỉ có vài ngày để thử nghiệm trước khi tung ra sản phẩm? chú ý vào \"only some days\" nên chọn A"
+  },
+  {
+    "id": 12,
+    "question": "<div>Which of the following are most characteristic of structure-based testing? (i) Information about how the software is constructed is used to derive test cases. (ii) Statement coverage and/or decision coverage can be measured for existing test cases. (iii) The knowledge and experience of people are used to derive test cases. (iv) Test cases are derived from a model or specification of the system.</div>",
+    "options": [
+      "a.\n(i) and (ii)",
+      "b.\n(ii) and (iii)",
+      "c.\n(ii) and (iv)",
+      "d.\n(i) and (iii)"
+    ],
+    "correct": 0,
+    "explanation": "refer 4.1.1"
+  },
+  {
+    "id": 13,
+    "question": "<div>Boundary value testing:</div>",
+    "options": [
+      "a.\nIs the same as equivalence partitioning tests",
+      "b.\nTest boundary conditions on, below and above the edges of input and output equivalence classes",
+      "c.\nTests combinations of input circumstances",
+      "d.\nIs used in white box testing strategy"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.2.2"
+  },
+  {
+    "id": 14,
+    "question": "<div>How many test cases are required to cover 100% 0 – switch</div>",
+    "options": [
+      "a.\n5",
+      "b.\n6",
+      "c.\n7",
+      "d.\n8"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2.1. Xem video chữa đề của Exam 27 câu 21"
+  },
+  {
+    "id": 15,
+    "question": "<div>How many test cases are required to cover 100% 1– switch from X4?</div>",
+    "options": [
+      "a.\n2",
+      "b.\n3",
+      "c.\n4",
+      "d.\n5"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.2.4. Xem video chữa đề của Exam 27 câu 22"
+  },
+  {
+    "id": 16,
+    "question": "<div>Which of the following is a characteristic of experience-based test techniques?</div>",
+    "options": [
+      "a.\nTest cases are created based on detailed design information",
+      "b.\nItems tested within the interface code section are used to measure coverage",
+      "c.\nThe techniques heavily rely on the tester's knowledge of the software and the business domain",
+      "d.\nThe test cases are used to identify deviations from the requirements"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.4.2. Điều nào sau đây là đặc điểm của kỹ thuật kiểm tra dựa trên kinh nghiệm? chọn C vì test dựa vào \"tester's knowledge of the software and the business domain\" A sai vì test dựa vào \"detailed design\" là của white box test, B sai vì \"the interface code\" cũng là white box test, D sai vì \"deviations from the requirements\" là của black box test"
+  },
+  {
+    "id": 17,
+    "question": "<div>You are testing a simplified apartment search form which has only two search criteria: • floor (with three possible options: ground floor; first floor; second or higher floor) • garden type (with three possible options: no garden; small garden; large garden) Only apartments on the ground floor may have gardens. The form has a built-in validation mechanism that will not allow you to use the search criteria which violate this rule. Each test has two input values: floor and garden type. You want to apply equivalence partitioning (EP) to cover each floor and each garden type in your tests. What is the minimal number of test cases to achieve 100% EP coverage?</div>",
+    "options": [
+      "a.\n3",
+      "b.\n4",
+      "c.\n5",
+      "d.\n6"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.2.1. Xem video hướng dẫn chữa đề Exam 27 câu 25"
+  },
+  {
+    "id": 18,
+    "question": "<div>You are testing a system that calculates the final course grade for a given student. The final grade is assigned based on the final result, according to the following rules: • 0 – 50 points: failed • 51 – 60 points: fair • 61 – 70 points: satisfactory • 71 – 80 points: good • 81 – 90 points: very good • 91 – 100 points: excellent You have prepared the following set of test cases ( image) What is the 2-value Boundary Value Analysis (BVA) coverage for the final result that is achieved with the existing test cases?</div>",
+    "options": [
+      "a.\n50%",
+      "b.\n60%",
+      "c.\n33.3%",
+      "d.\n100%"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.2.2. Xem video hướng dẫn chữa đề Exam 27 câu 26"
+  },
+  {
+    "id": 19,
+    "question": "<div>Your favorite bicycle daily rental store has just introduced a new Customer Relationship Management system and asked you, one of their most loyal members, to test it. The implemented features are as follows: • Anyone can rent a bicycle, but members receive a 20% discount • However, if the return deadline is missed, the discount is no longer available • After 15 rentals, members get a gift: a T-Shirt Decision table describing the implemented features looks as image Based ONLY on the feature description of the Customer Relationship Management system, which of the above rules describes an impossible situation?</div>",
+    "options": [
+      "a.\nR4",
+      "b.\nR2",
+      "c.\nR6",
+      "d.\nR8"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.2.3. quy tắc nào ở trên mô tả một tình huống không thể xảy ra? Nhớ là \"members get a gift: a T-Shirt- chỉ có member mới đc tặng áo thôi\" nên cột R8 sai. Xem video hướng dẫn chữa đề Exam 27 câu 27"
+  },
+  {
+    "id": 20,
+    "question": "<div>You test a system whose lifecycle is modeled by the state transition diagram shown below. The system starts in the INIT state and ends its operation in the OFF state. What is the MINIMAL number of test cases to achieve valid transitions coverage?</div>",
+    "options": [
+      "a.\n4",
+      "b.\n2",
+      "c.\n7",
+      "d.\n3"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.2.4. Xem video hướng dẫn chữa đề Exam 27 câu 28"
+  },
+  {
+    "id": 21,
+    "question": "<div>Your test suite achieved 100% statement coverage. What is the consequence of this fact?</div>",
+    "options": [
+      "a.\nEach instruction in the code that contains a defect has been executed at least once",
+      "b.\nAny test suite containing more test cases than your test suite will also achieve 100% statement coverage",
+      "c.\nEach path in the code has been executed at least once",
+      "d.\nEvery combination of input values has been tested at least once"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.3.1. Bộ thử nghiệm của bạn đã đạt được mức độ bao phủ câu lệnh 100%. Hậu quả của thực tế này là gì? Chọn A đúng như định nghĩa \"Each instruction- là cách gọi khác của statement\" dịch nôm na là mỗi dòng lệnh trong code đã đc chạy ít nhất 1 lần. B loại vì \"Any test suite containing more test cases - Bất kỳ bộ thử nghiệm nào chứa nhiều trường hợp thử nghiệm hơn \" cái này ko so sánh đc vì bộ này đã coverage 100% rồi, C sai ở \"Each path\", D sai ở \"Every combination of input values\" cái này là của bảng decision coverage"
+  },
+  {
+    "id": 22,
+    "question": "<div>In your project there has been a delay in the release of a brand-new application and test execution started late, but you have very detailed domain knowledge and good analytical skills. The full list of requirements has not yet been shared with the team, but management is asking for some test results to be presented. Which test technique fits BEST in this situation?</div>",
+    "options": [
+      "a.\nChecklist-based testing",
+      "b.\nError guessing",
+      "c.\nExploratory testing",
+      "d.\nBranch testing"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.4.2 Kỹ thuật nào tốt nhất ở tình huống này? Trong kịch bản bạn thấy là Release bị delay, test bắt đầu muộn, tài liệu requirement ko đầy đủ, bạn thì có kinh nghiệm và kiến thức về domain, vậy chỉ chọn đc C"
+  },
+  {
+    "id": 23,
+    "question": "<div>Which of the following BEST describes the concept behind error guessing?</div>",
+    "options": [
+      "a.\nError guessing involves using your knowledge and experience of defects found in the past and typical errors made by developers",
+      "b.\nError guessing involves using your personal experience of development and the errors you made as a developer",
+      "c.\nError guessing requires you to imagine that you are the user of the test object and to guess errors the user could make interacting with it",
+      "d.\nError guessing requires you to rapidly duplicate the development task to identify the sort of errors a developer might make"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.4.1 Điều nào sau đây TỐT NHẤT mô tả khái niệm đằng sau việc đoán lỗi? Chọn A đúng về error guessing, B sai vì \"experience of development- kinh nghiệm của LTV\" C sai vì \"imagine that you are the user- tưởng tượng người dùng dùng sai\", D sai vì \"rapidly duplicate the development task- nhanh chóng duplicate công việc của LTV\""
+  },
+  {
+    "id": 24,
+    "question": "<div>Which of the following is NOT true for white-box testing?</div>",
+    "options": [
+      "a.\nDuring white-box testing the entire software implementation is considered",
+      "b.\nWhite-box coverage metrics can help identify additional tests to increase code coverage",
+      "c.\nWhite-box test techniques can be used in static testing",
+      "d.\nWhite-box testing can help identify gaps in requirements implementation"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.1.1 Cái nào ko đúng về White box test? chọn D là đáp án của câu này. thì A đúng với mô tả của white box test vì dựa vào \"the entire software implementation- triển khai này là design và code đó\", B đúng vì nó có tính coverage để biết cần thêm bao nhiêu TC, C đúng trong sách có mục 4.3.3. Chỉ có D ko đúng và là đáp án của câu này vì White box test ko dựa vào requirement"
+  },
+  {
+    "id": 25,
+    "question": "<div>A functional requirement states that pressure values must always be positive and stay within a range of 100 to 200 pounds for a particular tank (100 and 200 are valid within the range). Which of the following is the minimum set of values that would achieve coverage using the equivalence partitioning technique?</div>",
+    "options": [
+      "a.\nA series of tests where pressure is set to 98, 110, and 201 pounds",
+      "b.\nA series of tests where pressure is set to 98, 100, and 200 pounds",
+      "c.\nA series of tests where pressure is set to 100, 110, and 200 pounds",
+      "d.\nA series of tests where pressure is set to -1, 0, 175, and 297 pounds"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.2.1. Trong đề có nói là số đó phải positive, Nhưng mà vì là nó lại mô tả thêm là từ 100-200 là vùng valid, dưới 100 và trên 200 là vùng invalid nên ở đây chỉ cần 3 giá trị để test 3 phân vùng thôi ( ko cần tách vùng &lt;0, từ 0 đến &lt;100 nữa vì nó nằm chung ở 1 vùng invalid rồi)"
+  },
+  {
+    "id": 26,
+    "question": "<div>A daily radiation recorder for plants produces a sunshine score based on a combination of the number of hours a plant is exposed to the sun (below 2 hours, 2 to 4 hours, above 4 to 6 hours, above 6 to 8 hours, above 8) and the average intensity of the sunshine (very low, low, medium, high). Given the following test case (image). What is the minimum number of additional test cases that are needed to ensure full coverage of all valid INPUT equivalence partitions?</div>",
+    "options": [
+      "a.\n1",
+      "b.\n2",
+      "c.\n3",
+      "d.\n4"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2.1 Equivalence partition, Việc ghép test case theo EP chỉ yêu cầu mỗi giá trị value được nhắc đến trong 1 test case, mà về hour thì các case đã có đã test đc 2 phân vùng còn thiếu 3 phân vùng chưa có test case, intensity cũng có 2 phân vùng đc test còn thiếu 2. Nên tối thiểu cần có 3 test case nữa để full coverage.,"
+  },
+  {
+    "id": 27,
+    "question": "<div>Which of the following statements about branch testing is CORRECT?</div>",
+    "options": [
+      "a.\nIf a program includes only unconditional branches, then 100% branch coverage can be achieved without executing any test cases",
+      "b.\nIf the test cases exercise all unconditional branches in the code, then 100% branch coverage is achieved",
+      "c.\nIf 100% statement coverage is achieved, then 100% branch coverage is also achieved",
+      "d.\nIf 100% branch coverage is achieved, then all decision outcomes in each decision statement in the code are exercised"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.3.2 theo định nghĩa của Decision coverage còn gọi là branch coverage"
+  }
+];
+
+let userAnswers = {};
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  document.getElementById('total-count').textContent = quizData.length;
+
+  container.innerHTML = quizData.map((q, idx) => `
+    <div class="question-card" id="card-${q.id}">
+      <div class="question-title">Câu ${idx + 1}: ${q.question}</div>
+      <ul class="options-list">
+        ${q.options.map((opt, optIdx) => `
+          <li class="option-item" 
+              id="opt-${q.id}-${optIdx}" 
+              onclick="selectOption(${q.id}, ${optIdx})">
+            ${opt}
+          </li>
+        `).join('')}
+      </ul>
+      
+      <button class="btn-toggle-explain" onclick="toggleExplanation(${q.id})">
+        💡 Lời giải / Tham chiếu
+      </button>
+
+      <div class="explanation-box" id="explain-${q.id}">
+        <strong>💡 Giải thích chi tiết:</strong>
+        <div>${q.explanation}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectOption(qId, optionIdx) {
+  userAnswers[qId] = optionIdx;
+  
+  // Highlight selected option
+  const options = document.querySelectorAll(`#card-${qId} .option-item`);
+  options.forEach((opt, idx) => {
+    if (idx === optionIdx) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
+}
+
+function toggleExplanation(qId) {
+  const box = document.getElementById(`explain-${qId}`);
+  if (box.style.display === 'none' || box.style.display === '') {
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function submitQuiz() {
+  let score = 0;
+  
+  quizData.forEach(q => {
+    const userAns = userAnswers[q.id];
+    const card = document.getElementById(`card-${q.id}`);
+    
+    // Highlight correct & incorrect answers
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected');
+      
+      if (optIdx === q.correct) {
+        optElem.classList.add('correct');
+      }
+      if (userAns !== undefined && userAns === optIdx && userAns !== q.correct) {
+        optElem.classList.add('incorrect');
+      }
+    });
+
+    if (userAns === q.correct) {
+      score++;
+    }
+
+    // Tự động mở lời giải sau khi nộp bài
+    document.getElementById(`explain-${q.id}`).style.display = 'block';
+  });
+
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: ${score} / ${quizData.length} (${Math.round(score/quizData.length*100)}%)`;
+  scoreDisplay.style.fontWeight = 'bold';
+  
+  alert(`Bạn đã hoàn thành bài thi! Điểm số: ${score}/${quizData.length}`);
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  
+  quizData.forEach(q => {
+    // Xóa các class highlight
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected', 'correct', 'incorrect');
+    });
+    
+    // Ẩn giải thích
+    document.getElementById(`explain-${q.id}`).style.display = 'none';
+  });
+
+  // Reset điểm
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: -- / --`;
+  scoreDisplay.style.fontWeight = 'normal';
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Khởi chạy khi load trang
+window.onload = function() {
+    const titleMatch = window.location.pathname.match(/([^/\\]+)\.html$/);
+    if(titleMatch) {
+        document.getElementById('quiz-title').textContent = decodeURIComponent(titleMatch[1]);
+    }
+    renderQuiz();
+};
+</script>
+
+</body>
+</html>

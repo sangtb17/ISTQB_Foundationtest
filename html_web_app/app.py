@@ -1,4 +1,5 @@
 import os
+import re
 import hmac
 import shutil
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory, flash, abort
@@ -46,7 +47,7 @@ try:
 except OSError:
     pass
 try:
-    MAX_MB = int(os.getenv('MAX_CONTENT_MB', '16'))
+    MAX_MB = int(os.getenv('MAX_CONTENT_MB', '200'))
 except ValueError:
     MAX_MB = 16
 app.config['MAX_CONTENT_LENGTH'] = MAX_MB * 1024 * 1024
@@ -178,6 +179,15 @@ def upload_file():
     flash(f'Tải lên thành công: {filename}', 'success')
     return redirect(url_for('index', req_path=current_path))
 
+def _safe_path_part(name):
+    """Sanitize one folder/file segment, keeping Unicode letters/digits."""
+    name = (name or '').replace('\\', '/')
+    name = re.sub(r'[^\w\.\- ]', '', name)      # unicode word chars + . - space
+    name = re.sub(r'[\/\\]', '-', name)
+    name = ' '.join(name.split()).strip(' .')
+    return '' if name in ('', '.', '..') else name
+
+
 @app.route('/upload_folder', methods=['POST'])
 def upload_folder():
     current_path = request.form.get('current_path', '')
@@ -192,28 +202,38 @@ def upload_folder():
     if not files:
         flash('Chưa chọn folder nào', 'error')
         return redirect(url_for('index', req_path=current_path))
-    if len(files) > 50:
-        flash('Tối đa 50 files/lần.', 'error')
-        return redirect(url_for('index', req_path=current_path))
 
     ok, skip = 0, 0
-    for f in files[:50]:
+    seen = set()
+    for f in files:
         rel = (f.filename or '').replace('\\', '/').lstrip('/')
         parts = [p for p in rel.split('/') if p not in ('', '.', '..')]
-        if not parts or any('..' in p for p in parts):
+        if not parts:
             skip += 1
             continue
-        safe_parts = [secure_filename(p) for p in parts]
-        if not safe_parts[-1] or os.path.splitext(safe_parts[-1])[1].lower() not in ALLOWED_EXT:
+        safe_parts = [_safe_path_part(p) for p in parts]
+        if not safe_parts or not safe_parts[-1]:
+            skip += 1
+            continue
+        if os.path.splitext(safe_parts[-1])[1].lower() not in ALLOWED_EXT:
             skip += 1
             continue
         dest = os.path.join(base_dir, *safe_parts)
         if not is_safe(dest):
             skip += 1
             continue
-        os.makedirs(os.path.dirname(dest), exist_ok=True)
-        f.save(dest)
-        ok += 1
+        try:
+            dest_key = os.path.normpath(dest).lower()
+            if dest_key in seen:      # mangled-name collision -> do not silently overwrite
+                skip += 1
+                continue
+            parent = os.path.dirname(dest) or base_dir
+            os.makedirs(parent, exist_ok=True)
+            f.save(dest)
+            seen.add(dest_key)
+            ok += 1
+        except OSError:
+            skip += 1
 
     msg = f'Đã tải {ok} file' + (f', bỏ qua {skip} file không phải .html.' if skip else '.')
     flash(msg, 'success' if ok else 'error')

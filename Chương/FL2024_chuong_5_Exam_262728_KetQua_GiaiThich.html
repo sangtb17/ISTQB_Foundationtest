@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Trắc Nghiệm</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-light: #2b6cb0;
+            --secondary-color: #319795;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --incorrect-bg: #fed7d7;
+            --incorrect-border: #e53e3e;
+            --explain-bg: #ebf8ff;
+            --explain-border: #3182ce;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stats-item {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .score-display {
+            color: var(--primary-light);
+            font-size: 16px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .option-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 14.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-light);
+            background-color: #ebf8ff;
+            font-weight: 500;
+        }
+
+        .option-item.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #22543d;
+            font-weight: 600;
+        }
+
+        .option-item.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #742a2a;
+        }
+
+        .btn-toggle-explain {
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-toggle-explain:hover {
+            background-color: #e2e8f0;
+            border-color: #a0aec0;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--explain-bg);
+            border-left: 4px solid var(--explain-border);
+            border-radius: 6px;
+            font-size: 14px;
+            color: #2b6cb0;
+        }
+
+        .explanation-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c5282;
+        }
+
+        .action-bar {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn-submit {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(49, 151, 149, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c7a7b;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background-color: #718096;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(113, 128, 150, 0.3);
+            transition: all 0.2s;
+            margin-left: 15px;
+        }
+
+        .btn-reset:hover {
+            background-color: #4a5568;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 id="quiz-title">Bộ Đề Trắc Nghiệm</h1>
+        <p>Luyện Tập</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stats-item">Tổng số câu: <span id="total-count">0</span></div>
+        <div class="stats-item score-display" id="score-display">Điểm số: -- / --</div>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <div class="action-bar">
+        <button class="btn-submit" onclick="submitQuiz()">Nộp Bài & Kiểm Tra Đáp Án</button>
+        <button class="btn-reset" onclick="resetQuiz()">Làm Lại</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    "id": 1,
+    "question": "<div>As part of the test strategy, entry and exit criteria will be defined for each test level. Which is NOT a valid reason for using entry and exit criteria?</div>",
+    "options": [
+      "a.\nThe expectation is that development testing is not adequate.",
+      "b.\nExit criteria are used to decide on when to stop testing.",
+      "c.\nEntry and exit criteria are a principal way for getting adequate resources.",
+      "d.\nUsing entry and exit criteria will prevent software that is not or poorly tested from going to the next test level."
+    ],
+    "correct": 2,
+    "explanation": "Refer 5.1.3 Lý do nào KHÔNG hợp lệ để sử dụng tiêu chí vào và ra? Chọn C vì \"adequate resources\" là sai, entry và exit criteria để giúp trong tình huống thiếu thời gian và nguồn lực thì vẫn có thể test được những cái quan trọng nhất và đảm bảo mục tiêu quan trọng nhất"
+  },
+  {
+    "id": 2,
+    "question": "<div>which of the following topics would you need to address in detail in the master test plan?</div>",
+    "options": [
+      "a.\nAn approach to regression testing",
+      "b.\nA list of boundary values for \"advance amount\"",
+      "c.\nA description of dependencies between test cases",
+      "d.\nA logical collection of test cases"
+    ],
+    "correct": 0,
+    "explanation": "refer 5.1.1. chọn A vì có Approach, BCD là của test case"
+  },
+  {
+    "id": 3,
+    "question": "<div>Which option BEST describes how the level of risk is determined?</div>",
+    "options": [
+      "a.\nThe likelihood of an adverse event happening multiplied by the cost of preventing it.",
+      "b.\nThe consequences of potential problem multiplied by the cost of possible legal action.",
+      "c.\nThe impact of an adverse event multiplied by the likelihood of that event occurring.",
+      "d.\nThe likelihood and the probability of a hazard occurring"
+    ],
+    "correct": 2,
+    "explanation": "refer 5.2.1. Lựa chọn nào TỐT NHẤT mô tả cách xác định mức độ rủi ro? Bạn thấy risk level = likelihood x impact, nên chọn C vì có 2 nhân tố này, loại D vì probability = likelihood, loại A vì likelihood x the cost of preventing (2 cái này nhân với nhau là sai), loại B vì consequences x cost ( hậu quả nhân với chi phí)"
+  },
+  {
+    "id": 4,
+    "question": "<div>Which of the following BEST describes how configuration management supports the test process?</div>",
+    "options": [
+      "a.\nIt enables the tester to reproduce the tested item through unique identification and version control",
+      "b.\nIt enables the tester to systematically design test conditions, cases and data",
+      "c.\nIt enables incidents to be tracked from discovery and classification to correction and confirmation of the solution",
+      "d.\nIt helps the test manager to decide how best to integrate and coordinate the testing activities into the software life cycle."
+    ],
+    "correct": 0,
+    "explanation": "refer 5.4 Điều nào sau đây TỐT NHẤT mô tả cách quản lý cấu hình hỗ trợ quá trình thử nghiệm? cứ theo định nghĩa ta chọn A vì có \" unique identification and version control\" loại B vì là mô tả của kỹ thuật thiết kế test của chương 4 mục 4.1.1, loại C vì nó đang mô tả đến defect management của 5.5, loại D vì là task của test manager ở mục 1.4.5"
+  },
+  {
+    "id": 5,
+    "question": "<div>Which one of the following statements about techniques for estimating test effort is correct?</div>",
+    "options": [
+      "a.\nThe metrics-based technique finds the most similar former project and uses its original estimate for the current project.",
+      "b.\nThe expert-based approach is based on the experience of the owners of the testing tasks or by subject matter experts.",
+      "c.\nThe metrics-based technique uses metrics supplied by the current test team based on their subjective feel for effort required.",
+      "d.\nIn an expert-based approach, the test lead with the most years in the role is chosen to produce the estimate."
+    ],
+    "correct": 1,
+    "explanation": "refer 5.1.4 Câu nào sau đây về kỹ thuật ước lượng nỗ lực kiểm thử là đúng? Chọn B đúng mô tả đúng về expert-based, Loại A vì \"uses its original estimate\" sử dụng estimation ban đầu của các dự án tương tự để tham chiếu cho dự án hiện tại là sai, loại C vì \"their subjective feel- cảm giác chủ quan\" cái này ko thể của metric based, loại D vì \"the most years\" cho test lead nhiều năm kinh nghiệm nhất estimate là sai"
+  },
+  {
+    "id": 6,
+    "question": "<div>Which of the following activities is appropriate to the test planning stage?</div>",
+    "options": [
+      "a.\nAnalyzing the test basis",
+      "b.\nAssigning resources for the planned activities",
+      "c.\nDesigning the test environments",
+      "d.\nWriting a test execution schedule"
+    ],
+    "correct": 1,
+    "explanation": "refer 5.1.1 Hoạt động nào sau đây phù hợp với giai đoạn lập kế hoạch kiểm thử? chọn B như sách là của test planning, A là của test analysis, C là của test design, D là của test implementation"
+  },
+  {
+    "id": 7,
+    "question": "<div>Which of the following would you expect to see in the master test plan?</div>",
+    "options": [
+      "a.\nA description of how the test cases are cross-referenced to requirements in the test management tool.",
+      "b.\nA detailed identification of the resources that will carry out structural testing in the first iteration.",
+      "c.\nThe test approach that will be applied at system integration testing",
+      "d.\nA list of the names of the testers who will carry out the performance testing for the final iteration."
+    ],
+    "correct": 2,
+    "explanation": "refer 5.1.1 Bạn mong đợi điều nào sau đây trong kế hoạch kiểm tra tổng thể? chọn C vì \"test approach\""
+  },
+  {
+    "id": 8,
+    "question": "<div>Which of the following would be the TWO most appropriate examples of entry criteria documented in the system integration test plan?</div>",
+    "options": [
+      "a.\nThe percentage of decision coverage achieved during unit testing.",
+      "b.\nThe availability of the latest version of the capture-replay tool (for testing the interface with the newly developed test management tool)",
+      "c.\nThe sign-off of a performance test software release note (test item transmittal report) by both development and testing showing that system performance meets the specified acceptance criteria.",
+      "d.\nThe percentage of acceptance test procedures scheduled for execution.\ne.\nE. The percentage of requirements coverage achieved during system integration test"
+    ],
+    "correct": 1,
+    "explanation": "refer 5.1.3 Điều nào sau đây sẽ là HAI ví dụ phù hợp nhất về tiêu chí đầu vào được ghi trong kế hoạch kiểm tra tích hợp hệ thống? chọn A vì là level trước (unit test) thỏa mãn tiêu chí kết thúc, Chọn B vì sự sẵn sàng của tài liệu"
+  },
+  {
+    "id": 9,
+    "question": "<div>The following Test Cases have been created for a simple web-based airline booking system. Test Case 1: Search for an item: Available Flights Test Case 2: View selected item in My Flights Test Case 3: Login to the system: Login is accepted Test Case 4: Select an available flight: item added to My Flights Test Case 5: Print confirmation receipt, then exit Test Case 6: In My Flights, confirm details and book flight Which of the following is the correct logical order for the test cases?</div>",
+    "options": [
+      "a.\n6, 3, 1, 4, 2, 5",
+      "b.\n3, 4, 1, 2, 5, 6",
+      "c.\n3, 2, 1, 4, 6, 5",
+      "d.\n3, 1, 4, 2, 6, 5"
+    ],
+    "correct": 3,
+    "explanation": "Refer 5.1.5. Sắp thứ tự của test case theo logic: bắt đầu Open/login và kết thúc là exit, tiếp theo là Search - select - edit - confirm"
+  },
+  {
+    "id": 10,
+    "question": "<div>Which of the following is NOT part of configuration management?</div>",
+    "options": [
+      "a.\nStatus accounting of configuration items",
+      "b.\nAuditing conformance to ISO9001",
+      "c.\nIdentification of test versions",
+      "d.\nRecord of changes to documentation over time"
+    ],
+    "correct": 1,
+    "explanation": "refer 5.4. chọn B vì ko nhắc đến trong sách, A thì \"Status accounting- kiểm tra rà soát trạng thái\" là 1 hoạt động của CM control, C và D thì rõ trong định nghĩa của CM rồi"
+  },
+  {
+    "id": 11,
+    "question": "<div>Which TWO of the following options are the exit criteria for testing a system?</div>",
+    "options": [
+      "a.\nTest environment readiness",
+      "b.\nThe ability to log in to the test object by the tester",
+      "c.\nEstimated defect density is reached",
+      "d.\nRequirements are translated into given/when/then format\ne.\n Regression tests are automated"
+    ],
+    "correct": 3,
+    "explanation": "Refer 5.1.3 Chọn 2 tiêu chí Exit criteria như trong sách luôn"
+  },
+  {
+    "id": 12,
+    "question": "<div>You are testing a mobile application that allows users to find a nearby restaurant based on the type of food they want to eat. Consider the following list of test cases, priorities (i.e., a smaller number means a higher priority), and dependencies (IMAGE) Which of the following test cases should be executed as the third one?</div>",
+    "options": [
+      "a.\nTC 003",
+      "b.\nTC 005",
+      "c.\nTC 002",
+      "d.\nTC 001"
+    ],
+    "correct": 0,
+    "explanation": "Refer 5.1.5 sắp xếp theo dependences trước rồi mới đến priority"
+  },
+  {
+    "id": 13,
+    "question": "<div>How can a risk assessment influence the thoroughness testing?</div>",
+    "options": [
+      "a.\nThe types of test techniques to be employed",
+      "b.\nThe total tests needed to provide 100 percent coverage.",
+      "c.\nAn estimation of the total cost of fixing.",
+      "d.\nOnly that test execution is effective at reducing risk."
+    ],
+    "correct": 0,
+    "explanation": "Refer 5.2.3 Đánh giá rủi ro có thể ảnh hưởng đến việc kiểm tra tính kỹ lưỡng như thế nào? Chọn A có trong sách, B sai vì ko có yêu cầu nào chính xác phải đạt 100% coverage, C sai ở cost of fixing, D sai ở Only that test execution"
+  },
+  {
+    "id": 14,
+    "question": "<div>You are engaged in planning a test effort for a new mobile banking application. As part of estimation, you first meet with the proposed testers and others on the project. The team is well-coordinated and has already worked on similar projects. To verify the resulting estimate, you then refer to some industry averages for testing effort and costs on similar projects, published by a reputable consultant. Which TWO statement describes your estimation approach?</div>",
+    "options": [
+      "a.\nA simultaneous expert-based and metrics-based approach",
+      "b.\nPrimarily an expert-based approach, augmented with a metrics-based approach",
+      "c.\nPrimarily a metrics-based approach, augmented with an expert-based approach",
+      "d.\nPrimarily planning poker, checked by velocity from burndown charts."
+    ],
+    "correct": 1,
+    "explanation": "Refer 5.2.4 kỹ thật estimation. Trong kịch bản: Đề ước lượng thì đầu tiên là bạn gặp \"meet with the proposed testers and others- người phù hợp\" cái này là kỹ thuật expert based rồi, sau đó để kiểm tra lại ước lượng này bạn \"refer to some industry averages for testing effort and costs on similar projects- tham chiếu đến các giá trị trung bình của dự án tương tự\" đây là kỹ thuật metric based. Như vậy đúng nhất là B, đúng thứ nhì là A ( dịch là kết hợp của 2 kỹ thuật)"
+  },
+  {
+    "id": 15,
+    "question": "<div>Which of the following statements about risks is most accurate?</div>",
+    "options": [
+      "a.\nProject risks rarely affect product risk.",
+      "b.\nProduct risks rarely affect project risk.",
+      "c.\nA risk-based approach is more likely to be used to mitigate product rather than project risks.",
+      "d.\nA risk-based approach is more likely to be used to mitigate project rather than product risks."
+    ],
+    "correct": 2,
+    "explanation": "Refer 5.2. Cái nào đúng nhất về Risk. Bạn xem lại cái bảng thì risk based là để mitigate cho product risk nên chọn C"
+  }
+];
+
+let userAnswers = {};
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  document.getElementById('total-count').textContent = quizData.length;
+
+  container.innerHTML = quizData.map((q, idx) => `
+    <div class="question-card" id="card-${q.id}">
+      <div class="question-title">Câu ${idx + 1}: ${q.question}</div>
+      <ul class="options-list">
+        ${q.options.map((opt, optIdx) => `
+          <li class="option-item" 
+              id="opt-${q.id}-${optIdx}" 
+              onclick="selectOption(${q.id}, ${optIdx})">
+            ${opt}
+          </li>
+        `).join('')}
+      </ul>
+      
+      <button class="btn-toggle-explain" onclick="toggleExplanation(${q.id})">
+        💡 Lời giải / Tham chiếu
+      </button>
+
+      <div class="explanation-box" id="explain-${q.id}">
+        <strong>💡 Giải thích chi tiết:</strong>
+        <div>${q.explanation}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectOption(qId, optionIdx) {
+  userAnswers[qId] = optionIdx;
+  
+  // Highlight selected option
+  const options = document.querySelectorAll(`#card-${qId} .option-item`);
+  options.forEach((opt, idx) => {
+    if (idx === optionIdx) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
+}
+
+function toggleExplanation(qId) {
+  const box = document.getElementById(`explain-${qId}`);
+  if (box.style.display === 'none' || box.style.display === '') {
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function submitQuiz() {
+  let score = 0;
+  
+  quizData.forEach(q => {
+    const userAns = userAnswers[q.id];
+    const card = document.getElementById(`card-${q.id}`);
+    
+    // Highlight correct & incorrect answers
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected');
+      
+      if (optIdx === q.correct) {
+        optElem.classList.add('correct');
+      }
+      if (userAns !== undefined && userAns === optIdx && userAns !== q.correct) {
+        optElem.classList.add('incorrect');
+      }
+    });
+
+    if (userAns === q.correct) {
+      score++;
+    }
+
+    // Tự động mở lời giải sau khi nộp bài
+    document.getElementById(`explain-${q.id}`).style.display = 'block';
+  });
+
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: ${score} / ${quizData.length} (${Math.round(score/quizData.length*100)}%)`;
+  scoreDisplay.style.fontWeight = 'bold';
+  
+  alert(`Bạn đã hoàn thành bài thi! Điểm số: ${score}/${quizData.length}`);
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  
+  quizData.forEach(q => {
+    // Xóa các class highlight
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected', 'correct', 'incorrect');
+    });
+    
+    // Ẩn giải thích
+    document.getElementById(`explain-${q.id}`).style.display = 'none';
+  });
+
+  // Reset điểm
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: -- / --`;
+  scoreDisplay.style.fontWeight = 'normal';
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Khởi chạy khi load trang
+window.onload = function() {
+    const titleMatch = window.location.pathname.match(/([^/\\]+)\.html$/);
+    if(titleMatch) {
+        document.getElementById('quiz-title').textContent = decodeURIComponent(titleMatch[1]);
+    }
+    renderQuiz();
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Trắc Nghiệm</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-light: #2b6cb0;
+            --secondary-color: #319795;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --correct-bg: #c6f6d5;
+            --correct-border: #38a169;
+            --incorrect-bg: #fed7d7;
+            --incorrect-border: #e53e3e;
+            --explain-bg: #ebf8ff;
+            --explain-border: #3182ce;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .stats-item {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .score-display {
+            color: var(--primary-light);
+            font-size: 16px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .option-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 14.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e0;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-light);
+            background-color: #ebf8ff;
+            font-weight: 500;
+        }
+
+        .option-item.correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: #22543d;
+            font-weight: 600;
+        }
+
+        .option-item.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: #742a2a;
+        }
+
+        .btn-toggle-explain {
+            background-color: #edf2f7;
+            color: #2d3748;
+            border: 1px solid #cbd5e0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-toggle-explain:hover {
+            background-color: #e2e8f0;
+            border-color: #a0aec0;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: var(--explain-bg);
+            border-left: 4px solid var(--explain-border);
+            border-radius: 6px;
+            font-size: 14px;
+            color: #2b6cb0;
+        }
+
+        .explanation-box strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c5282;
+        }
+
+        .action-bar {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn-submit {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(49, 151, 149, 0.3);
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c7a7b;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background-color: #718096;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(113, 128, 150, 0.3);
+            transition: all 0.2s;
+            margin-left: 15px;
+        }
+
+        .btn-reset:hover {
+            background-color: #4a5568;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 id="quiz-title">Bộ Đề Trắc Nghiệm</h1>
+        <p>Luyện Tập</p>
+    </header>
+
+    <div class="stats-bar">
+        <div class="stats-item">Tổng số câu: <span id="total-count">0</span></div>
+        <div class="stats-item score-display" id="score-display">Điểm số: -- / --</div>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <div class="action-bar">
+        <button class="btn-submit" onclick="submitQuiz()">Nộp Bài & Kiểm Tra Đáp Án</button>
+        <button class="btn-reset" onclick="resetQuiz()">Làm Lại</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+  {
+    "id": 1,
+    "question": "<div>Which of the following is an approach that can be used for exploratory testing?</div>",
+    "options": [
+      "a.\nA. A tester analyses, designs and implements tests based on external rules and standards.",
+      "b.\nB. A tester methodically executes tests from a list of possible failures, based on experience, defect and failure data.",
+      "c.\nC. Time-boxed test sessions are created, during which a tester uses a test charter containing test objectives to guide the testing.",
+      "d.\nD. Tests are designed based on the guidance of stakeholders and experts outside the test team."
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.4.2 Exploratory Testing thì ra đáp án C đúng. A sai vì \"external rules and standards\" là checklist based, B sai vì \"based on experience, defect and failure data\" là của error guessing, D sai vì \"guidance of stakeholders and experts outside\" là của Consultative mục 5.2.2"
+  },
+  {
+    "id": 2,
+    "question": "<div>A car insurance policy has 3 rates of insurance depending on the age of the driver. For drivers aged between 17 and 25 inclusive they are charged at rate A, drivers aged between 26 and 50 inclusive are charged at rate B and those drivers aged over 50 are charged at rate C. You are designing test cases, which of the following three ages would test all valid equivalence partitions and therefore test rate A, B and C?</div>",
+    "options": [
+      "a.\nA. 17, 25, 50.",
+      "b.\nB. 10, 21, 55.",
+      "c.\nC. 20, 35, 65.",
+      "d.\nD. 26, 45, 50."
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2.1 xem video chữa đề này ở Exam 23 câu 3"
+  },
+  {
+    "id": 3,
+    "question": "<div>A holiday club restricts those booking the holiday, to people between the ages of 18 and 30 inclusive. Using two-point boundary values, what ages would be required to test the lower and upper boundary?</div>",
+    "options": [
+      "a.\nA. 17, 18, 29, 30",
+      "b.\nB. 18, 19, 29, 30.",
+      "c.\nC. 17, 18, 30, 31.",
+      "d.\nD. 16, 17, 18, 30, 31, 32."
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2.1 xem video chữa đề ở Exam 23 câu 8"
+  },
+  {
+    "id": 4,
+    "question": "<div>Which of the following is NOT a valid use of decision coverage?</div>",
+    "options": [
+      "a.\nA. Checking that all decisions are based on a numeric value.",
+      "b.\nB. Checking that all decisions have been exercised in a business process.",
+      "c.\nC. Checking that at least 100% decision coverage has been achieved, as this guarantees 100% statement coverage.",
+      "d.\nD. Checking that all decisions have been exercised in a single program."
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.3.2 white box test. A vì based on a numeric value, không phải lúc nào giá trị test cùng là số numberic"
+  },
+  {
+    "id": 5,
+    "question": "<div>A student needs to score at least 50 points to pass. If they score at least 100 points they will achieve a merit and if they score at least 150 points they will achieve a distinction. Which two values are in the same partition?</div>",
+    "options": [
+      "a.\nA. 55 and 120.",
+      "b.\nB. 50 and 60.",
+      "c.\nC. 45 and 170.",
+      "d.\nD. 45 and 55."
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.2.1. Xem video chữa đề ở Exam 23 câu 13"
+  },
+  {
+    "id": 6,
+    "question": "<div>Given the following decision tables, what is the expected result for the test case listed below? Test Case: Purchase a Toaster weighing 9kg for £10.</div>",
+    "options": [
+      "a.\nNo need to pay in cash, no free delivery.",
+      "b.\nMust pay in cash, no free delivery.",
+      "c.\nNo need to pay in cash, free delivery.",
+      "d.\nMust pay in cash, free delivery"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.2.3 Gióng test case vào cái bảng và đọc đúng expected result. Xem video chữa đề này ở câu 20 của Exam 23"
+  },
+  {
+    "id": 7,
+    "question": "<div>Which of the following BEST describes a methodical approach to the Error Guessing test technique?</div>",
+    "options": [
+      "a.\nA tester dynamically designs and executes tests based on their knowledge, exploration of the test item and the results of previous tests.",
+      "b.\nAn experienced tester makes a list of potential defects and failures, and designs and runs tests to generate these failures should the defects be present in the code.",
+      "c.\nA tester designs, implements and executes tests to cover test conditions found in checklists that are based on what is important for the user.",
+      "d.\nAn inexperienced tester is asked to attempt to guess errors that may have been missed by experienced testers during formal test design"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.4.1 thì là B đúng experienced tester makes a list of potential defects and failures, A sai vì dynamically designs and executes là của exploratory testing,C sai vì checklists , D sai vì inexperienced tester dự đoán lỗi của tester có kinh nghiệm"
+  },
+  {
+    "id": 8,
+    "question": "<div>Which of the following BEST describes the concept behind error guessing?</div>",
+    "options": [
+      "a.\nError guessing requires you to imagine you are the user of the test object and guess mistakes the user could make interacting with it.",
+      "b.\nError guessing involves using your personal experience of development and the mistakes you made as a developer.",
+      "c.\nError guessing involves using your knowledge and experience of defects found in the past and typical mistakes made by developers.",
+      "d.\nError guessing requires you to rapidly duplicate the development task to identify the sort of mistakes a developer might make."
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.4.1 C đúng vì dùng \"knowledge and experience of defects\" A sai vì ko có kỹ thuật nào tưởng tượng user dùng sai, B sai vì sử dụng experience of development là kinh nghiệm lập trình ko phải kinh nghiệm test, D sai vì duplicate the development task"
+  },
+  {
+    "id": 9,
+    "question": "<div>An input field takes the year of birth between 1900 and 2004. The two boundary values for testing this field are:</div>",
+    "options": [
+      "a.\n0,1900,2004,2005",
+      "b.\n1900, 2004",
+      "c.\n1899,1900,2004,2005",
+      "d.\n1899, 1900, 1901,2003,2004,2005"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2.2 vẽ ra. Xem video chữa đề câu này ở Exam 23 câu số 28"
+  },
+  {
+    "id": 10,
+    "question": "<div>A system is designed to accept values of examination marks as follows: Fail :0-39 inclusive Pass :40-59 inclusive Merit :60-79 inclusive Distinction :80-100 inclusive In which of the following sets of values are all values in different equivalence partitions?</div>",
+    "options": [
+      "a.\nA. 25, 40, 60, 75",
+      "b.\nB. 0, 45, 79, 87",
+      "c.\nC. 35, 40, 59, 69",
+      "d.\nD. 25, 39, 60, 81"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.2, câu hỏi là xác định tất cả các giá trị test trong các phân vùng tương đương khác nhau. Xem video chữa đề này ở câu 3 của Exam 24"
+  },
+  {
+    "id": 11,
+    "question": "<div>A washing machine has three temperature bands for different kinds of fabrics: fragile fabrics are washed at temperatures between 15 and 30 degrees Celsius; normal fabrics are washed at temperatures between 31 and 60 degrees Celsius; heavily soiled and tough fabrics are washed at temperatures between 61 and 100 degrees Celsius. Which of the following contains only values that are in different equivalence partitions?</div>",
+    "options": [
+      "a.\nA. 15, 30, 60",
+      "b.\nB. 20, 35, 60",
+      "c.\nC. 25, 45, 75",
+      "d.\nD. 12, 35, 55"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.2.1 : Câu hỏi là đáp án nào chỉ chứa 1 giá trị trong các phân vùng tương đương khác nhau. Xem video chữa đề này ở câu 4 của Exam 24"
+  },
+  {
+    "id": 12,
+    "question": "<div>Consider the following pseudo code: 1 Begin 2 Read Time 3 If Time &lt; 12 Then 4 Print(Time, \"am\") 5 Endif 6 If Time &gt; 12 Then 7 Print(Time −12, \"pm\") 8 Endif 9 If Time = 12 Then 10 Print (Time, \"noon\") 11 Endif 12 End How many test cases are needed to achieve 100 per cent decision coverage?</div>",
+    "options": [
+      "a.\nA. 1",
+      "b.\nB. 2",
+      "c.\nC. 3",
+      "d.\nD. 4"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.3, vẽ sơ đồ ra và xác định số test case để bao phủ 100% decision coverage. Xem video chữa đề này ở câu 5 của Exam 24"
+  },
+  {
+    "id": 13,
+    "question": "<div>Consider the following pseudo code: 1 Begin 2 Read Time 3 If Time &lt; 12 Then 4 Print(Time, \"am\") 5 Endif 6 If Time &gt; 12 Then 7 Print(Time −12, \"pm\") 8 Endif 9 If Time = 12 Then 10 Print (Time, \"noon\") 11 Endif 12 End If the test cases Time = 11 and Time = 15 were input, what level of decision coverage would be achieved?</div>",
+    "options": [
+      "a.\nA. 100% or 6/6",
+      "b.\nB. 50% or 3/6",
+      "c.\nC. 67% or 4/6",
+      "d.\nD. 83% or 5/6"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.3 , vẽ sơ đồ ra và xác định 2 test case Time = 11 and Time = 15 đã bao phủ được bao nhiêu % decision coverage. Xem video chữa đề này ở câu 6 của Exam 24"
+  },
+  {
+    "id": 14,
+    "question": "<div>A software component has the code shown below: Program BiggestA, Biggest: Integer Begin Read A Biggest = 10 While A &gt; 0 Do If A &gt; Biggest Then Biggest = A Endif Read A Enddo End The component has exit criteria for component testing that include 100% statement coverage. Which of the following test cases will satisfy this criterion?</div>",
+    "options": [
+      "a.\nA. 0",
+      "b.\nB. 10, 0",
+      "c.\nC. 10, 5, 0",
+      "d.\nD. 10, 11, 0"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.3 vẽ sơ đồ ra. Xem video chữa đề này ở Tab Bài học của Exam 24 câu số 7"
+  },
+  {
+    "id": 15,
+    "question": "<div>Which of the following describes structure-based (white-box) test case design techniques?</div>",
+    "options": [
+      "a.\nA. Test cases are derived systematically from models of the system.",
+      "b.\nB. Test cases are derived systematically from the tester's experience.",
+      "c.\nC. Test cases are derived systematically from the delivered code.",
+      "d.\nD. Test cases are derived from the developers' experience."
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.1.1 thì A là của Black box, B là Experience based, C là White box, D là Experience based"
+  },
+  {
+    "id": 16,
+    "question": "<div>Which of the following is a structure-based (white-box) technique?</div>",
+    "options": [
+      "a.\nA. Decision table testing",
+      "b.\nB. State transition testing",
+      "c.\nC. Statement testing",
+      "d.\nD. Boundary value analysis"
+    ],
+    "correct": 2,
+    "explanation": "Refer 4.1.1 thì C đúng, A, B,D sai là vì của black box test"
+  },
+  {
+    "id": 17,
+    "question": "<div>Which of the following are most characteristic of structure-based testing? (i) Information about how the software is constructed is used to derive test cases. (ii) Statement coverage and/or decision coverage can be measured for existing test cases. (iii) The knowledge and experience of people are used to derive test cases. (iv) Test cases are derived from a model or specification of the system</div>",
+    "options": [
+      "a.\nA. (i) and (ii)",
+      "b.\nB. (ii) and (iii)",
+      "c.\nC. (ii) and (iv)",
+      "d.\nD. (i) and (iii)"
+    ],
+    "correct": 0,
+    "explanation": "Refer 4.1.1 chọn i và ii của white box test và loại trừ, iii là của experience based, iv là của black box"
+  },
+  {
+    "id": 18,
+    "question": "<div>Arrive-and-Go airline wants to clarify its baggage handling policy, whilst maximizing revenues, and will introduce the following tariffs for all baggage per individual customer (weights are rounded up to the nearest 0.1Kg): The first 2Kg will be carried free of charge. The next 10 Kg will be carried for a flat charge of $20. An additional 15Kg will be charged a total charge of $27. Luggage over this amount will be charged at $5 per Kg, up to a maximum of 150Kg per person. No passenger may take more that 150Kg with them. Which of the following would constitute boundary values for baggage weights in the price calculation?</div>",
+    "options": [
+      "a.\n1.9, 12.0, 14.9, 150.0",
+      "b.\n2.0, 9.9, 15.0, 26.9",
+      "c.\n0, 5.0, 10.0, 17.0",
+      "d.\n2.0, 12.1, 27.0, 150.1"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.2.2. Xem video chữa đề Exam 25 câu 16"
+  },
+  {
+    "id": 19,
+    "question": "<div>Company ABC is going to provide their employees with a bonus which will be based on the employee's length of service in the company. The bonus calculation will be zero if they have been with the company for less than two years, 10% of their salary for more than two but less than five years, and 25% for five to ten years, 35% for ten years or more. The interface will not allow a negative value to be input, but it will allow a zero to be input. How many equivalence partitions are needed to test the calculation of the bonus?</div>",
+    "options": [
+      "a.\n4",
+      "b.\n2",
+      "c.\n3",
+      "d.\n5"
+    ],
+    "correct": 3,
+    "explanation": "Refer 4.2.1. Xem video chữa đề Exam 25 câu 18"
+  },
+  {
+    "id": 20,
+    "question": "<div>A wholesaler sells printer cartridges. The minimum order quantity is 5. There is a 20% discount for orders of 100 or more printer cartridges. You have been asked to prepare test cases using various values for the number of printer cartridges ordered. Which of the following groups contain three test inputs that would be generated using Boundary Value Analysis?</div>",
+    "options": [
+      "a.\n5, 6, 20",
+      "b.\n4, 5, 99",
+      "c.\n4, 5, 80",
+      "d.\n1, 20, 0100"
+    ],
+    "correct": 1,
+    "explanation": "Refer 4.2.2. Xem video chữa đề Exam 25 câu 19"
+  },
+  {
+    "id": 21,
+    "question": "<div>Which of the following test techniques is structure-based?</div>",
+    "options": [
+      "a.\nControl flow testing",
+      "b.\nUse case testing",
+      "c.\nState transition testing",
+      "d.\nDecision table testing"
+    ],
+    "correct": 0,
+    "explanation": "refer 4.3.4 Kỹ thuật kiểm thử nào sau đây dựa trên cấu trúc? xem bảng summary của white box test"
+  },
+  {
+    "id": 22,
+    "question": "<div>Which of the following is an example of black-box dynamic testing?</div>",
+    "options": [
+      "a.\nCode inspection",
+      "b.\nChecking memory leaks for a program by executing it",
+      "c.\nFunctional Testing",
+      "d.\nCoverage analysis"
+    ],
+    "correct": 2,
+    "explanation": "refer 4.1.1 A là của static test, B là dynamic analysis bởi tool tìm ra lỗi về bộ nhớ ko phải kỹ thuật black-box ( xem thêm 3.1.3) , D là của white box test, còn C"
+  },
+  {
+    "id": 23,
+    "question": "<div>When testing a mission critical system, a high coverage should be achieved. Which of the following techniques should be implemented as a structural based coverage technique in order to achieve the highest coverage?</div>",
+    "options": [
+      "a.\nmultiple condition coverage",
+      "b.\ndecision table",
+      "c.\nuse case testing",
+      "d.\nstatement coverage"
+    ],
+    "correct": 0,
+    "explanation": "refer 4.3.4 nhìn vào bảng Summary của white box test sẽ thấy mức độ coverage cao nhất là A, B C loại vì của black box test, D thấp nhất"
+  }
+];
+
+let userAnswers = {};
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  document.getElementById('total-count').textContent = quizData.length;
+
+  container.innerHTML = quizData.map((q, idx) => `
+    <div class="question-card" id="card-${q.id}">
+      <div class="question-title">Câu ${idx + 1}: ${q.question}</div>
+      <ul class="options-list">
+        ${q.options.map((opt, optIdx) => `
+          <li class="option-item" 
+              id="opt-${q.id}-${optIdx}" 
+              onclick="selectOption(${q.id}, ${optIdx})">
+            ${opt}
+          </li>
+        `).join('')}
+      </ul>
+      
+      <button class="btn-toggle-explain" onclick="toggleExplanation(${q.id})">
+        💡 Lời giải / Tham chiếu
+      </button>
+
+      <div class="explanation-box" id="explain-${q.id}">
+        <strong>💡 Giải thích chi tiết:</strong>
+        <div>${q.explanation}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectOption(qId, optionIdx) {
+  userAnswers[qId] = optionIdx;
+  
+  // Highlight selected option
+  const options = document.querySelectorAll(`#card-${qId} .option-item`);
+  options.forEach((opt, idx) => {
+    if (idx === optionIdx) {
+      opt.classList.add('selected');
+    } else {
+      opt.classList.remove('selected');
+    }
+  });
+}
+
+function toggleExplanation(qId) {
+  const box = document.getElementById(`explain-${qId}`);
+  if (box.style.display === 'none' || box.style.display === '') {
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function submitQuiz() {
+  let score = 0;
+  
+  quizData.forEach(q => {
+    const userAns = userAnswers[q.id];
+    const card = document.getElementById(`card-${q.id}`);
+    
+    // Highlight correct & incorrect answers
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected');
+      
+      if (optIdx === q.correct) {
+        optElem.classList.add('correct');
+      }
+      if (userAns !== undefined && userAns === optIdx && userAns !== q.correct) {
+        optElem.classList.add('incorrect');
+      }
+    });
+
+    if (userAns === q.correct) {
+      score++;
+    }
+
+    // Tự động mở lời giải sau khi nộp bài
+    document.getElementById(`explain-${q.id}`).style.display = 'block';
+  });
+
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: ${score} / ${quizData.length} (${Math.round(score/quizData.length*100)}%)`;
+  scoreDisplay.style.fontWeight = 'bold';
+  
+  alert(`Bạn đã hoàn thành bài thi! Điểm số: ${score}/${quizData.length}`);
+}
+
+function resetQuiz() {
+  userAnswers = {};
+  
+  quizData.forEach(q => {
+    // Xóa các class highlight
+    q.options.forEach((_, optIdx) => {
+      const optElem = document.getElementById(`opt-${q.id}-${optIdx}`);
+      optElem.classList.remove('selected', 'correct', 'incorrect');
+    });
+    
+    // Ẩn giải thích
+    document.getElementById(`explain-${q.id}`).style.display = 'none';
+  });
+
+  // Reset điểm
+  const scoreDisplay = document.getElementById('score-display');
+  scoreDisplay.textContent = `Điểm số: -- / --`;
+  scoreDisplay.style.fontWeight = 'normal';
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Khởi chạy khi load trang
+window.onload = function() {
+    const titleMatch = window.location.pathname.match(/([^/\\]+)\.html$/);
+    if(titleMatch) {
+        document.getElementById('quiz-title').textContent = decodeURIComponent(titleMatch[1]);
+    }
+    renderQuiz();
+};
+</script>
+
+</body>
+</html>

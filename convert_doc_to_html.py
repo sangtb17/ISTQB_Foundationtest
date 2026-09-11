@@ -9,84 +9,214 @@ except ImportError:
     print("Thư viện 'beautifulsoup4' chưa được cài đặt. Vui lòng chạy lệnh: pip install beautifulsoup4")
     sys.exit(1)
 
-def process_file(input_file, output_file):
-    sys.stdout.reconfigure(encoding='utf-8')
-    print(f"Dang xu ly: {input_file} ...")
-    content = ""
-    # Thử đọc file với các encoding khác nhau
-    for enc in ['utf-8', 'utf-8-sig', 'windows-1258', 'cp1252', 'latin1']:
+def _read_input_file(input_file):
+    for enc in ['utf-8-sig', 'utf-8', 'windows-1258', 'cp1252', 'latin1']:
         try:
             with open(input_file, 'r', encoding=enc) as f:
                 content = f.read()
-            break
-        except UnicodeDecodeError:
+            if content and content.strip():
+                if content.startswith('\ufeff'):
+                    content = content.lstrip('\ufeff')
+                return content
+        except (UnicodeDecodeError, UnicodeError):
             continue
-            
-    if not content:
+    with open(input_file, 'rb') as f:
+        raw = f.read()
+    for enc in ['utf-8-sig', 'utf-8', 'cp1252']:
+        try:
+            return raw.decode(enc)
+        except Exception:
+            continue
+    return raw.decode('utf-8', errors='replace')
+
+
+def _detect_correct(opt_div, opt_text):
+    classes = opt_div.get('class', []) or []
+    if 'correct' in classes or 'selectedright' in classes:
+        return True
+    t = opt_text or ''
+    tu = t.upper()
+    for m in ['DAP AN DUNG', 'CORRECT']:
+        if m in tu:
+            return True
+    if 'ĐÁP ÁN ĐÚNG' in t or 'Đáp án đúng' in t:
+        return True
+    low = t.lower()
+    if '[p n' in low and 'ng]' in low:
+        return True
+    return False
+
+
+def _clean_option(opt_text):
+    clean_text = opt_text or ''
+    pats = [r'\[THÍ SINH.*?\]', r'\[Thí sinh.*?\]', r'\[ĐÁP ÁN.*?\]',
+        r'\[Đáp án.*?\]', r'\[BAN DA CHON.*?\]', r'\[BẠN ĐÃ CHỌN.*?\]',
+        r'\[DAP AN DUNG.*?\]', r'\[DAP AN.*?\]', r'\[THI SINH.*?\]',
+        r'\[Th sinh.*?\]', r'\[p n.*?\]', r'\[DAP.*?\]']
+    for pat in pats:
+        clean_text = re.sub(pat, '', clean_text, flags=re.IGNORECASE | re.DOTALL)
+    clean_text = re.sub(r'\s*\[[^\[\]]{2,40}\]\s*$', '', clean_text).strip()
+    clean_text = re.sub(r'[ \t]+', ' ', clean_text)
+    clean_text = re.sub(r'\n\s*\n+', '\n', clean_text).strip()
+    return clean_text
+
+
+def _clean_explanation(explain_html):
+    exp = (explain_html or '').strip()
+    exp = re.sub(r'^(<[^>]+>\s*)*(Lời giải|Loi giai)\s*:\s*(</[^>]+>\s*)*', '', exp, flags=re.IGNORECASE)
+    return exp.strip()
+
+
+def process_file(input_file, output_file):
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
+    print(f"Dang xu ly: {input_file} ...")
+    content = _read_input_file(input_file)
+    if not content or not content.strip():
         print(f"Không thể đọc nội dung file {input_file}")
         return
 
     soup = BeautifulSoup(content, 'html.parser')
     qblocks = soup.find_all('div', class_='qblock')
-    
-    if not qblocks:
-        print("Không tìm thấy các câu hỏi (không có thẻ <div class='qblock'>). File có thể không đúng định dạng mong đợi.")
-        return False
 
     quiz_data = []
-    
-    for idx, qblock in enumerate(qblocks):
-        qtitle = qblock.find('div', class_='qtitle')
-        
-        # Lấy nội dung câu hỏi
-        question_html_parts = []
-        if qtitle:
-            node = qtitle.next_sibling
-            while node:
-                if node.name == 'div' and node.has_attr('class') and any(c.startswith('opt') for c in node.get('class', [])):
-                    break
-                if node.name is not None or str(node).strip():
-                    question_html_parts.append(str(node))
-                node = node.next_sibling
-                
-        question_text = "".join(question_html_parts).strip()
-        if not question_text:
-            question_text = f"Câu hỏi {idx + 1}"
-        
-        # Lấy các lựa chọn (options)
-        options = []
-        correct_idx = 0
-        opt_divs = qblock.find_all('div', class_=re.compile(r'^opt'))
-        for o_idx, opt_div in enumerate(opt_divs):
-            opt_text = opt_div.get_text(strip=True)
-            
-            # Xác định đáp án đúng
-            classes = opt_div.get('class', [])
-            if 'correct' in classes or 'selectedright' in classes or '[Đáp án đúng]' in opt_text or '[p n ng]' in opt_text:
-                correct_idx = o_idx
-            
-            # Làm sạch text lựa chọn
-            clean_text = opt_text
-            clean_text = re.sub(r'\[Thí sinh.*?\]', '', clean_text)
-            clean_text = re.sub(r'\[Đáp án.*?\]', '', clean_text)
-            # Regex cho các ký tự bị lỗi font
-            clean_text = re.sub(r'\[Th sinh.*?\]', '', clean_text)
-            clean_text = re.sub(r'\[p n.*?\]', '', clean_text)
-            options.append(clean_text.strip())
-            
-        # Lấy giải thích
-        explain_div = qblock.find('div', class_='explain')
-        explanation = explain_div.decode_contents().strip() if explain_div else ""
-        explanation = re.sub(r'^Lời giải:\s*', '', explanation, flags=re.IGNORECASE)
-        explanation = re.sub(r'^L\?i gi\?i:\s*', '', explanation, flags=re.IGNORECASE)
-        
-        quiz_data.append({
-            "id": idx + 1,
-            "question": question_text,
-            "options": options,
-            "correct": correct_idx,
-            "explanation": explanation
-        })
+    src_format = ""
+
+    if qblocks:
+        src_format = "qblock"
+        for idx, qblock in enumerate(qblocks):
+            qtitle = qblock.find('div', class_='qtitle')
+
+            # Lấy nội dung câu hỏi
+            question_html_parts = []
+            if qtitle:
+                node = qtitle.next_sibling
+                while node:
+                    if node.name == 'div' and node.has_attr('class') and any(c.startswith('opt') for c in node.get('class', [])):
+                        break
+                    if node.name is not None or str(node).strip():
+                        question_html_parts.append(str(node))
+                    node = node.next_sibling
+
+            question_text = "".join(question_html_parts).strip()
+            if not question_text:
+                question_text = f"Câu hỏi {idx + 1}"
+
+            # Lấy các lựa chọn (options)
+            options = []
+            correct_idx = 0
+            opt_divs = qblock.find_all('div', class_=re.compile(r'^opt'))
+            for o_idx, opt_div in enumerate(opt_divs):
+                opt_text = opt_div.get_text(separator='\n', strip=True)
+                if _detect_correct(opt_div, opt_text):
+                    correct_idx = o_idx
+                options.append(_clean_option(opt_text))
+
+            # Lấy giải thích
+            explain_div = qblock.find('div', class_='explain')
+            explanation = _clean_explanation(explain_div.decode_contents() if explain_div else "")
+
+            quiz_data.append({
+                "id": idx + 1,
+                "question": question_text,
+                "options": options,
+                "correct": correct_idx,
+                "explanation": explanation
+            })
+
+    else:
+        # Format file tong hop: <h2>Cau hoi N</h2> + <div class="qtext"> + <div class="opt...">
+        src_format = "qtext"
+        qtexts = soup.find_all('div', class_='qtext')
+        if qtexts:
+            for idx, qtext in enumerate(qtexts):
+                question_html = str(qtext)
+                options = []
+                correct_idx = 0
+                explanation = ""
+                opt_idx = 0
+                node = qtext.next_sibling
+                while node is not None:
+                    if getattr(node, 'name', None) is None:
+                        node = node.next_sibling
+                        continue
+                    if node.name == 'h2':
+                        break
+                    if node.name == 'div' and 'qtext' in (node.get('class', []) or []):
+                        break
+                    classes = node.get('class', []) or []
+                    is_opt = node.name == 'div' and any(c == 'opt' or c.startswith('opt') for c in classes)
+                    is_explain = node.name == 'div' and 'explain' in classes
+                    if is_opt:
+                        ot = node.get_text(separator='\n', strip=True)
+                        if _detect_correct(node, ot):
+                            correct_idx = opt_idx
+                        options.append(_clean_option(ot))
+                        opt_idx += 1
+                    elif is_explain:
+                        explanation = _clean_explanation(node.decode_contents())
+                    node = node.next_sibling
+                if not options:
+                    continue
+                quiz_data.append({
+                    "id": len(quiz_data) + 1,
+                    "question": question_html,
+                    "options": options,
+                    "correct": correct_idx,
+                    "explanation": explanation
+                })
+        else:
+            # Fallback: chi co <h2>Cau hoi N</h2> ma khong co qtext
+            h2s = [h for h in soup.find_all('h2')
+                   if 'cau hoi' in h.get_text(strip=True).lower()
+                   or 'câu hỏi' in h.get_text(strip=True).lower()]
+            for idx, h2 in enumerate(h2s):
+                parts = []
+                options = []
+                correct_idx = 0
+                explanation = ""
+                opt_idx = 0
+                node = h2.next_sibling
+                while node is not None:
+                    if getattr(node, 'name', None) is None:
+                        if str(node).strip():
+                            parts.append(str(node))
+                        node = node.next_sibling
+                        continue
+                    if node.name == 'h2':
+                        break
+                    classes = node.get('class', []) or []
+                    is_opt = node.name == 'div' and any(c == 'opt' or c.startswith('opt') for c in classes)
+                    is_explain = node.name == 'div' and 'explain' in classes
+                    if is_opt:
+                        ot = node.get_text(separator='\n', strip=True)
+                        if _detect_correct(node, ot):
+                            correct_idx = opt_idx
+                        options.append(_clean_option(ot))
+                        opt_idx += 1
+                    elif is_explain:
+                        explanation = _clean_explanation(node.decode_contents())
+                    elif not (node.name == 'div' and 'video' in classes):
+                        parts.append(str(node))
+                    node = node.next_sibling
+                q_html = "".join(parts).strip() or f"Câu hỏi {idx + 1}"
+                if not options:
+                    continue
+                quiz_data.append({
+                    "id": len(quiz_data) + 1,
+                    "question": q_html,
+                    "options": options,
+                    "correct": correct_idx,
+                    "explanation": explanation
+                })
+
+    if not quiz_data:
+        print("Không tìm thấy các câu hỏi (không có <div class='qblock'> cũng không có <div class='qtext'>/h2). File có thể không đúng định dạng mong đợi.")
+        return False
+
+    print(f"Nhan dang format: {src_format} -> {len(quiz_data)} cau.")
         
     # Tạo HTML
     template = """<!DOCTYPE html>
